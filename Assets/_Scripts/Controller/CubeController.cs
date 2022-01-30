@@ -9,6 +9,10 @@ public class CubeController : MonoBehaviour
 
     void Update()
     {
+        
+    }
+    void FixedUpdate()
+    {
         if (isMoving)//必须要等一次旋转完成，才能进行下一次旋转
         {
             return;
@@ -31,8 +35,11 @@ public class CubeController : MonoBehaviour
             StartCoroutine(Roll(Vector3.back));
         }
     }
-
-    IEnumerator Roll(Vector3 direction)
+    void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("fs"+collision.gameObject.name);
+    }
+        IEnumerator Roll(Vector3 direction)
     {
         isMoving = true;
 
