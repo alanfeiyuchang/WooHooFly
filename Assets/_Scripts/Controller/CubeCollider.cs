@@ -24,7 +24,7 @@ public class CubeCollider : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        //Debug.Log(other.gameObject.tag);
+        
         if(other.gameObject.tag == "MapCube")
         {
             map = other.gameObject.GetComponent<MapColorChange>();
