@@ -5,13 +5,17 @@ using UnityEngine;
 public class CubeCollider : MonoBehaviour
 {
     // Start is called before the first frame update
+    public static CubeCollider instance;
     public enum color{
         green,
         red
     };
     public color SideColor;
     private MapColorChange map;
-    
+    private void Awake()
+    {
+        instance = this;
+    }
     void Start()
     {
         
