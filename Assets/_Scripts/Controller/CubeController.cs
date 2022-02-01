@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CubeController : MonoBehaviour
 {
-    public int speed = 300;//·­×ªµÄËÙ¶È£¬¿ÉÒÔÖ±½ÓÔÚunityÐÞ¸Ä
+    public int speed = 300;//ï¿½ï¿½×ªï¿½ï¿½ï¿½Ù¶È£ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ï¿½ï¿½ï¿½unityï¿½Þ¸ï¿½
     bool isMoving = false;
     bool onWall = false;
 
@@ -14,11 +14,11 @@ public class CubeController : MonoBehaviour
     }
     void FixedUpdate()
     {
-        if (isMoving)//±ØÐëÒªµÈÒ»´ÎÐý×ªÍê³É£¬²ÅÄÜ½øÐÐÏÂÒ»´ÎÐý×ª
+        if (isMoving)//ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½É£ï¿½ï¿½ï¿½ï¿½Ü½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½×ª
         {
             return;
         }
-        //ÎÒÏÖÔÚÓÃµÄÊÇÉÏÏÂ×óÓÒ
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         if (Input.GetKey(KeyCode.RightArrow))
         {
             StartCoroutine(Roll(Vector3.right));
@@ -44,13 +44,19 @@ public class CubeController : MonoBehaviour
             StartCoroutine(Roll(Vector3.down));
         }
     }
+
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag == "wall")
         {
             Debug.Log("fs" + other.gameObject.tag);
+            onWall = true;
         }
-        
+        else {
+            Debug.Log("safe area");
+            onWall = false;
+        }
     }
     IEnumerator Roll(Vector3 direction)
     {
