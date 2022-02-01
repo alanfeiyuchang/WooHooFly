@@ -58,6 +58,8 @@ namespace RW.MonumentValley
         // minimum distance in pixels before activating mouse drag
         [SerializeField] private int minDragDist = 10;
 
+        [SerializeField] private Linker linker;
+
         //[SerializeField] private Linker linker;
 
         // vector from pivot to mouse pointer
@@ -105,7 +107,7 @@ namespace RW.MonumentValley
             {
                 return;
             }
-
+            linker.HideItem();
             isSpinning = true;
 
             // get the angle to the mouse position on down frame

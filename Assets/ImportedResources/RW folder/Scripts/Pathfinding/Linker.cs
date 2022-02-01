@@ -47,10 +47,20 @@ namespace RW.MonumentValley
         public Node nodeB;
     }
 
+    [System.Serializable]
+    public class RotationErase
+    {
+        public Transform controllerTransform;
+        public Vector3 activeEulerAngle;
+        [Header("GameObjects to show / hide")]
+        public GameObject item;
+    }
+
     // activates or deactivates special Edges between Nodes
     public class Linker : MonoBehaviour
     {
         [SerializeField] public RotationLink[] rotationLinks;
+        [SerializeField] public RotationErase[] rotationErases;
 
         // toggle active state of Edge between neighbor Nodes
         public void EnableLink(Node nodeA, Node nodeB, bool state)
@@ -83,6 +93,39 @@ namespace RW.MonumentValley
                 {
                     EnableLink(l.nodeA, l.nodeB, false);
                 }
+            }
+        }
+
+        public void ShowItem(GameObject item, bool state)
+        {
+            if (item == null) return;
+            item.SetActive(state);
+        }
+
+        public void HideItem()
+        {
+            foreach (RotationErase e in rotationErases)
+            {
+                if (e.item == null)
+                    continue;
+
+                    ShowItem(e.item, false);
+            }
+        }
+        public void UpdateRotationErase()
+        {
+            foreach (RotationErase e in rotationErases)
+            {
+                if (e.controllerTransform == null || e.item == null)
+                    continue;
+
+                Quaternion targetAngle = Quaternion.Euler(e.activeEulerAngle);
+                float angleDiff = Quaternion.Angle(e.controllerTransform.rotation, targetAngle);
+
+                if (Mathf.Abs(angleDiff) < 0.01f)
+                    ShowItem(e.item, true);
+                else
+                    ShowItem(e.item, false);
             }
         }
 
