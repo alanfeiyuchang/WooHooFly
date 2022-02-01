@@ -22,9 +22,11 @@ public class CubeCollider : MonoBehaviour
     {
  
     }
+
+
     private void OnTriggerEnter(Collider other)
     {
-        
+
         if(other.gameObject.tag == "MapCube")
         {
             map = other.gameObject.GetComponent<MapColorChange>();
