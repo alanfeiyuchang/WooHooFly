@@ -81,6 +81,8 @@ namespace RW.MonumentValley
 
         public UnityEvent snapEvent;
 
+        public UnityEvent onDragEvent;
+
         private float timeCount;
 
         void Start()
@@ -145,6 +147,9 @@ namespace RW.MonumentValley
                     targetToSpin.Rotate(newRotationVector);
                     previousAngleToMouse = angleToMouse;
                 }
+
+                if (onDragEvent != null)
+                    onDragEvent.Invoke();
             }
         }
 
