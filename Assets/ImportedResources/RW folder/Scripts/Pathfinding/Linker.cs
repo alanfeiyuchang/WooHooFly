@@ -55,7 +55,10 @@ namespace RW.MonumentValley
         public Transform controllerTransform;
         public Vector3 activeEulerAngle1;
         public Vector3 activeEulerAngle2;
-        public Vector3 activeEulerAngle3;
+        public Vector3 inactiveEulerAngle1;
+        public Vector3 inactiveEulerAngle2;
+        public Vector3 inactiveEulerAngle3;
+        public Vector3 inactiveEulerAngle4;
         [Header("GameObjects to show / hide")]
         public GameObject item;
     }
@@ -65,6 +68,7 @@ namespace RW.MonumentValley
     {
         [SerializeField] public RotationLink[] rotationLinks;
         [SerializeField] public RotationErase[] rotationErases;
+        private bool canGo = true;
 
         // toggle active state of Edge between neighbor Nodes
         public void EnableLink(Node nodeA, Node nodeB, bool state)
@@ -89,7 +93,7 @@ namespace RW.MonumentValley
                 float angleDiff = Quaternion.Angle(l.linkedTransform.rotation, targetAngle);
 
                 // enable the linked Edges if the angle matches; otherwise disable
-                if (Mathf.Abs(angleDiff) < 0.01f)
+                if (Mathf.Abs(angleDiff) < 0.01f && canGo)
                 {
                     EnableLink(l.nodeA, l.nodeB, true);
                 }
@@ -202,12 +206,15 @@ namespace RW.MonumentValley
                 if (inBetweenAngle(e.controllerTransform.rotation.eulerAngles, e.activeEulerAngle1, e.activeEulerAngle2))
                 {
                     ShowItem(e.item, true);
+                    canGo = true;
                     Debug.Log("in 1");
 
                 }
-                else if (inBetweenAngle(e.controllerTransform.rotation.eulerAngles, e.activeEulerAngle2, e.activeEulerAngle3))
+                else if (inBetweenAngle(e.controllerTransform.rotation.eulerAngles, e.inactiveEulerAngle1, e.inactiveEulerAngle2) ||
+                    inBetweenAngle(e.controllerTransform.rotation.eulerAngles, e.inactiveEulerAngle3, e.inactiveEulerAngle3))
                 {
                     ShowItem(e.item, false);
+                    canGo = false;
                     Debug.Log("in 2");
                 }
 
@@ -223,6 +230,7 @@ namespace RW.MonumentValley
         private void Start()
         {
             UpdateRotationLinks();
+            UpdateRotationErase();
         }
     }
 }

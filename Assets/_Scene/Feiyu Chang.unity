@@ -294,6 +294,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 36959870}
+  - component: {fileID: 36959871}
   m_Layer: 9
   m_Name: PenroseTriangle
   m_TagString: Untagged
@@ -318,6 +319,47 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &36959871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 36959869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf2c4b5499c7b7541a46ae5a0326591d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationAngle: {x: 0, y: 10, z: 0}
+  targetAngle: {x: 0, y: 0, z: 0}
+  rotationEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1291370071}
+        m_TargetAssemblyTypeName: RW.MonumentValley.Linker, Assembly-CSharp
+        m_MethodName: UpdateRotationErase
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1291370071}
+        m_TargetAssemblyTypeName: RW.MonumentValley.Linker, Assembly-CSharp
+        m_MethodName: UpdateRotationLinks
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &37995283
 GameObject:
   m_ObjectHideFlags: 0
@@ -2190,8 +2232,11 @@ MonoBehaviour:
   rotationErases:
   - controllerTransform: {fileID: 36959870}
     activeEulerAngle1: {x: 0, y: -5, z: 0}
-    activeEulerAngle2: {x: 0, y: -10, z: 0}
-    activeEulerAngle3: {x: 0, y: -20, z: 0}
+    activeEulerAngle2: {x: 0, y: -11, z: 0}
+    inactiveEulerAngle1: {x: 0, y: 0.01, z: 0}
+    inactiveEulerAngle2: {x: 0, y: 11, z: 0}
+    inactiveEulerAngle3: {x: 0, y: -21, z: 0}
+    inactiveEulerAngle4: {x: 0, y: -31, z: 0}
     item: {fileID: 1623580389}
 --- !u!1 &1397925251
 GameObject:
