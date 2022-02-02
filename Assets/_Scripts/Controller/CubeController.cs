@@ -6,40 +6,73 @@ public class CubeController : MonoBehaviour
 {
     public int speed = 300;//��ת���ٶȣ�����ֱ����unity�޸�
     bool isMoving = false;
-    bool onWall = false;
+
+    public bool[] edgeDirection = new bool[4];
+
+    public bool[] connectDirection = new bool[4];
+
+    public static CubeController instance;
 
     void Update()
     {
         
     }
+
+    void Awake() {
+        instance = this;
+    }
+
     void FixedUpdate()
     {
-        
+    
         if (isMoving)//����Ҫ��һ����ת��ɣ����ܽ�����һ����ת
         {
             return;
         }
+
         //�������õ�����������
         if (Input.GetKey(KeyCode.RightArrow))
         {
+            if (edgeDirection[3] == true) {
+                return;
+            }
+            
             StartCoroutine(Roll(Vector3.right));
         }
         else if (Input.GetKey(KeyCode.LeftArrow))
         {
+            if (edgeDirection[2] == true) {
+                return;
+            }
             StartCoroutine(Roll(Vector3.left));
         }
         else if (Input.GetKey(KeyCode.UpArrow))
         {
+            if (edgeDirection[0] == true) {
+                return;
+            }
             StartCoroutine(Roll(Vector3.forward));
         }
         else if (Input.GetKey(KeyCode.DownArrow))
         {
+            if (edgeDirection[1] == true) {
+                return;
+            }
             StartCoroutine(Roll(Vector3.back));
         }
         else if (Input.GetKey(KeyCode.W))
         {
-            StartCoroutine(Roll(Vector3.up));
+            foreach (var direction in connectDirection)
+            {
+             if (direction) {
+                StartCoroutine(Roll(Vector3.up));
+                break;
+             }   
+            }
+           
+            
         }
+        // when is cube going south? not implemented south condition
         else if (Input.GetKey(KeyCode.S))
         {
             StartCoroutine(Roll(Vector3.down));
@@ -47,18 +80,6 @@ public class CubeController : MonoBehaviour
     }
 
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.gameObject.tag == "wall")
-        {
-            Debug.Log("fs" + other.gameObject.tag);
-            onWall = true;
-        }
-        else {
-            Debug.Log("safe area");
-            onWall = false;
-        }
-    }
     IEnumerator Roll(Vector3 direction)
     {
         isMoving = true;

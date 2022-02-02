@@ -11,7 +11,11 @@ public class CubeCollider : MonoBehaviour
         red
     };
     public color SideColor;
+    
     private MapColorChange map;
+
+    private MapTag tag;
+    
     private void Awake()
     {
         instance = this;
@@ -30,11 +34,29 @@ public class CubeCollider : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-
-        if(other.gameObject.tag == "MapCube")
+        
+        if (other.gameObject.tag == "MapCube")
         {
+            Debug.Log(gameObject.name + " hit " + other.gameObject.name);
             map = other.gameObject.GetComponent<MapColorChange>();
             map.ColorChange(SideColor);
+            tag = other.gameObject.GetComponent<MapTag>();
+            CubeController cubeController = CubeController.instance;
+            cubeController.edgeDirection = tag.EdgeDirection;
+            if (!cubeController.connectDirection[0]) {
+                cubeController.connectDirection = tag.ConnectDirection; 
+            }
+            
         }
     }
+
+    private void OnTriggerExit(Collider other) {
+        CubeController cubeController = CubeController.instance;
+        cubeController.connectDirection = new bool[4];
+        Debug.Log("reset");
+    }
+
+
+
+    
 }

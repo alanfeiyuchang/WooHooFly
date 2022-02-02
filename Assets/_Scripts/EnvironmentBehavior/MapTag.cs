@@ -8,13 +8,12 @@ public class MapTag : MonoBehaviour
 
     public bool IsEdgeCube;
     public bool IsConnectCube;
-    [Tooltip("0->foward,1->backward,2->left,3->right,(ex. if left is egde,IsEdgeDirection[2] = true")]
+    [Tooltip("0->foward,1->backward,2->left,3->right,(ex. if left is egde,EdgeDirection[2] = true")]
     public bool[] EdgeDirection = new bool[4];
-    [Tooltip("0->foward,1->backward,2->left,3->right,(ex. if left is egde,IsEdgeDirection[2] = true")]
+    [Tooltip("0->foward,1->backward,2->left,3->right,(ex. if left is egde,ConnectDirection[2] = true")]
     public bool[] ConnectDirection = new bool[4];
     void Start()
     {
-        
     }
 
     // Update is called once per frame
