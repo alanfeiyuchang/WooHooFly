@@ -62,20 +62,14 @@ public class CubeController : MonoBehaviour
         }
         else if (Input.GetKey(KeyCode.W))
         {
-            foreach (var direction in connectDirection)
-            {
-             if (direction) {
-                StartCoroutine(Roll(Vector3.up));
-                break;
-             }   
-            }
-           
-            
+            if (connectDirection[0])
+                StartCoroutine(Roll(Vector3.up)); 
         }
-        // when is cube going south? not implemented south condition
+        // when is cube going south?
         else if (Input.GetKey(KeyCode.S))
         {
-            StartCoroutine(Roll(Vector3.down));
+            if (connectDirection[1])
+                StartCoroutine(Roll(Vector3.down));
         }
     }
 

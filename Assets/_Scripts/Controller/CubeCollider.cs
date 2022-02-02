@@ -53,7 +53,6 @@ public class CubeCollider : MonoBehaviour
     private void OnTriggerExit(Collider other) {
         CubeController cubeController = CubeController.instance;
         cubeController.connectDirection = new bool[4];
-        Debug.Log("reset");
     }
 
 
