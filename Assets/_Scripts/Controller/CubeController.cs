@@ -14,6 +14,7 @@ public class CubeController : MonoBehaviour
     }
     void FixedUpdate()
     {
+        
         if (isMoving)//����Ҫ��һ����ת��ɣ����ܽ�����һ����ת
         {
             return;
