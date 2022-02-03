@@ -42,10 +42,15 @@ public class CubeCollider : MonoBehaviour
             map.ColorChange(SideColor);
             tag = other.gameObject.GetComponent<MapTag>();
             CubeController cubeController = CubeController.instance;
-            cubeController.edgeDirection = tag.EdgeDirection;
-            if (!cubeController.connectDirection[0]) {
-                cubeController.connectDirection = tag.ConnectDirection; 
+            cubeController.edgeDirection = tag.EdgeDirection; // cubeController = player, tag=map
+            if (tag.IsConnectCube)
+            {
+                cubeController.connectDirection = tag.ConnectDirection;
             }
+            /*
+            if (!cubeController.connectDirection[0] ) {
+                cubeController.connectDirection = tag.ConnectDirection; 
+            }*/
             
         }
     }
