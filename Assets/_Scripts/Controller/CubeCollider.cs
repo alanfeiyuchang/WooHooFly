@@ -43,7 +43,7 @@ public class CubeCollider : MonoBehaviour
             tag = other.gameObject.GetComponent<MapTag>();
             CubeController cubeController = CubeController.instance;
             cubeController.edgeDirection = tag.EdgeDirection;
-            if (!cubeController.connectDirection[0]) {
+            if (tag.IsConnectCube) {
                 cubeController.connectDirection = tag.ConnectDirection; 
             }
             
