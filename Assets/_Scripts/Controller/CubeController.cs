@@ -99,11 +99,7 @@ public class CubeController : MonoBehaviour
         // when is cube going south? 
         else if (Input.GetKey(KeyCode.S))
         {
-<<<<<<< HEAD
             if (IsConnectCube)
-=======
-            if (downwall)
->>>>>>> ad549720a89adb439c370c181d17a326f1b98d31
                 StartCoroutine(Roll(Vector3.down));
         }
         
@@ -131,26 +127,11 @@ public class CubeController : MonoBehaviour
             rotationPoint = transform.position + Vector3.forward / 2 + Vector3.up / 2;
             rotationAxis = new Vector3(1,0,0);
         }
-<<<<<<< HEAD
         else if (direction == Vector3.up && connectDirection[1])
-=======
-        // for test only: deleted down direction condition check 
-        // -- ivy
-        else if (direction == Vector3.down)
->>>>>>> ad549720a89adb439c370c181d17a326f1b98d31
         {
-
             rotationPoint = transform.position + Vector3.back / 2 + Vector3.up / 2;
             rotationAxis = new Vector3(-1, 0, 0);
         }
-<<<<<<< HEAD
-=======
-        else if (direction == Vector3.down)
-        {
-            rotationPoint = transform.position + Vector3.left / 2 + Vector3.down / 2;
-            rotationAxis = new Vector3(0, 0, -1);
-        }
->>>>>>> ad549720a89adb439c370c181d17a326f1b98d31
         else if (direction == Vector3.up && connectDirection[2])
         {
 
