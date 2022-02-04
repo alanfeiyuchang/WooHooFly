@@ -44,7 +44,8 @@ public class CubeCollider : MonoBehaviour
             CubeController cubeController = CubeController.instance;
             cubeController.edgeDirection = tag.EdgeDirection;
             if (tag.IsConnectCube) {
-                cubeController.connectDirection = tag.ConnectDirection; 
+                cubeController.connectDirection = tag.ConnectDirection;
+                cubeController.IsConnectCube = tag.IsConnectCube;
             }
             
         }
