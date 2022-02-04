@@ -43,7 +43,10 @@ public class CubeCollider : MonoBehaviour
             tag = other.gameObject.GetComponent<MapTag>();
             CubeController cubeController = CubeController.instance;
             cubeController.edgeDirection = tag.EdgeDirection;
-            if (tag.IsConnectCube) {
+            cubeController.downwall = tag.downwall;
+            //TODO - need add ground collider check! (ChuTing? Menghan?)
+            // so only copy connect direction when the collision is on ground
+            if (tag.IsConnectCube) { 
                 cubeController.connectDirection = tag.ConnectDirection; 
             }
             

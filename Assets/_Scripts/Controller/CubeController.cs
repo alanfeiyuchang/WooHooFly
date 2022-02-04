@@ -11,6 +11,8 @@ public class CubeController : MonoBehaviour
 
     public bool[] connectDirection = new bool[4];
 
+    public bool downwall; // test only
+
     public static CubeController instance;
 
     void Update()
@@ -62,7 +64,7 @@ public class CubeController : MonoBehaviour
         // when is cube going south? 
         else if (Input.GetKey(KeyCode.S))
         {
-            if (connectDirection[1])
+            if (downwall)
                 StartCoroutine(Roll(Vector3.down));
         }
         
@@ -90,12 +92,14 @@ public class CubeController : MonoBehaviour
             rotationPoint = transform.position + Vector3.forward / 2 + Vector3.up / 2;
             rotationAxis = new Vector3(1,0,0);
         }
-        else if (direction == Vector3.down && connectDirection[1] && connectDirection[0])
+        // for test only: deleted down direction condition check 
+        // -- ivy
+        else if (direction == Vector3.down)
         {
             rotationPoint = transform.position + Vector3.forward / 2 + Vector3.down / 2;
             rotationAxis = new Vector3(-1, 0, 0);
         }
-        else if (direction == Vector3.down && connectDirection[1] && connectDirection[2])
+        else if (direction == Vector3.down)
         {
             rotationPoint = transform.position + Vector3.left / 2 + Vector3.down / 2;
             rotationAxis = new Vector3(0, 0, -1);
