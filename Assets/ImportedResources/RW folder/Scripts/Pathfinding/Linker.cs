@@ -155,17 +155,17 @@ namespace RW.MonumentValley
                 ans = ans && target.x <= angle1.x && target.x >= angle2.x;
             else
                 ans = ans && target.x <= angle2.x && target.x >= angle1.x;
-            Debug.Log("1. " + ans);
+            //Debug.Log("1. " + ans);
             if (angle1.y > angle2.y)
                 ans = ans && target.y <= angle1.y && target.y >= angle2.y;
             else 
                 ans = ans && target.y <= angle2.y && target.y >= angle1.y;
-            Debug.Log("2. " + ans);
+            //Debug.Log("2. " + ans);
             if (angle1.z > angle2.z)
                 ans = ans && target.z <= angle1.z && target.z >= angle2.z;
             else
                 ans = ans && target.z <= angle2.z && target.z >= angle1.z;
-            Debug.Log("3. " + ans);
+            //Debug.Log("3. " + ans);
             return ans;
         }
 
@@ -207,15 +207,15 @@ namespace RW.MonumentValley
                 {
                     ShowItem(e.item, true);
                     canGo = true;
-                    Debug.Log("in 1");
+                    //Debug.Log("in 1");
 
                 }
                 else if (inBetweenAngle(e.controllerTransform.rotation.eulerAngles, e.inactiveEulerAngle1, e.inactiveEulerAngle2) ||
-                    inBetweenAngle(e.controllerTransform.rotation.eulerAngles, e.inactiveEulerAngle3, e.inactiveEulerAngle3))
+                    inBetweenAngle(e.controllerTransform.rotation.eulerAngles, e.inactiveEulerAngle3, e.inactiveEulerAngle4))
                 {
                     ShowItem(e.item, false);
                     canGo = false;
-                    Debug.Log("in 2");
+                    //Debug.Log("in 2");
                 }
 
 /*
