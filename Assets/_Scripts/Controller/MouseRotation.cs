@@ -17,9 +17,11 @@ public class MouseRotation : MonoBehaviour
         {
             targetAngle += Input.GetAxis("Mouse ScrollWheel") * rotationAngle * 10f;
             transform.eulerAngles = targetAngle;
+
+
+            if (rotationEvent != null)
+                rotationEvent.Invoke();
         }
 
-        if (rotationEvent != null)
-            rotationEvent.Invoke();
     }
 }
