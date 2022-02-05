@@ -4,76 +4,164 @@ using UnityEngine;
 
 public class CubeController : MonoBehaviour
 {
-    public int speed = 300;//��ת���ٶȣ�����ֱ����unity�޸�
+    public int speed = 300;
     bool isMoving = false;
-    bool onWall = false;
+
+    public bool[] edgeDirection = new bool[4];
+
+    public bool[] connectDirection = new bool[4];
+    public bool IsEdgeCube;
+    public bool IsConnectCube;
+
+    public bool downwall; // test only
+
+    public static CubeController instance;
 
     void Update()
     {
-        
-    }
-    void FixedUpdate()
-    {
-        
-        if (isMoving)//����Ҫ��һ����ת��ɣ����ܽ�����һ����ת
+        if (isMoving)
         {
             return;
         }
-        //�������õ�����������
+
+
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            StartCoroutine(Roll(Vector3.right));
+            
+            if (IsConnectCube && connectDirection[3])
+            {
+                StartCoroutine(Roll(Vector3.up));
+            }
+            else if(edgeDirection[3] == false)
+            {
+                return;
+            }
+            else
+            { 
+                StartCoroutine(Roll(Vector3.right));
+            }
         }
         else if (Input.GetKey(KeyCode.LeftArrow))
         {
-            StartCoroutine(Roll(Vector3.left));
+            
+            if (IsConnectCube && connectDirection[2])
+            {
+                StartCoroutine(Roll(Vector3.up));
+            }
+            else if (edgeDirection[2] == false)
+            {
+                return;
+            }
+            else
+            {
+                StartCoroutine(Roll(Vector3.left));
+            }
         }
         else if (Input.GetKey(KeyCode.UpArrow))
         {
-            StartCoroutine(Roll(Vector3.forward));
+            
+            if (IsConnectCube && connectDirection[0])
+            {
+                StartCoroutine(Roll(Vector3.up));
+            }
+            else if (edgeDirection[0] == false)
+            {
+                return;
+            }
+            else
+            {
+                StartCoroutine(Roll(Vector3.forward));
+            }
+                
         }
         else if (Input.GetKey(KeyCode.DownArrow))
         {
-            StartCoroutine(Roll(Vector3.back));
+            
+            if (IsConnectCube && connectDirection[1])
+            {
+                StartCoroutine(Roll(Vector3.up));
+            }
+            else if (edgeDirection[1] == false)
+            {
+                return;
+            }
+            else
+            {
+                StartCoroutine(Roll(Vector3.back));
+            }
+              
         }
         else if (Input.GetKey(KeyCode.W))
         {
-            StartCoroutine(Roll(Vector3.up));
+            if (connectDirection[0] || connectDirection[2] || connectDirection[3])
+                StartCoroutine(Roll(Vector3.up));
         }
+        // when is cube going south? 
         else if (Input.GetKey(KeyCode.S))
         {
-            StartCoroutine(Roll(Vector3.down));
+            if (IsConnectCube)
+                StartCoroutine(Roll(Vector3.down));
         }
+        
     }
 
+    void Awake() {
+        instance = this;
+    }
 
-    private void OnTriggerEnter(Collider other)
+    void FixedUpdate()
     {
-        if(other.gameObject.tag == "wall")
-        {
-            Debug.Log("fs" + other.gameObject.tag);
-            onWall = true;
-        }
-        else {
-            Debug.Log("safe area");
-            onWall = false;
-        }
+    
+        
     }
+
+
     IEnumerator Roll(Vector3 direction)
     {
         isMoving = true;
         Vector3 rotationPoint;
         Vector3 rotationAxis ;
         float remainingAngle = 90;
-        if (direction == Vector3.up)
+        if (direction == Vector3.up && connectDirection[0])
         {
             rotationPoint = transform.position + Vector3.forward / 2 + Vector3.up / 2;
             rotationAxis = new Vector3(1,0,0);
         }
-        else if (direction == Vector3.down)
+        else if (direction == Vector3.up && connectDirection[1])
+        {
+            rotationPoint = transform.position + Vector3.back / 2 + Vector3.up / 2;
+            rotationAxis = new Vector3(-1, 0, 0);
+        }
+        else if (direction == Vector3.up && connectDirection[2])
+        {
+
+            rotationPoint = transform.position + Vector3.left / 2 + Vector3.up / 2;
+            rotationAxis = new Vector3(0, 0, 1);
+        }
+        else if (direction == Vector3.up && connectDirection[3])
+        {
+            rotationPoint = transform.position + Vector3.right / 2 + Vector3.up / 2;
+            rotationAxis = new Vector3(0, 0, -1);
+        }
+        else if (direction == Vector3.down && connectDirection[0])
         {
             rotationPoint = transform.position + Vector3.forward / 2 + Vector3.down / 2;
             rotationAxis = new Vector3(-1, 0, 0);
+        }
+        else if (direction == Vector3.down && connectDirection[1])
+        {
+            rotationPoint = transform.position + Vector3.back / 2 + Vector3.down / 2;
+            rotationAxis = new Vector3(1, 0, 0);
+        }
+        else if (direction == Vector3.down && connectDirection[2])
+        {
+            rotationPoint = transform.position + Vector3.left / 2 + Vector3.down / 2;
+            rotationAxis = new Vector3(0, 0, -1);
+        }
+        else if (direction == Vector3.down && connectDirection[3])
+        {
+            rotationPoint = transform.position + Vector3.right / 2 + Vector3.down / 2;
+            rotationAxis = new Vector3(0, 0, 1);
         }
         else
         {

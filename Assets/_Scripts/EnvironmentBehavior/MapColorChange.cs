@@ -19,9 +19,9 @@ public class MapColorChange : MonoBehaviour
     }
     public void ColorChange(CubeCollider.color color)
     {
-        Debug.Log(gameObject.name + "has became " + color);
+        Debug.Log(gameObject.name + " has became " + color);
         //change the color of the cube this collison belongs to
-        MeshRenderer mesh = gameObject.GetComponentInParent<MeshRenderer>();
+        MeshRenderer mesh = gameObject.GetComponent<MeshRenderer>();
         MapColor = color;
         switch (color)
         {
