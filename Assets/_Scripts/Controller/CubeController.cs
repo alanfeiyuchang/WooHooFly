@@ -13,7 +13,6 @@ public class CubeController : MonoBehaviour
     public bool IsEdgeCube;
     public bool IsConnectCube;
 
-    public bool downwall; // test only
 
     public static CubeController instance;
 
