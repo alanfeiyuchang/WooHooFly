@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour
         {
             CurrentState = GameState.win;
             Debug.Log("***************WON***************");
+            UIController.instance.WinUI();
         }
         else
         {
