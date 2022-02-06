@@ -168,9 +168,9 @@ public class CubeController : MonoBehaviour
             rotationAxis = Vector3.Cross(Vector3.up, direction);
 
         }
-        
-        
 
+
+        UIController.instance.AddStep();
         while (remainingAngle > 0)
         {
             
