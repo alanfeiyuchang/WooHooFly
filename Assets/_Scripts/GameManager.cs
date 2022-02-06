@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     }
 
     //variables
-    [SerializeField] private List<CubeCollider> Tiles;
+    private List<GameObject> ChangableTiles = new List<GameObject>();
     public GameState CurrentState = GameState.playing;
     public enum GameState
     {
@@ -24,14 +24,22 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         CurrentState = GameState.playing;
+
+        foreach (GameObject Obj in GameObject.FindGameObjectsWithTag("MapCube"))
+        {
+            if (Obj.name == "Changable_Tile")
+            {
+                ChangableTiles.Add(Obj);
+            }
+        }
     }
 
     public void CheckWin()
     {
         bool win = true;
-        foreach (CubeCollider tile in Tiles)
+        foreach (var tile in ChangableTiles)
         {
-            if (tile.SideColor == CubeCollider.color.red)
+            if (tile.GetComponent<MapColorChange>().MapColor == CubeCollider.color.red)
             {
                 win = false;
                 break;
