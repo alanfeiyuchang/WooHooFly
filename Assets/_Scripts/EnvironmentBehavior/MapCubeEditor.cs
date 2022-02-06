@@ -11,21 +11,20 @@ public class MapCubeEditor : Editor
     }
     public override void OnInspectorGUI()
     {
-        //base.OnInspectorGUI();
+        base.OnInspectorGUI();
         
         MapCubeManager mapCubeManager = (MapCubeManager)target;
-        EditorGUILayout.LabelField("Enable side", EditorStyles.boldLabel);
-        mapCubeManager.sideAEnabled = EditorGUILayout.Toggle("Side A Enabled", mapCubeManager.sideAEnabled);
+        //mapCubeManager.sideAEnabled = EditorGUILayout.Toggle("Side A Enabled", mapCubeManager.sideAEnabled);
         mapCubeManager.ChangeSideActiveStatus(mapCubeManager.sideA, mapCubeManager.sideAEnabled);
-        mapCubeManager.sideBEnabled = EditorGUILayout.Toggle("Side B Enabled", mapCubeManager.sideBEnabled);
+        //mapCubeManager.sideBEnabled = EditorGUILayout.Toggle("Side B Enabled", mapCubeManager.sideBEnabled);
         mapCubeManager.ChangeSideActiveStatus(mapCubeManager.sideB, mapCubeManager.sideBEnabled);
-        mapCubeManager.sideCEnabled = EditorGUILayout.Toggle("Side C Enabled", mapCubeManager.sideCEnabled);
+        //mapCubeManager.sideCEnabled = EditorGUILayout.Toggle("Side C Enabled", mapCubeManager.sideCEnabled);
         mapCubeManager.ChangeSideActiveStatus(mapCubeManager.sideC, mapCubeManager.sideCEnabled);
-        mapCubeManager.sideDEnabled = EditorGUILayout.Toggle("Side D Enabled", mapCubeManager.sideDEnabled);
+        //mapCubeManager.sideDEnabled = EditorGUILayout.Toggle("Side D Enabled", mapCubeManager.sideDEnabled);
         mapCubeManager.ChangeSideActiveStatus(mapCubeManager.sideD, mapCubeManager.sideDEnabled);
-        mapCubeManager.sideEEnabled = EditorGUILayout.Toggle("Side E Enabled", mapCubeManager.sideEEnabled);
+        //mapCubeManager.sideEEnabled = EditorGUILayout.Toggle("Side E Enabled", mapCubeManager.sideEEnabled);
         mapCubeManager.ChangeSideActiveStatus(mapCubeManager.sideE, mapCubeManager.sideEEnabled);
-        mapCubeManager.sideFEnabled = EditorGUILayout.Toggle("Side F Enabled", mapCubeManager.sideFEnabled);
+        //mapCubeManager.sideFEnabled = EditorGUILayout.Toggle("Side F Enabled", mapCubeManager.sideFEnabled);
         mapCubeManager.ChangeSideActiveStatus(mapCubeManager.sideF, mapCubeManager.sideFEnabled);
     }
     public void OnSceneGUI()
