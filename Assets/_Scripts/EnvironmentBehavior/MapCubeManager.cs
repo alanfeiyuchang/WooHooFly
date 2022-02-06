@@ -10,7 +10,7 @@ public class MapCubeManager : MonoBehaviour
     public GameObject sideD;
     public GameObject sideE;
     public GameObject sideF;
-
+    [Header("Enable Side")]
     public bool sideAEnabled;
     public bool sideBEnabled;
     public bool sideCEnabled;
