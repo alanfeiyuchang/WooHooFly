@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CamRotation : MonoBehaviour
 {
-    public float speed = 90f;
+    public float speed = 40f;
     private bool isRotating = false;
     private bool clockwise = true;
 
@@ -31,7 +31,7 @@ public class CamRotation : MonoBehaviour
 
     IEnumerator RotateCam()
     {
-        float remainingAngle = 90;
+        float remainingAngle = 40;
         isRotating = true;
 
         while (remainingAngle > 0)
