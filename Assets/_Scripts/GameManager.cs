@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     {
         playing,
         paused,
+        rotating,
         win
     };
 
