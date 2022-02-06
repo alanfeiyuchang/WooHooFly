@@ -125,52 +125,61 @@ public class CubeController : MonoBehaviour
         {
             rotationPoint = transform.position + Vector3.forward / 2 + Vector3.up / 2;
             rotationAxis = new Vector3(1,0,0);
+            UIController.instance.AddStep();
         }
         else if (direction == Vector3.up && connectDirection[1])
         {
             rotationPoint = transform.position + Vector3.back / 2 + Vector3.up / 2;
             rotationAxis = new Vector3(-1, 0, 0);
+            UIController.instance.AddStep();
         }
         else if (direction == Vector3.up && connectDirection[2])
         {
 
             rotationPoint = transform.position + Vector3.left / 2 + Vector3.up / 2;
             rotationAxis = new Vector3(0, 0, 1);
+            UIController.instance.AddStep();
         }
         else if (direction == Vector3.up && connectDirection[3])
         {
             rotationPoint = transform.position + Vector3.right / 2 + Vector3.up / 2;
             rotationAxis = new Vector3(0, 0, -1);
+            UIController.instance.AddStep();
         }
         else if (direction == Vector3.down && connectDirection[0])
         {
             rotationPoint = transform.position + Vector3.forward / 2 + Vector3.down / 2;
             rotationAxis = new Vector3(-1, 0, 0);
+            UIController.instance.AddStep();
         }
         else if (direction == Vector3.down && connectDirection[1])
         {
             rotationPoint = transform.position + Vector3.back / 2 + Vector3.down / 2;
             rotationAxis = new Vector3(1, 0, 0);
+            UIController.instance.AddStep();
         }
         else if (direction == Vector3.down && connectDirection[2])
         {
             rotationPoint = transform.position + Vector3.left / 2 + Vector3.down / 2;
             rotationAxis = new Vector3(0, 0, -1);
+            UIController.instance.AddStep();
         }
         else if (direction == Vector3.down && connectDirection[3])
         {
             rotationPoint = transform.position + Vector3.right / 2 + Vector3.down / 2;
             rotationAxis = new Vector3(0, 0, 1);
+            UIController.instance.AddStep();
         }
         else
         {
             rotationPoint = transform.position + direction / 2 + Vector3.down / 2;
             rotationAxis = Vector3.Cross(Vector3.up, direction);
+            UIController.instance.AddStep();
 
         }
 
 
-        UIController.instance.AddStep();
+        
         while (remainingAngle > 0)
         {
             
