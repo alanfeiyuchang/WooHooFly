@@ -128,6 +128,7 @@ public class controllerTem : MonoBehaviour
         //moveTime = Mathf.Clamp(moveTime, 0.1f, 5f);
         Vector3 startPos = this.transform.position;
         Vector3 targetPos = targetNode.transform.position;
+
         while (elapsedTime < moveTime)
         {
             elapsedTime += Time.deltaTime;
