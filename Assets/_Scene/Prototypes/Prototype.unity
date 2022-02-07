@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.43975514, g: 0.48817998, b: 0.5683994, a: 1}
+  m_IndirectSpecularColor: {r: 0.44109416, g: 0.4898492, b: 0.569927, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -265,7 +265,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3986414075793719710, guid: 86152510efd2c41458ee7863098a2b9f, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3986414075793719711, guid: 86152510efd2c41458ee7863098a2b9f, type: 3}
       propertyPath: m_Color.b
@@ -314,6 +314,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf2c4b5499c7b7541a46ae5a0326591d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Compass: {fileID: 961842032}
   rotationAngle: {x: 0, y: 5, z: 0}
   rotationEvent:
     m_PersistentCalls:
@@ -468,6 +469,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 57a017a3b58b6804fa0585412ee90ecf, type: 3}
+--- !u!1 &511473981 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1959897540147485778, guid: 57a017a3b58b6804fa0585412ee90ecf, type: 3}
+  m_PrefabInstance: {fileID: 511473980}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &511473982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 511473981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85119281ec0756f43a1ba6f66fd86537, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  time: 3
+  speed: 90
 --- !u!1001 &621472168
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -481,7 +501,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4297356097832487413, guid: ac4fe88db80a44b6fb536dd6d802e253, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4297356097832487415, guid: ac4fe88db80a44b6fb536dd6d802e253, type: 3}
       propertyPath: m_RootOrder
@@ -898,7 +918,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8960337274170647337, guid: a2e792a8077fa419a9b2da6f0e42994e, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8960337274170647338, guid: a2e792a8077fa419a9b2da6f0e42994e, type: 3}
       propertyPath: m_Color.b
@@ -1249,7 +1269,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7985813998048069006, guid: 0c8a549f25f134a869c23746c0f2c06d, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c8a549f25f134a869c23746c0f2c06d, type: 3}

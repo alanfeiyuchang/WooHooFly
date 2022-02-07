@@ -6,13 +6,14 @@ using UnityEngine.EventSystems;
 
 public class MouseRotation : MonoBehaviour
 {
+    public Transform Compass;
     public Vector3 rotationAngle;
     private Vector3 targetAngle;
 
     public UnityEvent rotationEvent;
     void Update()
     {
-        
+        rotationAngle = Compass.transform.up * 5;
         if (Input.GetAxis("Mouse ScrollWheel") != 0)
         {
             targetAngle += Input.GetAxis("Mouse ScrollWheel") * rotationAngle * 10f;
