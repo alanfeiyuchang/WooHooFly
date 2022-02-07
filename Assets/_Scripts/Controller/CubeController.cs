@@ -27,7 +27,7 @@ public class CubeController : MonoBehaviour
         
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            
+
             if (IsConnectCube && connectDirection[3])
             {
                 StartCoroutine(Roll(Vector3.up));
@@ -43,7 +43,6 @@ public class CubeController : MonoBehaviour
         }
         else if (Input.GetKey(KeyCode.LeftArrow))
         {
-            
             if (IsConnectCube && connectDirection[2])
             {
                 StartCoroutine(Roll(Vector3.up));
@@ -59,7 +58,6 @@ public class CubeController : MonoBehaviour
         }
         else if (Input.GetKey(KeyCode.UpArrow))
         {
-            
             if (IsConnectCube && connectDirection[0])
             {
                 StartCoroutine(Roll(Vector3.up));
@@ -76,7 +74,7 @@ public class CubeController : MonoBehaviour
         }
         else if (Input.GetKey(KeyCode.DownArrow))
         {
-            
+
             if (IsConnectCube && connectDirection[1])
             {
                 StartCoroutine(Roll(Vector3.up));
@@ -189,7 +187,7 @@ public class CubeController : MonoBehaviour
         {
             mapBaseRotation.setRotate("right");
         }
-        Debug.Log("direction" + connectDirection[2]);
+
         isMoving = false;
     }
 }

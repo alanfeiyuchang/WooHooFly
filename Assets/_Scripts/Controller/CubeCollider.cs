@@ -37,43 +37,13 @@ public class CubeCollider : MonoBehaviour
         
         if (other.gameObject.tag == "MapCube")
         {
-            Debug.Log(gameObject.name + " hit " + other.gameObject.name);
             map = other.gameObject.GetComponent<MapColorChange>();
             map.ColorChange(SideColor);
-            tag = other.gameObject.GetComponent<MapTag>();
-
-            CubeController cubeController = CubeController.instance;
-            cubeController.edgeDirection = tag.EdgeDirection;
-
-            CubeControllerTemp cubeControllerTemp = CubeControllerTemp.instance;
-            cubeControllerTemp.edgeDirection = tag.EdgeDirection;
-
-            if (tag.IsConnectCube)
-            {
-                cubeController.connectDirection = tag.ConnectDirection;
-                cubeController.IsConnectCube = tag.IsConnectCube;
-
-                cubeControllerTemp.connectDirection = tag.ConnectDirection;
-                cubeControllerTemp.IsConnectCube = tag.IsConnectCube;
-            }
-            //TODO - need add ground collider check! (ChuTing? Menghan?)
-            // so only copy connect direction when the collision is on ground
-            if (tag.IsConnectCube) { 
-                cubeController.connectDirection = tag.ConnectDirection;
-
-                cubeControllerTemp.connectDirection = tag.ConnectDirection;
-            }
+            
             
         }
     }
 
-    private void OnTriggerExit(Collider other) {
-        CubeController cubeController = CubeController.instance;
-        cubeController.connectDirection = new bool[4];
-
-        CubeControllerTemp cubeControllerTemp = CubeControllerTemp.instance;
-        cubeControllerTemp.connectDirection = new bool[4];
-    }
 
 
 
