@@ -38,6 +38,9 @@ public class CubeControllerTemp : MonoBehaviour
     public bool IsConnectCube;
     ///need to be replace with TileInfo in future
 
+    public MapBaseRotation mapBaseRotation;
+    //public GameObject mapmapBaseRotation;
+
     public static CubeControllerTemp instance;
 
     void Awake()
@@ -124,7 +127,7 @@ public class CubeControllerTemp : MonoBehaviour
             remainingAngle -= rotationAngle;
             yield return null;
         }
-
+        UIController.instance.AddStep();
         moving = false;
     }
 
