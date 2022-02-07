@@ -23,13 +23,12 @@ public class PlayerBottomCollider : MonoBehaviour
     private void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.tag == "MapCube") {
+                
                 tag = other.gameObject.GetComponent<MapTag>();
 
-                CubeController cubeController = CubeController.instance;
+                CubeControllerTemp cubeController = CubeControllerTemp.instance;
                 cubeController.edgeDirection = tag.EdgeDirection;
-
-                // CubeControllerTemp cubeControllerTemp = CubeControllerTemp.instance;
-                // cubeControllerTemp.edgeDirection = tag.EdgeDirection;
+                
 
                 if (tag.IsConnectCube)
                 {
@@ -47,7 +46,7 @@ public class PlayerBottomCollider : MonoBehaviour
     private void OnTriggerExit(Collider other)
         {
             if (other.gameObject.tag == "MapCube") {
-                CubeController cubeController = CubeController.instance;
+                CubeControllerTemp cubeController = CubeControllerTemp.instance;
                 cubeController.IsConnectCube = false;
                 cubeController.edgeDirection = new bool[4];
                 cubeController.connectDirection = new bool[4];

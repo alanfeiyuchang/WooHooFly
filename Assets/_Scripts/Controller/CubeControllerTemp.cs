@@ -21,7 +21,7 @@ public class CubeControllerTemp : MonoBehaviour
         public bool IsConnectCube;
     }
 
-    private float speed = 500;
+    public float speed = 500;
     private bool moving = false;
 
     public Compass compassInfo;
