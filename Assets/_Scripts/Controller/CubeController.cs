@@ -179,6 +179,7 @@ public class CubeController : MonoBehaviour
             yield return null;
         }
         UIController.instance.AddStep();
+        /*
         if(direction == Vector3.up && rotationAxis == new Vector3(0, 0, 1))
         {
             mapBaseRotation.setRotate("left");
@@ -186,8 +187,8 @@ public class CubeController : MonoBehaviour
         else if (direction == Vector3.up && rotationAxis == new Vector3(0, 0, -1))
         {
             mapBaseRotation.setRotate("right");
-        }
-
+        }*/
+        Debug.Log("direction" + connectDirection[2]);
         isMoving = false;
     }
 }
