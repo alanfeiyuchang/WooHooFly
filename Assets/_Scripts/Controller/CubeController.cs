@@ -12,7 +12,8 @@ public class CubeController : MonoBehaviour
     public bool[] connectDirection = new bool[4];
     public bool IsEdgeCube;
     public bool IsConnectCube;
-
+    public MapBaseRotation mapBaseRotation;
+    //public GameObject mapmapBaseRotation;
 
     public static CubeController instance;
 
@@ -23,7 +24,7 @@ public class CubeController : MonoBehaviour
             return;
         }
 
-
+        
         if (Input.GetKey(KeyCode.RightArrow))
         {
             
@@ -133,7 +134,7 @@ public class CubeController : MonoBehaviour
         }
         else if (direction == Vector3.up && connectDirection[2])
         {
-
+            
             rotationPoint = transform.position + Vector3.left / 2 + Vector3.up / 2;
             rotationAxis = new Vector3(0, 0, 1);
         }
@@ -168,17 +169,18 @@ public class CubeController : MonoBehaviour
             rotationAxis = Vector3.Cross(Vector3.up, direction);
 
         }
-        
-        
+
+
 
         while (remainingAngle > 0)
         {
-            
+
             float rotationAngle = Mathf.Min(Time.deltaTime * speed, remainingAngle);
             transform.RotateAround(rotationPoint, rotationAxis, rotationAngle);
             remainingAngle -= rotationAngle;
             yield return null;
         }
+        UIController.instance.AddStep();
         isMoving = false;
     }
 }
