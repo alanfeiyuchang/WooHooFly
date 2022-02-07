@@ -358,6 +358,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Map 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8399000616074395895, guid: 57a017a3b58b6804fa0585412ee90ecf, type: 3}
+      propertyPath: EdgeDirection.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8399000616074395895, guid: 57a017a3b58b6804fa0585412ee90ecf, type: 3}
+      propertyPath: EdgeDirection.Array.data[1]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8399000616074395895, guid: 57a017a3b58b6804fa0585412ee90ecf, type: 3}
+      propertyPath: EdgeDirection.Array.data[2]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8399000616074395895, guid: 57a017a3b58b6804fa0585412ee90ecf, type: 3}
+      propertyPath: EdgeDirection.Array.data[3]
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8729892906534510693, guid: 57a017a3b58b6804fa0585412ee90ecf, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -401,6 +417,54 @@ PrefabInstance:
     - target: {fileID: 8729892906534510693, guid: 57a017a3b58b6804fa0585412ee90ecf, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8949855585209486327, guid: 57a017a3b58b6804fa0585412ee90ecf, type: 3}
+      propertyPath: IsEdgeCube
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8949855585209486327, guid: 57a017a3b58b6804fa0585412ee90ecf, type: 3}
+      propertyPath: EdgeDirection.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8949855585209486327, guid: 57a017a3b58b6804fa0585412ee90ecf, type: 3}
+      propertyPath: EdgeDirection.Array.data[1]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8949855585209486327, guid: 57a017a3b58b6804fa0585412ee90ecf, type: 3}
+      propertyPath: EdgeDirection.Array.data[2]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8949855585209486327, guid: 57a017a3b58b6804fa0585412ee90ecf, type: 3}
+      propertyPath: EdgeDirection.Array.data[3]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8949855585403438021, guid: 57a017a3b58b6804fa0585412ee90ecf, type: 3}
+      propertyPath: IsEdgeCube
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8949855585492579555, guid: 57a017a3b58b6804fa0585412ee90ecf, type: 3}
+      propertyPath: IsEdgeCube
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8949855586283631695, guid: 57a017a3b58b6804fa0585412ee90ecf, type: 3}
+      propertyPath: IsEdgeCube
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8949855586283631695, guid: 57a017a3b58b6804fa0585412ee90ecf, type: 3}
+      propertyPath: EdgeDirection.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8949855586283631695, guid: 57a017a3b58b6804fa0585412ee90ecf, type: 3}
+      propertyPath: EdgeDirection.Array.data[1]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8949855586283631695, guid: 57a017a3b58b6804fa0585412ee90ecf, type: 3}
+      propertyPath: EdgeDirection.Array.data[2]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8949855586283631695, guid: 57a017a3b58b6804fa0585412ee90ecf, type: 3}
+      propertyPath: EdgeDirection.Array.data[3]
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 57a017a3b58b6804fa0585412ee90ecf, type: 3}
@@ -1237,6 +1301,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   compassInfo: {fileID: 961842033}
+  tileInfo:
+    edge:
+      forward: 0
+      backward: 0
+      left: 0
+      right: 0
+    wall:
+      forward: 0
+      backward: 0
+      left: 0
+      right: 0
+    IsEdgeCube: 0
+    IsConnectCube: 0
   edgeDirection: 00000000
   connectDirection: 00000000
   IsEdgeCube: 0

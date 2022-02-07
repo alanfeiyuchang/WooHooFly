@@ -4,14 +4,23 @@ using UnityEngine;
 
 public class Compass : MonoBehaviour
 {
+    public enum Direction
+    {
+        Forward, Backward, Left, Right
+    }
     public class compassDirection
     {
         public Vector3 forward = Vector3.forward;
         public Vector3 up = Vector3.up;
         public Vector3 right = Vector3.right;
+        public Direction state = Direction.Forward; // map rotation related to compass
     }
 
     public compassDirection compass = new compassDirection();
+    private void Start()
+    {
+        UpdateOrientation();
+    }
     public Vector3 forwardPivot
     {
         get { return compass.forward / 2 - compass.up / 2; }
@@ -52,6 +61,11 @@ public class Compass : MonoBehaviour
         get { return compass.forward; }
     }
 
+    public Vector3 upPivot
+    {
+        get { return compass.up; }
+    }
+
     public void UpdateOrientation()
     {
         float angle = Vector3.Angle(this.transform.forward, Vector3.forward);
@@ -62,21 +76,25 @@ public class Compass : MonoBehaviour
         {
             compass.forward = -this.transform.right;
             compass.right = this.transform.forward;
+            compass.state = Direction.Forward;
         }
         else if (angle >= 90 && angle < 180)
         {
             compass.forward = -this.transform.forward;
             compass.right = -this.transform.right;
+            compass.state = Direction.Right;
         }
         else if (angle >= 180 && angle < 270)
         {
             compass.forward = this.transform.right;
             compass.right = -this.transform.forward;
+            compass.state = Direction.Backward;
         }
         else if (angle >= 270 && angle < 360)
         {
             compass.forward = this.transform.forward;
             compass.right = this.transform.right;
+            compass.state = Direction.Left;
         }
 }
     void OnDrawGizmosSelected()
