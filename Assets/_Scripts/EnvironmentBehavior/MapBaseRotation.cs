@@ -7,13 +7,17 @@ public class MapBaseRotation : MonoBehaviour
     bool isMoving = false;
     public float time = 3.0f;
     public float speed = 3.0f;
-
+    private  bool leftRotate = false;
+    public static MapBaseRotation instance;
     // Start is called before the first frame update
     void Start()
     {
         
     }
-
+    void Awake()
+    {
+        instance = this;
+    }
     // Update is called once per frame
     void Update()
     {
@@ -23,7 +27,7 @@ public class MapBaseRotation : MonoBehaviour
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (leftRotate)
         {
             StartCoroutine(RotateMap(Vector3.forward));
         }
@@ -47,5 +51,13 @@ public class MapBaseRotation : MonoBehaviour
         }
 
         isMoving = false;
+        leftRotate = false;
+    }
+    public  void setRotate(bool rotate)
+    {
+        if(rotate == true)
+        {
+            leftRotate = true;
+        }
     }
 }
