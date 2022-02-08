@@ -7,24 +7,42 @@ using UnityEngine.EventSystems;
 public class MouseRotation : MonoBehaviour
 {
     public Transform Compass;
-    public Vector3 rotationAngle;
+    public float angle;
+    private Vector3 rotationAngle;
     private Vector3 targetAngle;
 
     public UnityEvent rotationEvent;
     void Update()
     {
-        rotationAngle = Compass.transform.up * 5;
+        if (GameManager.instance.CurrentState != GameManager.GameState.playing)
+            return;
+        rotationAngle = Compass.transform.up * angle;
         if (Input.GetAxis("Mouse ScrollWheel") != 0)
         {
-            targetAngle += Input.GetAxis("Mouse ScrollWheel") * rotationAngle * 10f;
+            targetAngle += Input.GetAxis("Mouse ScrollWheel") * rotationAngle * 10;
             transform.eulerAngles = clampAngle(targetAngle);
-
+            //StartCoroutine(RotateMap(Compass.transform.up, angle));
 
             if (rotationEvent != null)
                 rotationEvent.Invoke();
         }
-
     }
+
+    //IEnumerator RotateMap(Vector3 direction, float angle)
+    //{
+    //    float t = 0;
+    //    float duration = 3;
+    //    while (t < duration)
+    //    {
+    //        t ++;
+    //        float rotationAngle = Mathf.Lerp(0, angle, t / duration);
+    //        transform.Rotate(direction, rotationAngle);
+
+    //        GameManager.instance.CurrentState = GameManager.GameState.rotating;
+    //        yield return null;
+    //    }
+    //    GameManager.instance.CurrentState = GameManager.GameState.playing;
+    //}
 
     private Vector3 clampAngle(Vector3 target)
     {

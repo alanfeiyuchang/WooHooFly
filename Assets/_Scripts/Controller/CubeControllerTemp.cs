@@ -52,6 +52,8 @@ public class CubeControllerTemp : MonoBehaviour
         UpdateTileInfo();
         if (moving)
             return;
+        if (GameManager.instance.CurrentState != GameManager.GameState.playing)
+            return;
         if (Input.GetKey(KeyCode.W))
         {
             if (IsConnectCube && tileInfo.wall.forward)
@@ -125,8 +127,12 @@ public class CubeControllerTemp : MonoBehaviour
             float rotationAngle = Mathf.Min(Time.deltaTime * speed, remainingAngle);
             transform.RotateAround(rotationPoint, rotationAxis, rotationAngle);
             remainingAngle -= rotationAngle;
+
+            GameManager.instance.CurrentState = GameManager.GameState.rotating;
             yield return null;
         }
+
+        GameManager.instance.CurrentState = GameManager.GameState.playing;
         UIController.instance.AddStep();
         moving = false;
     }
@@ -137,6 +143,8 @@ public class CubeControllerTemp : MonoBehaviour
     private void UpdateTileInfo()
     {
         /*need to be polished in the future*/
+        if (moving)
+            return;
         if(compassInfo.compass.state == Compass.Direction.Forward)
         {
             tileInfo.edge.forward = edgeDirection[2];
