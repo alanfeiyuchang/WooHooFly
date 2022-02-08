@@ -14,7 +14,7 @@ public class CubeCollider : MonoBehaviour
     
     private MapColorChange map;
 
-    private MapTag tag;
+    private MapTag mapTag;
     
     private void Awake()
     {

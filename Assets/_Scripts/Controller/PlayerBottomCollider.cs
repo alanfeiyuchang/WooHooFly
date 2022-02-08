@@ -8,7 +8,7 @@ public class PlayerBottomCollider : MonoBehaviour
     [SerializeField] private GameObject playerCube;
     
 
-    private MapTag tag;
+    private MapTag mapTag;
     void Start()
     {
         
@@ -23,17 +23,17 @@ public class PlayerBottomCollider : MonoBehaviour
     private void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.tag == "MapCube") {
-                
-                tag = other.gameObject.GetComponent<MapTag>();
+
+            mapTag = other.gameObject.GetComponent<MapTag>();
 
                 CubeControllerTemp cubeController = CubeControllerTemp.instance;
-                cubeController.edgeDirection = tag.EdgeDirection;
+                cubeController.edgeDirection = mapTag.EdgeDirection;
                 
 
-                if (tag.IsConnectCube)
+                if (mapTag.IsConnectCube)
                 {
-                    cubeController.connectDirection = tag.ConnectDirection;
-                    cubeController.IsConnectCube = tag.IsConnectCube;
+                    cubeController.connectDirection = mapTag.ConnectDirection;
+                    cubeController.IsConnectCube = mapTag.IsConnectCube;
 
                     // cubeControllerTemp.connectDirection = tag.ConnectDirection;
                     // cubeControllerTemp.IsConnectCube = tag.IsConnectCube;
