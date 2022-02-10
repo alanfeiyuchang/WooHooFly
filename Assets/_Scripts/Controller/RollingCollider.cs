@@ -20,37 +20,6 @@ public class RollingCollider : MonoBehaviour
         transform.position = new Vector3(playerCube.transform.position.x,
         playerCube.transform.position.y,playerCube.transform.position.z);
     }
-    private void OnTriggerEnter(Collider other)
-        {
-            if (other.gameObject.tag == "MapCube") {
 
-            mapTag = other.gameObject.GetComponent<MapTag>();
-
-                CubeControllerTemp cubeController = CubeControllerTemp.instance;
-                cubeController.edgeDirection = mapTag.EdgeDirection;
-                
-
-                if (mapTag.IsConnectCube)
-                {
-                    cubeController.connectDirection = mapTag.ConnectDirection;
-                    cubeController.IsConnectCube = mapTag.IsConnectCube;
-
-                    // cubeControllerTemp.connectDirection = tag.ConnectDirection;
-                    // cubeControllerTemp.IsConnectCube = tag.IsConnectCube;
-                }
-
-            }
-            
-        }
-
-    private void OnTriggerExit(Collider other)
-        {
-            if (other.gameObject.tag == "MapCube") {
-                CubeControllerTemp cubeController = CubeControllerTemp.instance;
-                cubeController.IsConnectCube = false;
-                cubeController.edgeDirection = new bool[4];
-                cubeController.connectDirection = new bool[4];
-            }
-        }
 
 }
