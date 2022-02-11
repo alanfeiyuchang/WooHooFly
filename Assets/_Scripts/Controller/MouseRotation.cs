@@ -14,9 +14,10 @@ public class MouseRotation : MonoBehaviour
     public UnityEvent rotationEvent;
     void Update()
     {
-        if (GameManager.instance.CurrentState != GameManager.GameState.playing)
-            return;
-        rotationAngle = Compass.transform.up * angle;
+        //if (GameManager.instance.CurrentState != GameManager.GameState.playing)
+        //    return;
+        //rotationAngle = Compass.transform.up * angle;
+        rotationAngle = this.transform.up * angle;
         if (Input.GetAxis("Mouse ScrollWheel") != 0)
         {
             targetAngle += Input.GetAxis("Mouse ScrollWheel") * rotationAngle * 10;
