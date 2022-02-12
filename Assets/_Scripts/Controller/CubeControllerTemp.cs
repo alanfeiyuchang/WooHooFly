@@ -19,9 +19,11 @@ public class CubeControllerTemp : MonoBehaviour
         public Direction wall;
         public bool IsEdgeCube;
         public bool IsConnectCube;
+        public bool OnTheWall;
+        public bool DownWall;
     }
 
-    public float speed = 500;
+    public float speed = 300;
     private bool moving = false;
 
     public Compass compassInfo;
@@ -37,7 +39,10 @@ public class CubeControllerTemp : MonoBehaviour
     [HideInInspector]
     public bool IsConnectCube;
     ///need to be replace with TileInfo in future
-
+    [HideInInspector]
+    public bool OnTheWall;
+    [HideInInspector]
+    public bool DownWall;
     public MapBaseRotation mapBaseRotation;
     //public GameObject mapmapBaseRotation;
 
@@ -54,6 +59,54 @@ public class CubeControllerTemp : MonoBehaviour
             return;
         if (GameManager.instance.CurrentState != GameManager.GameState.playing)
             return;
+        /*if (OnTheWall)
+        {
+            if (Input.GetKey(KeyCode.W))
+            {
+                if (tileInfo.edge.forward)
+                {
+                    StartCoroutine(Roll(compassInfo.forwardPivot + compassInfo.upPivot, compassInfo.forwardAxis));
+                } 
+                else
+                {
+                    return;
+                }
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                if (tileInfo.edge.right)
+                {
+                    StartCoroutine(Roll(compassInfo.rightPivot + compassInfo.upPivot, compassInfo.rightAxis));
+                }
+                else
+                {
+                    return;
+                }
+            }
+            if (Input.GetKey(KeyCode.S))
+            {
+                if (tileInfo.edge.backward)
+                {
+                    StartCoroutine(Roll(compassInfo.backwardPivot + compassInfo.upPivot, compassInfo.backwardAxis));
+                }
+                else
+                {
+                    return;
+                }
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                if (tileInfo.edge.left)
+                {
+                    StartCoroutine(Roll(compassInfo.leftPivot + compassInfo.upPivot, compassInfo.leftAxis));
+                }
+                else
+                {
+                    return;
+                }
+            }
+        }
+        */
         if (Input.GetKey(KeyCode.W))
         {
             if (IsConnectCube && tileInfo.wall.forward)
@@ -196,5 +249,7 @@ public class CubeControllerTemp : MonoBehaviour
 
         tileInfo.IsEdgeCube = IsEdgeCube;
         tileInfo.IsConnectCube = IsConnectCube;
+        tileInfo.OnTheWall = OnTheWall;
+        tileInfo.DownWall = DownWall;
     }
 }

@@ -28,18 +28,25 @@ public class PlayerBottomCollider : MonoBehaviour
 
                 CubeControllerTemp cubeController = CubeControllerTemp.instance;
                 cubeController.edgeDirection = mapTag.EdgeDirection;
-                
 
                 if (mapTag.IsConnectCube)
                 {
                     cubeController.connectDirection = mapTag.ConnectDirection;
                     cubeController.IsConnectCube = mapTag.IsConnectCube;
-
-                    // cubeControllerTemp.connectDirection = tag.ConnectDirection;
-                    // cubeControllerTemp.IsConnectCube = tag.IsConnectCube;
-                }
-
+                    
+                // cubeControllerTemp.connectDirection = tag.ConnectDirection;
+                // cubeControllerTemp.IsConnectCube = tag.IsConnectCube;
             }
+                else if (mapTag.OnTheWall)
+            {
+                cubeController.OnTheWall = mapTag.OnTheWall;
+            }
+                else if (mapTag.DownWall)
+            {
+                cubeController.DownWall = mapTag.DownWall;
+            }
+
+        }
             
         }
 
@@ -48,6 +55,8 @@ public class PlayerBottomCollider : MonoBehaviour
             if (other.gameObject.tag == "MapCube") {
                 CubeControllerTemp cubeController = CubeControllerTemp.instance;
                 cubeController.IsConnectCube = false;
+                cubeController.OnTheWall = false;
+                cubeController.DownWall = false;
                 cubeController.edgeDirection = new bool[4];
                 cubeController.connectDirection = new bool[4];
             }
