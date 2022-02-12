@@ -57,7 +57,7 @@ public class UIController : MonoBehaviour
     public void RestartButtonPressed()
     {
         CloseMenu();
-        //GameManager.instance.CurrentState = GameManager.GameState.restart;
+        GameManager.instance.CurrentState = GameManager.GameState.restart;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         Debug.Log("Reload scene");
     }

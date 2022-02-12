@@ -15,11 +15,13 @@ public class GameManager : MonoBehaviour
     public GameState CurrentState = GameState.playing;
     public enum GameState
     {
+        restart,
         playing,
         paused,
         rotating,
         win
     };
+    private bool levelComplete = false;
 
     private void Start()
     {
@@ -34,8 +36,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
     public void CheckWin()
     {
+        if (levelComplete || CurrentState == GameState.restart)
+            return;
+
         bool win = true;
         foreach (var tile in ChangableTiles)
         {
@@ -45,12 +51,13 @@ public class GameManager : MonoBehaviour
                 break;
             }
         }
-        
+
         if (win)
         {
             CurrentState = GameState.win;
             Debug.Log("***************WON***************");
             UIController.instance.WinUI();
+            levelComplete = true;
         }
         else
         {
