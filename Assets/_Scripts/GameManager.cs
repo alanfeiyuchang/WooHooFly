@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Not yet");
+            //Debug.Log("Not yet");
         }
     }
 }
