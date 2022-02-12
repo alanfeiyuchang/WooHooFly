@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CubeControllerTemp : MonoBehaviour
+public class cubeOnTheWall : MonoBehaviour
 {
     [System.Serializable]
     public class Direction
@@ -46,129 +46,23 @@ public class CubeControllerTemp : MonoBehaviour
     public MapBaseRotation mapBaseRotation;
     //public GameObject mapmapBaseRotation;
 
-    public static CubeControllerTemp instance;
+    public static cubeOnTheWall instance;
 
     void Awake()
     {
         instance = this;
     }
-    void Update()
+    // Start is called before the first frame update
+    void Start()
     {
-        UpdateTileInfo();
-        if (moving)
-            return;
-        if (GameManager.instance.CurrentState != GameManager.GameState.playing)
-            return;
-        /*if (OnTheWall)
-        {
-            if (Input.GetKey(KeyCode.W))
-            {
-                if (tileInfo.edge.forward)
-                {
-                    StartCoroutine(Roll(compassInfo.forwardPivot + compassInfo.upPivot, compassInfo.forwardAxis));
-                } 
-                else
-                {
-                    return;
-                }
-            }
-            if (Input.GetKey(KeyCode.D))
-            {
-                if (tileInfo.edge.right)
-                {
-                    StartCoroutine(Roll(compassInfo.rightPivot + compassInfo.upPivot, compassInfo.rightAxis));
-                }
-                else
-                {
-                    return;
-                }
-            }
-            if (Input.GetKey(KeyCode.S))
-            {
-                if (tileInfo.edge.backward)
-                {
-                    StartCoroutine(Roll(compassInfo.backwardPivot + compassInfo.upPivot, compassInfo.backwardAxis));
-                }
-                else
-                {
-                    return;
-                }
-            }
-            if (Input.GetKey(KeyCode.A))
-            {
-                if (tileInfo.edge.left)
-                {
-                    StartCoroutine(Roll(compassInfo.leftPivot + compassInfo.upPivot, compassInfo.leftAxis));
-                }
-                else
-                {
-                    return;
-                }
-            }
-        }
-        */
-        if (Input.GetKey(KeyCode.W))
-        {
-            if (IsConnectCube && tileInfo.wall.forward)
-            {
-                StartCoroutine(Roll(compassInfo.forwardPivot + compassInfo.upPivot, compassInfo.forwardAxis));
-            }
-            else if (tileInfo.edge.forward == false)
-            {
-                return;
-            }
-            else
-            {
-                StartCoroutine(Roll(compassInfo.forwardPivot, compassInfo.forwardAxis));
-            }
-        }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            if (IsConnectCube && tileInfo.wall.right)
-            {
-                StartCoroutine(Roll(compassInfo.rightPivot + compassInfo.upPivot, compassInfo.rightAxis));
-            }
-            else if (tileInfo.edge.right == false)
-            {
-                return;
-            }
-            else
-            {
-                StartCoroutine(Roll(compassInfo.rightPivot, compassInfo.rightAxis));
-            }
-        }
-        else if (Input.GetKey(KeyCode.S))
-        {
-            if (IsConnectCube && tileInfo.wall.backward)
-            {
-                StartCoroutine(Roll(compassInfo.backwardPivot + compassInfo.upPivot, compassInfo.backwardAxis));
-            }
-            else if (tileInfo.edge.backward == false)
-            {
-                return;
-            }
-            else
-            {
-                StartCoroutine(Roll(compassInfo.backwardPivot, compassInfo.backwardAxis));
-            }
-        }
-        else if (Input.GetKey(KeyCode.A))
-        {
-            if (IsConnectCube && tileInfo.wall.left)
-            {
-                StartCoroutine(Roll(compassInfo.leftPivot + compassInfo.upPivot, compassInfo.leftAxis));
-            }
-            else if (tileInfo.edge.left == false)
-            {
-                return;
-            }
-            else
-            {
-                StartCoroutine(Roll(compassInfo.leftPivot, compassInfo.leftAxis));
-            }
-        }
+        
     }
 
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
     IEnumerator Roll(Vector3 rotationPointOffset, Vector3 rotationAxis)
     {
         float remainingAngle = 90;
@@ -198,7 +92,7 @@ public class CubeControllerTemp : MonoBehaviour
         /*need to be polished in the future*/
         if (moving)
             return;
-        if(compassInfo.compass.state == Compass.Direction.Forward)
+        if (compassInfo.compass.state == Compass.Direction.Forward)
         {
             tileInfo.edge.forward = edgeDirection[2];
             tileInfo.edge.backward = edgeDirection[3];

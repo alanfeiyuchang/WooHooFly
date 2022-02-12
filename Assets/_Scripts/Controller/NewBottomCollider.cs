@@ -26,7 +26,6 @@ public class NewBottomCollider : MonoBehaviour
 
             CubeControllerTemp cubeController = CubeControllerTemp.instance;
             cubeController.edgeDirection = mapTag.EdgeDirection;
-            
 
             if (mapTag.IsConnectCube)
             {
@@ -36,7 +35,7 @@ public class NewBottomCollider : MonoBehaviour
                 // cubeControllerTemp.connectDirection = tag.ConnectDirection;
                 // cubeControllerTemp.IsConnectCube = tag.IsConnectCube;
             }
-
+            
         }
         
     }

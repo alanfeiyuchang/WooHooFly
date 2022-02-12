@@ -12,6 +12,7 @@ public class Compass : MonoBehaviour
     {
         public Vector3 forward = Vector3.forward;
         public Vector3 up = Vector3.up;
+        public Vector3 down = Vector3.down;
         public Vector3 right = Vector3.right;
         public Direction state = Direction.Forward; // map rotation related to compass
     }
@@ -65,7 +66,10 @@ public class Compass : MonoBehaviour
     {
         get { return compass.up; }
     }
-
+    public Vector3 downPivot
+    {
+        get { return compass.down; }
+    }
     public void UpdateOrientation()
     {
         float angle = Vector3.Angle(this.transform.forward, Vector3.forward);
