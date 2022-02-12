@@ -26,6 +26,13 @@ public class MapCubeEditor : Editor
         mapCubeManager.ChangeSideActiveStatus(mapCubeManager.sideE, mapCubeManager.sideEEnabled);
         //mapCubeManager.sideFEnabled = EditorGUILayout.Toggle("Side F Enabled", mapCubeManager.sideFEnabled);
         mapCubeManager.ChangeSideActiveStatus(mapCubeManager.sideF, mapCubeManager.sideFEnabled);
+
+        mapCubeManager.ChangeNodeActiveStatus(mapCubeManager.sideA, mapCubeManager.NodeAEnabled);
+        mapCubeManager.ChangeNodeActiveStatus(mapCubeManager.sideB, mapCubeManager.NodeBEnabled);
+        mapCubeManager.ChangeNodeActiveStatus(mapCubeManager.sideC, mapCubeManager.NodeCEnabled);
+        mapCubeManager.ChangeNodeActiveStatus(mapCubeManager.sideD, mapCubeManager.NodeDEnabled);
+        mapCubeManager.ChangeNodeActiveStatus(mapCubeManager.sideE, mapCubeManager.NodeEEnabled);
+        mapCubeManager.ChangeNodeActiveStatus(mapCubeManager.sideF, mapCubeManager.NodeFEnabled);
     }
     public void OnSceneGUI()
     {

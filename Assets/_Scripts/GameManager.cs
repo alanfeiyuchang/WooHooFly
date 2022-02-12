@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using WooHooFly.NodeSystem;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class GameManager : MonoBehaviour
     //variables
     private List<GameObject> ChangableTiles = new List<GameObject>();
     public GameState CurrentState = GameState.playing;
+    [HideInInspector]
+    public Direction levelDirection = Direction.None;
     public enum GameState
     {
         restart,

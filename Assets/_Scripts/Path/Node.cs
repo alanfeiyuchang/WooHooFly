@@ -35,6 +35,8 @@ namespace WooHooFly.NodeSystem
         public List<Edge> Edges => edges;
         public List<Edge> Corners => corners;
 
+        private static Direction[] directionList = { Direction.Forward, Direction.Right, Direction.Backward, Direction.Left };
+
         private void Start()
         {
             // automatic connect Edges with horizontal Nodes
@@ -82,7 +84,7 @@ namespace WooHooFly.NodeSystem
         public void FindNeighbors()
         {
             Vector3[] neighborDirections = { transform.forward, -transform.forward, transform.right, -transform.right };
-             
+
             // search through possible neighbor offsets
             foreach (Vector3 direction in neighborDirections)
             {
@@ -101,7 +103,7 @@ namespace WooHooFly.NodeSystem
         public void FindCorners()
         {
             Vector3[] horizontalDirection = { transform.forward, -transform.forward, transform.right, -transform.right };
-            Vector3[] verticalDirection = { transform.up, -transform.up};
+            Vector3[] verticalDirection = { transform.up, -transform.up };
 
             // search through possible corners offsets, they are in the same cube space
             foreach (Vector3 horizontaldirection in horizontalDirection)
@@ -114,7 +116,7 @@ namespace WooHooFly.NodeSystem
 
                     if (newNode == null)
                         continue;
-                    
+
                     if (this.transform.parent.parent == newNode.transform.parent.parent)
                     {
                         // two node at same cube which is not traversable
@@ -128,7 +130,7 @@ namespace WooHooFly.NodeSystem
                         corners.Add(newEdge);
                     }
                 }
-               
+
             }
         }
 
@@ -162,6 +164,7 @@ namespace WooHooFly.NodeSystem
             this.graph = graphToInit;
         }
 
+        // node blue axis is forward, red is right
         private Direction GetDirection(Vector3 horizontalDir)
         {
             Direction direction;
@@ -188,12 +191,14 @@ namespace WooHooFly.NodeSystem
             return direction;
         }
 
-        public bool FindNodesAtDirection(ref Vector3 startPos, ref Vector3 endPos, Direction direction)
+        // Based on the graph, moving direction and current rotation of level, output startPos and EndPos
+        public bool FindNodesAtDirection(ref Vector3 startPos, ref Vector3 endPos, Direction InputDirection, Direction LevelDirect)
         {
+            Direction direction = correctDirection(LevelDirect, InputDirection);
             // find the neighbor node at that direction
             foreach (Edge e in edges)
             {
-                if(e.direction == direction && e.isActive)
+                if (e.direction == direction && e.isActive)
                 {
                     startPos = this.transform.position;
                     endPos = e.neighbor.transform.position;
@@ -202,13 +207,13 @@ namespace WooHooFly.NodeSystem
             }
 
             // check if other node at same cube space have neighbor node
-            foreach(Edge c in corners)
+            foreach (Edge c in corners)
             {
-                if(c.direction == direction && c.isActive)
+                if (c.direction == direction && c.isActive)
                 {
-                    foreach(Edge e in c.neighbor.Edges)
+                    foreach (Edge e in c.neighbor.Edges)
                     {
-                        if(e.direction == direction && e.isActive)
+                        if (e.direction == direction && e.isActive)
                         {
                             startPos = c.neighbor.transform.position;
                             endPos = e.neighbor.transform.position;
@@ -217,7 +222,15 @@ namespace WooHooFly.NodeSystem
                     }
                 }
             }
-            return false ;
+            return false;
+        }
+
+        // Based on the rotationAngle and face correct direction
+        // e.g. rotate level 90' to right, would make node on the top face: forward(edge)->right(input) ...
+        public Direction correctDirection(Direction LevelDirect, Direction InputDirect)
+        {
+            Direction outputDirect = directionList[((int)InputDirect - (int)LevelDirect + 4) % 4];
+            return outputDirect;
         }
     }
 }
