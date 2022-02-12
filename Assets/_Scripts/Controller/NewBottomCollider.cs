@@ -21,21 +21,22 @@ public class NewBottomCollider : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "MapCube") {
-
-        mapTag = other.gameObject.GetComponent<MapTag>();
+            Debug.Log(other.transform.parent.gameObject.name + " info is obtained");
+            mapTag = other.gameObject.GetComponent<MapTag>();
 
             CubeControllerTemp cubeController = CubeControllerTemp.instance;
             cubeController.edgeDirection = mapTag.EdgeDirection;
+            cubeController.IsEdgeCube = mapTag.IsEdgeCube;
 
             if (mapTag.IsConnectCube)
             {
                 cubeController.connectDirection = mapTag.ConnectDirection;
                 cubeController.IsConnectCube = mapTag.IsConnectCube;
+                cubeController.DownWall = mapTag.DownWall;
+                cubeController.OnTheWall = mapTag.OnTheWall;
 
-                // cubeControllerTemp.connectDirection = tag.ConnectDirection;
-                // cubeControllerTemp.IsConnectCube = tag.IsConnectCube;
             }
-            
+                
         }
         
     }
@@ -47,6 +48,8 @@ private void OnTriggerExit(Collider other)
             cubeController.IsConnectCube = false;
             cubeController.edgeDirection = new bool[4];
             cubeController.connectDirection = new bool[4];
+            cubeController.DownWall = false;
+            cubeController.OnTheWall = false;
         }
     }
 }
