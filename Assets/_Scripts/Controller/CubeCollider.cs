@@ -48,6 +48,7 @@ public class CubeCollider : MonoBehaviour
         //change playerCube's color
         else if(other.gameObject.tag == "ColorCube")
         {
+            Debug.Log("color");
             map = other.gameObject.GetComponent<MapColorChange>();
             color c = map.MapColor;
             MeshRenderer mesh = gameObject.GetComponent<MeshRenderer>();
