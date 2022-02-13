@@ -17,6 +17,7 @@ public class UIController : MonoBehaviour
     }
 
     [SerializeField] private GameObject WinPanel;
+    [SerializeField] private GameObject PauseMene;
 
     [SerializeField] private TMP_Text StepCountText;
     private int _stepCount = 0;
@@ -32,7 +33,7 @@ public class UIController : MonoBehaviour
 
     private void Start()
     {
-        WinPanel.SetActive(false);
+        CloseMenu();
 
         //enable step counter
         stepCounterActive = true;
@@ -42,6 +43,7 @@ public class UIController : MonoBehaviour
     private void CloseMenu()
     {
         WinPanel.SetActive(false);
+        PauseMene.SetActive(false);
     }
 
     public void WinUI()
@@ -60,6 +62,23 @@ public class UIController : MonoBehaviour
         GameManager.instance.CurrentState = GameManager.GameState.restart;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         Debug.Log("Reload scene");
+    }
+
+    public void PauseMenuClicked()
+    {
+        if (WinPanel.activeInHierarchy)
+            return;
+
+        if (PauseMene.activeInHierarchy)
+        {
+            PauseMene.SetActive(false);
+            GameManager.instance.CurrentState = GameManager.GameState.playing;
+        }
+        else
+        {
+            PauseMene.SetActive(true);
+            GameManager.instance.CurrentState = GameManager.GameState.paused;
+        }
     }
 
     public void AddStep()
