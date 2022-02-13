@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using WooHooFly.NodeSystem;
+#if ENABLE_CLOUD_SERVICES_ANALYTICS
+using UnityEngine.Analytics;
+#endif
 
 public class GameManager : MonoBehaviour
 {
@@ -61,6 +64,16 @@ public class GameManager : MonoBehaviour
             Debug.Log("***************WON***************");
             UIController.instance.WinUI();
             levelComplete = true;
+
+            // Send analytics data on winnning the level
+#if ENABLE_CLOUD_SERVICES_ANALYTICS
+            AnalyticsResult analyticsResult = Analytics.CustomEvent("levelWon", new Dictionary<string, object>
+        {
+            { "level", 1 },
+            { "steps", UIController.instance.GetStep() }
+        });
+            Debug.Log("Analytics data sent: " + analyticsResult);
+#endif
         }
         else
         {
