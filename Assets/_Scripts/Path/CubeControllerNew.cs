@@ -9,9 +9,10 @@ public class CubeControllerNew : MonoBehaviour
     private Vector3 currenPos;
     private Vector3 targetPos;
     private bool isMoving;
-
+    public IllusionSpot IllusionSpot;
     public GameObject SnapPoint;
     public float speed = 500;
+    public string JumpDirection;
     private void Awake()
     {
         graph = FindObjectOfType<Graph>();
@@ -24,6 +25,14 @@ public class CubeControllerNew : MonoBehaviour
 
     private void Update()
     {
+        if (IllusionSpot.ReadyForJump)
+        {
+             JumpDirection = IllusionSpot.direction;
+        }
+        else
+        {
+            JumpDirection = null;
+        }
         if (isMoving)
             return;
         if (Input.GetKeyDown(KeyCode.W))
@@ -32,6 +41,12 @@ public class CubeControllerNew : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.A))
         {
+            if(JumpDirection == "Left")
+            {
+                IllusionSpot.IllusionJump();
+                currenPos = SnapPoint.transform.position;
+                SnapToNearestNode();
+            }
             Rolling(Direction.Left);
         }
         else if (Input.GetKeyDown(KeyCode.S))
