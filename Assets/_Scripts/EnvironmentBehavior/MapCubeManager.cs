@@ -25,6 +25,7 @@ public class MapCubeManager : MonoBehaviour
     
     public enum TileType
     {
+        DefalutTile,
         Unchangeable,
         Changeable,
         Color   
@@ -51,9 +52,11 @@ public class MapCubeManager : MonoBehaviour
         GameObject changableSide = side.transform.GetChild(0).gameObject;
         GameObject unchangableSide = side.transform.GetChild(1).gameObject;
         GameObject coloringSide = side.transform.GetChild(3).gameObject;
+        GameObject defaultSide = side.transform.GetChild(4).gameObject;
         changableSide.SetActive(false);
         unchangableSide.SetActive(false);
         coloringSide.SetActive(false);
+        defaultSide.SetActive(false);
         switch (type)
         {
             case TileType.Changeable:
@@ -64,6 +67,9 @@ public class MapCubeManager : MonoBehaviour
                 break;
             case TileType.Color:
                 coloringSide.SetActive(true);
+                break;
+            case TileType.DefalutTile:
+                defaultSide.SetActive(true);
                 break;
             default:
                 break;
