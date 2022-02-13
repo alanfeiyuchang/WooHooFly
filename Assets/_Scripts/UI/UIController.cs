@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+#if ENABLE_CLOUD_SERVICES_ANALYTICS
+using UnityEngine.Analytics;
+#endif
 
 public class UIController : MonoBehaviour
 {
@@ -38,6 +40,13 @@ public class UIController : MonoBehaviour
         //enable step counter
         stepCounterActive = true;
         Debug.Log("New Game");
+#if ENABLE_CLOUD_SERVICES_ANALYTICS
+        AnalyticsResult analyticsResult = Analytics.CustomEvent("newGame", new Dictionary<string, object>
+        {
+            { "level", 1 }
+        });
+        Debug.Log("Analytics data sent: " + analyticsResult);
+#endif
     }
 
     private void CloseMenu()
@@ -88,6 +97,11 @@ public class UIController : MonoBehaviour
             StepCount++;
         }
         
+    }
+
+    public int GetStep()
+    {
+        return StepCount;
     }
 
     // add more methods to track other stats
