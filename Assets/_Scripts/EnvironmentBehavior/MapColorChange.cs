@@ -7,10 +7,14 @@ public class MapColorChange : MonoBehaviour
     [SerializeField] private Material red;
     [SerializeField] private Material green;
     public CubeCollider.color MapColor;
+    
     // Start is called before the first frame update
     void Start()
     {
-        ColorChange(MapColor);
+        if (gameObject.tag == "MapCube")
+        {
+            ColorChange(MapColor);
+        }
     }
 
     // Update is called once per frame

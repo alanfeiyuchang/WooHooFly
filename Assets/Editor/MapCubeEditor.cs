@@ -15,17 +15,17 @@ public class MapCubeEditor : Editor
         
         MapCubeManager mapCubeManager = (MapCubeManager)target;
         //mapCubeManager.sideAEnabled = EditorGUILayout.Toggle("Side A Enabled", mapCubeManager.sideAEnabled);
-        mapCubeManager.ChangeSideActiveStatus(mapCubeManager.sideA, mapCubeManager.sideAEnabled);
+        mapCubeManager.ChangeTileType(mapCubeManager.sideA, mapCubeManager.sideAType);
         //mapCubeManager.sideBEnabled = EditorGUILayout.Toggle("Side B Enabled", mapCubeManager.sideBEnabled);
-        mapCubeManager.ChangeSideActiveStatus(mapCubeManager.sideB, mapCubeManager.sideBEnabled);
+        mapCubeManager.ChangeTileType(mapCubeManager.sideB, mapCubeManager.sideBType);
         //mapCubeManager.sideCEnabled = EditorGUILayout.Toggle("Side C Enabled", mapCubeManager.sideCEnabled);
-        mapCubeManager.ChangeSideActiveStatus(mapCubeManager.sideC, mapCubeManager.sideCEnabled);
+        mapCubeManager.ChangeTileType(mapCubeManager.sideC, mapCubeManager.sideCType);
         //mapCubeManager.sideDEnabled = EditorGUILayout.Toggle("Side D Enabled", mapCubeManager.sideDEnabled);
-        mapCubeManager.ChangeSideActiveStatus(mapCubeManager.sideD, mapCubeManager.sideDEnabled);
+        mapCubeManager.ChangeTileType(mapCubeManager.sideD, mapCubeManager.sideDType);
         //mapCubeManager.sideEEnabled = EditorGUILayout.Toggle("Side E Enabled", mapCubeManager.sideEEnabled);
-        mapCubeManager.ChangeSideActiveStatus(mapCubeManager.sideE, mapCubeManager.sideEEnabled);
+        mapCubeManager.ChangeTileType(mapCubeManager.sideE, mapCubeManager.sideEType);
         //mapCubeManager.sideFEnabled = EditorGUILayout.Toggle("Side F Enabled", mapCubeManager.sideFEnabled);
-        mapCubeManager.ChangeSideActiveStatus(mapCubeManager.sideF, mapCubeManager.sideFEnabled);
+        mapCubeManager.ChangeTileType(mapCubeManager.sideF, mapCubeManager.sideFType);
 
         mapCubeManager.ChangeNodeActiveStatus(mapCubeManager.sideA, mapCubeManager.NodeAEnabled);
         mapCubeManager.ChangeNodeActiveStatus(mapCubeManager.sideB, mapCubeManager.NodeBEnabled);

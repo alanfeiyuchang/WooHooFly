@@ -12,22 +12,23 @@ public class MapCubeManager : MonoBehaviour
     public bool NodeEEnabled;
     public bool NodeFEnabled;
 
-    [Header("Enable Side")]
-    public bool sideAEnabled;
-    public bool sideBEnabled;
-    public bool sideCEnabled;
-    public bool sideDEnabled;
-    public bool sideEEnabled;
-    public bool sideFEnabled;
+    [Header("Side Tile Type")]
+    public TileType sideAType;
+    public TileType sideBType;
+    public TileType sideCType;
+    public TileType sideDType;
+    public TileType sideEType;
+    public TileType sideFType;
  
-    public GameObject sideA;
-    public GameObject sideB;
-    public GameObject sideC;
-    public GameObject sideD;
-    public GameObject sideE;
-    public GameObject sideF;
+    [HideInInspector]
+    public GameObject sideA, sideB, sideC, sideD, sideE, sideF;
     
-
+    public enum TileType
+    {
+        Unchangeable,
+        Changeable,
+        Color   
+    };
 
     void Start()
     {
@@ -45,6 +46,29 @@ public class MapCubeManager : MonoBehaviour
         
     }
     
+    public void ChangeTileType(GameObject side, TileType type)
+    {
+        GameObject changableSide = side.transform.GetChild(0).gameObject;
+        GameObject unchangableSide = side.transform.GetChild(1).gameObject;
+        GameObject coloringSide = side.transform.GetChild(3).gameObject;
+        changableSide.SetActive(false);
+        unchangableSide.SetActive(false);
+        coloringSide.SetActive(false);
+        switch (type)
+        {
+            case TileType.Changeable:
+                changableSide.SetActive(true);
+                break;
+            case TileType.Unchangeable:
+                unchangableSide.SetActive(true);
+                break;
+            case TileType.Color:
+                coloringSide.SetActive(true);
+                break;
+            default:
+                break;
+        }
+    }
     public void ChangeSideActiveStatus(GameObject side, bool enable)
     {
         GameObject changableSide = side.transform.GetChild(0).gameObject;
