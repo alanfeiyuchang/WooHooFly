@@ -54,7 +54,6 @@ public class IllusionSpot : MonoBehaviour
             CanIllusionJump = false;*/
             //playerCubeTransform = GoToTransform;
             float step = 10000 * Time.deltaTime;
-            Debug.Log(GoToTransform.localPosition);
             playerCube.transform.localPosition = Vector3.MoveTowards(playerCube.transform.localPosition, new Vector3(1, (float)2.5, -1), step);
             CanIllusionJump = false;
         }
