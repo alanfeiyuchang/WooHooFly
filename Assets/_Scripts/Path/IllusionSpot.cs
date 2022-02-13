@@ -14,20 +14,26 @@ public class IllusionSpot : MonoBehaviour
     public bool CanIllusionJump = false;
 
     /// <summary>
-    /// Check if the player is ideal to do the illusion jump
+    /// Check if the player is ideal to do the illusion jump, returns a bool
     /// </summary>
-    public void CheckIllusionJump()
+    public bool CheckIllusionJump()
     {
         if (MapTransform.localEulerAngles == OnlyAngle)
         {
             CanIllusionJump = true;
+            return true;
         }
         else
         {
             CanIllusionJump = false;
+            return false;
         }
     }
 
+    /// <summary>
+    /// Do the illustion jump if you can. Takes in playerCube's transform as parameter
+    /// </summary>
+    /// <param name="playerCubeTransform"></param>
     public void IllusionJump(Transform playerCubeTransform)
     {
         CheckIllusionJump();
