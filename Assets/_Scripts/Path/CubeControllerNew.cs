@@ -79,10 +79,16 @@ public class CubeControllerNew : MonoBehaviour
     {
         if (currentNode != null)
         {
-
+            Node startRollNode = null, endRollNode = null;
             Material currentColor = gameObject.GetComponent<MeshRenderer>().sharedMaterial;
-            if (currentNode.FindNodesAtDirection(ref currenPos, ref targetPos, direction, GameManager.instance.levelDirection, currentColor))
+            if (currentNode.FindNodesAtDirection(ref startRollNode, ref endRollNode, direction, GameManager.instance.levelDirection, currentColor))
             {
+                //if (!CorrectColor(endRollNode))
+                //    return;
+
+                currenPos = startRollNode.transform.position;
+                targetPos = endRollNode.transform.position;
+
                 Vector3 midPos = (currenPos + targetPos) / 2;
 
                 Vector3 toTargetVector = targetPos - currenPos;
@@ -131,9 +137,10 @@ public class CubeControllerNew : MonoBehaviour
         this.transform.localEulerAngles = new Vector3(Mathf.Round(transform.localEulerAngles.x / 90) * 90, Mathf.Round(transform.localEulerAngles.y / 90) * 90, Mathf.Round(transform.localEulerAngles.z / 90) * 90);
     }
 
-    private bool CorrectColor(Vector3 targetPos)
+    private bool CorrectColor(Node nextNode)
     {
-        Node targetNode = graph?.FindClosestNode(targetPos);
-        return true;
+        if(nextNode.GetCurrentColor() == cubeCollider.Color)
+            return true;
+        return false;
     }
 }

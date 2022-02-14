@@ -213,7 +213,7 @@ namespace WooHooFly.NodeSystem
 
         // Based on the graph, moving direction and current rotation of level, output startPos and EndPos
 
-        public bool FindNodesAtDirection(ref Vector3 startPos, ref Vector3 endPos, Direction InputDirection, Direction LevelDirect, Material playerColor)
+        public bool FindNodesAtDirection(ref Node startNode, ref Node endNode, Direction InputDirection, Direction LevelDirect, Material playerColor)
         {
             Direction direction = correctDirection(LevelDirect, InputDirection);
             // find the neighbor node at that direction
@@ -224,8 +224,8 @@ namespace WooHooFly.NodeSystem
                 {
                     
                     if (e.isWalkable(playerColor)) {
-                        startPos = this.transform.position;
-                        endPos = e.neighbor.transform.position;
+                        startNode = this;
+                        endNode = e.neighbor;
                         return true;
                     }
                 }
@@ -240,8 +240,8 @@ namespace WooHooFly.NodeSystem
                     {
                         if (e.direction == direction && e.isActive)
                         {
-                            startPos = c.neighbor.transform.position;
-                            endPos = e.neighbor.transform.position;
+                            startNode = c.neighbor;
+                            endNode = e.neighbor;
                             return true;
                         }
                     }
@@ -258,11 +258,10 @@ namespace WooHooFly.NodeSystem
             return outputDirect;
         }
 
-        public void GetCurrentColor()
+        public CubeCollider.color GetCurrentColor()
         {
             // since only one tile is ative every time, we can use getComponent
-            CubeCollider.color mapColor = side.GetComponentInChildren<MapColorChange>(false).MapColor;
-            Debug.Log(mapColor);
+            return side.GetComponentInChildren<MapColorChange>(false).MapColor;
         }
     }
 }
