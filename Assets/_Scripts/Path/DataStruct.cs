@@ -19,6 +19,16 @@ namespace WooHooFly.NodeSystem
             }
             return null;
         }
+        
+        public bool isWalkable(Material playerColor) {
+            Material m1 = getColor();
+            Material m2 = playerColor;
+            Debug.Log("Playcube is " + m2.name + "; Mapcube is " + (m1 == null ? "invisible" : m1.name) + " Tile is " + Tile.tag);
+            if (m1 == m2 || Tile.tag == "ColorCube") {
+                return true;
+            }
+            return false;
+        }
 
     }
 
