@@ -26,6 +26,8 @@ namespace WooHooFly.NodeSystem
         // previous Node that forms a "breadcrumb" trail back to the start
         private Node previousNode;
 
+        private GameObject Tile;
+
         // invoked when Player enters this node
         //public UnityEvent gameEvent;
 
@@ -84,19 +86,34 @@ namespace WooHooFly.NodeSystem
         public void FindNeighbors()
         {
             Vector3[] neighborDirections = { transform.forward, -transform.forward, transform.right, -transform.right };
-
             // search through possible neighbor offsets
             foreach (Vector3 direction in neighborDirections)
             {
                 Node newNode = graph?.FindNodeAt(transform.position + direction);
-
+                
                 // add to edges list if not already included and not excluded specifically
                 if (newNode != null && !HasNeighbor(newNode) && !excludedNodes.Contains(newNode))
-                {
-                    Edge newEdge = new Edge { neighbor = newNode, isActive = true, direction = GetDirection(direction) };
+                {                  
+                    Edge newEdge = new Edge { neighbor = newNode, isActive = true, direction = GetDirection(direction), Tile = newNode.getActiveTile() };
                     edges.Add(newEdge);
                 }
             }
+        }
+
+        public GameObject getActiveTile() {
+            Transform parent = transform.parent;
+            foreach (Transform child in parent)
+            {
+                if (child.gameObject.activeSelf && child.gameObject.name != "Node") {
+                    return child.gameObject;
+                }
+            }
+            return null;
+        }
+
+        public void setTile(ref GameObject tile) 
+        {
+            Tile = tile;
         }
 
         // connect nodes in the same cube space
@@ -192,17 +209,24 @@ namespace WooHooFly.NodeSystem
         }
 
         // Based on the graph, moving direction and current rotation of level, output startPos and EndPos
-        public bool FindNodesAtDirection(ref Vector3 startPos, ref Vector3 endPos, Direction InputDirection, Direction LevelDirect)
+        public bool FindNodesAtDirection(ref Vector3 startPos, ref Vector3 endPos, Direction InputDirection, Direction LevelDirect, Material playerColor)
         {
             Direction direction = correctDirection(LevelDirect, InputDirection);
             // find the neighbor node at that direction
+            
             foreach (Edge e in edges)
             {
                 if (e.direction == direction && e.isActive)
                 {
-                    startPos = this.transform.position;
-                    endPos = e.neighbor.transform.position;
-                    return true;
+                    Material m1 = e.getColor();
+                    Material m2 = playerColor;
+                    Debug.Log("Playcube is " + m2.name + "; Mapcube is " + m1.name);
+                    if (m1 == m2) {
+                        startPos = this.transform.position;
+                        endPos = e.neighbor.transform.position;
+                        return true;
+                    }
+                    
                 }
             }
 
