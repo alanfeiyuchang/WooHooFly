@@ -63,7 +63,8 @@ public class CubeControllerNew : MonoBehaviour
     {
         if (currentNode != null)
         {
-            if (currentNode.FindNodesAtDirection(ref currenPos, ref targetPos, direction, GameManager.instance.levelDirection))
+            Material currentColor = gameObject.GetComponent<MeshRenderer>().sharedMaterial;
+            if (currentNode.FindNodesAtDirection(ref currenPos, ref targetPos, direction, GameManager.instance.levelDirection, currentColor))
             {
                 Vector3 midPos = (currenPos + targetPos) / 2;
 

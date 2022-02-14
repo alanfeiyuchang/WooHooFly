@@ -22,6 +22,7 @@ namespace WooHooFly.NodeSystem
 
         private void Start()
         {
+
             InitNeighbors();
         }
 

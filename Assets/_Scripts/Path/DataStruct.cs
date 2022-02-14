@@ -10,6 +10,13 @@ namespace WooHooFly.NodeSystem
         public Node neighbor;
         public bool isActive;
         public Direction direction;
+
+        public GameObject Tile;
+
+        public Material getColor() {
+            return Tile.GetComponent<MeshRenderer>().sharedMaterial;
+        }
+
     }
 
     [System.Serializable]
@@ -22,4 +29,7 @@ namespace WooHooFly.NodeSystem
     {
         None, Bottom, Top, Front, Back, Left, Right
     }
+    
+
+
 }
