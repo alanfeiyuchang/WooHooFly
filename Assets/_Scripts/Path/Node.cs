@@ -240,8 +240,8 @@ namespace WooHooFly.NodeSystem
                     {
                         if (e.direction == direction && e.isActive)
                         {
-                            startPos = c.neighbor;
-                            endPos = e.neighbor;
+                            startPos = c.neighbor.transform.position;
+                            endPos = e.neighbor.transform.position;
                             return true;
                         }
                     }

@@ -34,7 +34,7 @@ public class CubeControllerNew : MonoBehaviour
         {
              JumpDirection = IllusionSpot.direction;
         }
-        else if (IllusionSpot2.ReadyForJump)
+        else if (IllusionSpot != null && IllusionSpot2.ReadyForJump)
         {
             JumpDirection = IllusionSpot2.direction;
         }
@@ -83,9 +83,6 @@ public class CubeControllerNew : MonoBehaviour
             Material currentColor = gameObject.GetComponent<MeshRenderer>().sharedMaterial;
             if (currentNode.FindNodesAtDirection(ref currenPos, ref targetPos, direction, GameManager.instance.levelDirection, currentColor))
             {
-                currenPos = rotateFromNode.transform.position;
-                targetPos = rotateToNode.transform.position;
-
                 Vector3 midPos = (currenPos + targetPos) / 2;
 
                 Vector3 toTargetVector = targetPos - currenPos;
