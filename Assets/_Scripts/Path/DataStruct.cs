@@ -14,7 +14,10 @@ namespace WooHooFly.NodeSystem
         public GameObject Tile;
 
         public Material getColor() {
-            return Tile.GetComponent<MeshRenderer>().sharedMaterial;
+            if (Tile.GetComponent<MeshRenderer>().enabled) {
+                return Tile.GetComponent<MeshRenderer>().sharedMaterial;
+            }
+            return null;
         }
 
     }

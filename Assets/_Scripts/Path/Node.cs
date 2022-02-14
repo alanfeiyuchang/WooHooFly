@@ -220,7 +220,7 @@ namespace WooHooFly.NodeSystem
                 {
                     Material m1 = e.getColor();
                     Material m2 = playerColor;
-                    Debug.Log("Playcube is " + m2.name + "; Mapcube is " + m1.name);
+                    Debug.Log("Playcube is " + m2.name + "; Mapcube is " + (m1 == null ? "invisible" : m1.name));
                     if (m1 == m2) {
                         startPos = this.transform.position;
                         endPos = e.neighbor.transform.position;
