@@ -13,6 +13,7 @@ public class CubeControllerNew : MonoBehaviour
     private bool isMoving;
 
     public IllusionSpot IllusionSpot;
+    public IllusionSpot IllusionSpot2;
     public GameObject SnapPoint;
     public float speed = 500;
     public string JumpDirection;
@@ -32,6 +33,10 @@ public class CubeControllerNew : MonoBehaviour
         if (IllusionSpot != null && IllusionSpot.ReadyForJump)
         {
              JumpDirection = IllusionSpot.direction;
+        }
+        else if (IllusionSpot2.ReadyForJump)
+        {
+            JumpDirection = IllusionSpot2.direction;
         }
         else
         {
@@ -60,6 +65,12 @@ public class CubeControllerNew : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.D))
         {
+            if (JumpDirection == "Right")
+            {
+                IllusionSpot2.IllusionJump();
+                currenPos = SnapPoint.transform.position;
+                SnapToNearestNode();
+            }
             Rolling(Direction.Right);
         }
     }
@@ -68,9 +79,9 @@ public class CubeControllerNew : MonoBehaviour
     {
         if (currentNode != null)
         {
-            Node rotateFromNode = null;
-            Node rotateToNode = null;
-            if (currentNode.FindNodesAtDirection(ref rotateFromNode, ref rotateToNode, direction, GameManager.instance.levelDirection))
+
+            Material currentColor = gameObject.GetComponent<MeshRenderer>().sharedMaterial;
+            if (currentNode.FindNodesAtDirection(ref currenPos, ref targetPos, direction, GameManager.instance.levelDirection, currentColor))
             {
                 currenPos = rotateFromNode.transform.position;
                 targetPos = rotateToNode.transform.position;

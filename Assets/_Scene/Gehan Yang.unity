@@ -1120,6 +1120,10 @@ PrefabInstance:
       propertyPath: IllusionSpot
       value: 
       objectReference: {fileID: 1825358853}
+    - target: {fileID: 5201491358786116031, guid: 241e7c310de5db541b1d6039424e9fe1, type: 3}
+      propertyPath: IllusionSpot2
+      value: 
+      objectReference: {fileID: 1178209266}
     - target: {fileID: 5201491358786116035, guid: 241e7c310de5db541b1d6039424e9fe1, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -1404,6 +1408,31 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5201491358786116035, guid: 241e7c310de5db541b1d6039424e9fe1, type: 3}
   m_PrefabInstance: {fileID: 579513313}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1178209265 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1261258185344848933, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
+  m_PrefabInstance: {fileID: 1232525533}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1178209266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1178209265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a3b6347e9b869448a35ad3e0e364579, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StartPosition: {x: 1, y: 2.5, z: -2}
+  GotoPosition: {x: -1, y: 0.5, z: 0}
+  playerCube: {fileID: 355485514}
+  MapTransform: {fileID: 591463310}
+  OnlyAngle: {x: 0, y: 0, z: 0}
+  CanIllusionJump: 0
+  ReadyForJump: 0
+  direction: Right
 --- !u!4 &1223964533 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1261258185344848921, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
@@ -2375,7 +2404,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a3b6347e9b869448a35ad3e0e364579, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GoToTransform: {fileID: 1401711727}
+  StartPosition: {x: -1, y: 0.5, z: 1}
+  GotoPosition: {x: 1, y: 2.5, z: -1}
   playerCube: {fileID: 355485514}
   MapTransform: {fileID: 591463310}
   OnlyAngle: {x: 0, y: 0, z: 0}
