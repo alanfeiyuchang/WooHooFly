@@ -2,13 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using WooHooFly.NodeSystem;
+
 public class CubeControllerNew : MonoBehaviour
 {
     private Graph graph;
     private Node currentNode;
+    private CubeCollider cubeCollider;
     private Vector3 currenPos;
     private Vector3 targetPos;
     private bool isMoving;
+
     public IllusionSpot IllusionSpot;
     public GameObject SnapPoint;
     public float speed = 500;
@@ -16,6 +19,7 @@ public class CubeControllerNew : MonoBehaviour
     private void Awake()
     {
         graph = FindObjectOfType<Graph>();
+        cubeCollider = this.GetComponent<CubeCollider>();
     }
     private void Start()
     {
@@ -25,7 +29,7 @@ public class CubeControllerNew : MonoBehaviour
 
     private void Update()
     {
-        if (IllusionSpot.ReadyForJump)
+        if (IllusionSpot != null && IllusionSpot.ReadyForJump)
         {
              JumpDirection = IllusionSpot.direction;
         }
@@ -38,6 +42,7 @@ public class CubeControllerNew : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.W))
         {
             Rolling(Direction.Forward);
+            currentNode.GetCurrentColor();
         }
         else if (Input.GetKeyDown(KeyCode.A))
         {
@@ -63,8 +68,13 @@ public class CubeControllerNew : MonoBehaviour
     {
         if (currentNode != null)
         {
-            if (currentNode.FindNodesAtDirection(ref currenPos, ref targetPos, direction, GameManager.instance.levelDirection))
+            Node rotateFromNode = null;
+            Node rotateToNode = null;
+            if (currentNode.FindNodesAtDirection(ref rotateFromNode, ref rotateToNode, direction, GameManager.instance.levelDirection))
             {
+                currenPos = rotateFromNode.transform.position;
+                targetPos = rotateToNode.transform.position;
+
                 Vector3 midPos = (currenPos + targetPos) / 2;
 
                 Vector3 toTargetVector = targetPos - currenPos;
@@ -111,5 +121,11 @@ public class CubeControllerNew : MonoBehaviour
     {
         this.transform.localPosition =  new Vector3(Mathf.Round(this.transform.localPosition.x * 2) / 2, Mathf.Round(this.transform.localPosition.y * 2) / 2, Mathf.Round(this.transform.localPosition.z * 2) / 2);
         this.transform.localEulerAngles = new Vector3(Mathf.Round(transform.localEulerAngles.x / 90) * 90, Mathf.Round(transform.localEulerAngles.y / 90) * 90, Mathf.Round(transform.localEulerAngles.z / 90) * 90);
+    }
+
+    private bool CorrectColor(Vector3 targetPos)
+    {
+        Node targetNode = graph?.FindClosestNode(targetPos);
+        return true;
     }
 }

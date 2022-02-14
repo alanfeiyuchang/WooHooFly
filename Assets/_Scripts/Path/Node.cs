@@ -26,6 +26,9 @@ namespace WooHooFly.NodeSystem
         // previous Node that forms a "breadcrumb" trail back to the start
         private Node previousNode;
 
+        // the current Node belong to
+        private GameObject side;
+
         // invoked when Player enters this node
         //public UnityEvent gameEvent;
 
@@ -39,6 +42,7 @@ namespace WooHooFly.NodeSystem
 
         private void Start()
         {
+            side = this.transform.parent.gameObject;
             // automatic connect Edges with horizontal Nodes
             //if (graph != null)
             //{
@@ -192,7 +196,7 @@ namespace WooHooFly.NodeSystem
         }
 
         // Based on the graph, moving direction and current rotation of level, output startPos and EndPos
-        public bool FindNodesAtDirection(ref Vector3 startPos, ref Vector3 endPos, Direction InputDirection, Direction LevelDirect)
+        public bool FindNodesAtDirection(ref Node startPos, ref Node endPos, Direction InputDirection, Direction LevelDirect)
         {
             Direction direction = correctDirection(LevelDirect, InputDirection);
             // find the neighbor node at that direction
@@ -200,8 +204,8 @@ namespace WooHooFly.NodeSystem
             {
                 if (e.direction == direction && e.isActive)
                 {
-                    startPos = this.transform.position;
-                    endPos = e.neighbor.transform.position;
+                    startPos = this;
+                    endPos = e.neighbor;
                     return true;
                 }
             }
@@ -215,8 +219,8 @@ namespace WooHooFly.NodeSystem
                     {
                         if (e.direction == direction && e.isActive)
                         {
-                            startPos = c.neighbor.transform.position;
-                            endPos = e.neighbor.transform.position;
+                            startPos = c.neighbor;
+                            endPos = e.neighbor;
                             return true;
                         }
                     }
@@ -227,10 +231,17 @@ namespace WooHooFly.NodeSystem
 
         // Based on the rotationAngle and face correct direction
         // e.g. rotate level 90' to right, would make node on the top face: forward(edge)->right(input) ...
-        public Direction correctDirection(Direction LevelDirect, Direction InputDirect)
+        private Direction correctDirection(Direction LevelDirect, Direction InputDirect)
         {
             Direction outputDirect = directionList[((int)InputDirect - (int)LevelDirect + 4) % 4];
             return outputDirect;
+        }
+
+        public void GetCurrentColor()
+        {
+            // since only one tile is ative every time, we can use getComponent
+            CubeCollider.color mapColor = side.GetComponentInChildren<MapColorChange>(false).MapColor;
+            Debug.Log(mapColor);
         }
     }
 }
