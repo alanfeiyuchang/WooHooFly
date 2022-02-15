@@ -15,6 +15,7 @@ public class MouseRotation : MonoBehaviour
     public UnityEvent rotationEvent;
     private void Start()
     {
+        targetAngle = this.transform.eulerAngles;
         UpdateOrientation();
     }
     void Update()

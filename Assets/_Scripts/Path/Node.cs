@@ -234,6 +234,8 @@ namespace WooHooFly.NodeSystem
             // check if other node at same cube space have neighbor node
             foreach (Edge c in corners)
             {
+                Debug.Log(c.direction);
+                Debug.Log(direction);
                 if (c.direction == direction && c.isActive)
                 {
                     foreach (Edge e in c.neighbor.Edges)

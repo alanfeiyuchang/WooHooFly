@@ -11,7 +11,7 @@ namespace WooHooFly.NodeSystem
         private List<Node> allNodes = new List<Node>();
 
         // end of level
-        [SerializeField] private Node goalNode;
+        private Node goalNode;
         private Node GoalNode => goalNode;
 
         private void Awake()

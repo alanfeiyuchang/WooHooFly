@@ -47,7 +47,6 @@ public class CubeControllerNew : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.W))
         {
             Rolling(Direction.Forward);
-            currentNode.GetCurrentColor();
         }
         else if (Input.GetKeyDown(KeyCode.A))
         {
