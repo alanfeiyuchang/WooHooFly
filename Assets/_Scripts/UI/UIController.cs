@@ -21,7 +21,10 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject StartMenu;
     [SerializeField] private GameObject WinPanel;
     [SerializeField] private GameObject PauseMene;
+    [SerializeField] private GameObject InGamePanel;
     [SerializeField] private CubeControllerNew CubeControllerNewScript;
+    [SerializeField] private MouseRotation MouseRotationScript;
+
 
     [SerializeField] private TMP_Text StepCountText;
     private int _stepCount = 0;
@@ -37,11 +40,18 @@ public class UIController : MonoBehaviour
 
     private void Start()
     {
-        CubeControllerNewScript.enabled = false;
+        // Disable user control
+        DisableController();
+
+        // Reset UI
         CloseMenu();
         StartMenu.SetActive(true);
-        //enable step counter
+        InGamePanel.SetActive(false);
+
+        // Enable step counter
         stepCounterActive = true;
+
+        // Analytics data
         Debug.Log("New Game");
 #if ENABLE_CLOUD_SERVICES_ANALYTICS
         AnalyticsResult analyticsResult = Analytics.CustomEvent("newGame", new Dictionary<string, object>
@@ -50,6 +60,7 @@ public class UIController : MonoBehaviour
         });
         Debug.Log("Analytics data sent: " + analyticsResult);
 #endif
+
     }
 
     private void CloseMenu()
@@ -57,6 +68,18 @@ public class UIController : MonoBehaviour
         StartMenu.SetActive(false);
         WinPanel.SetActive(false);
         PauseMene.SetActive(false);
+    }
+
+    private void DisableController()
+    {
+        CubeControllerNewScript.enabled = false;
+        MouseRotationScript.enabled = false;
+    }
+
+    private void EnableController()
+    {
+        CubeControllerNewScript.enabled = true;
+        MouseRotationScript.enabled = true;
     }
 
     public void WinUI()
@@ -72,8 +95,9 @@ public class UIController : MonoBehaviour
     public void StartButtonPressed()
     {
         CloseMenu();
+        InGamePanel.SetActive(true);
         GameManager.instance.CurrentState = GameManager.GameState.playing;
-        CubeControllerNewScript.enabled = true;
+        EnableController();
     }
 
     public void RestartButtonPressed()

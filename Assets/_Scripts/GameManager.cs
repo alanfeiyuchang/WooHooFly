@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     //variables
     private List<GameObject> ChangableTiles = new List<GameObject>();
     public GameState CurrentState = GameState.starting;
+    [SerializeField] private CubeControllerNew CubeControllerNewScript;
+
     [HideInInspector]
     public Direction levelDirection = Direction.None;
     public enum GameState
@@ -51,8 +53,7 @@ public class GameManager : MonoBehaviour
         levelComplete = true;
 
         // disable player controller
-        GameObject playerObject = GameObject.Find("PlayerCube_OneColor");
-        playerObject.GetComponent<CubeControllerNew>().enabled = false;
+        CubeControllerNewScript.enabled = false;
 
         // Send analytics data on winnning the level
 #if ENABLE_CLOUD_SERVICES_ANALYTICS
