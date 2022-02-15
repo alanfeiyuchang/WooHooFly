@@ -49,6 +49,10 @@ public class GameManager : MonoBehaviour
         UIController.instance.WinUI();
         levelComplete = true;
 
+        // disable player controller
+        GameObject playerObject = GameObject.Find("PlayerCube_OneColor");
+        playerObject.GetComponent<CubeControllerNew>().enabled = false;
+
         // Send analytics data on winnning the level
 #if ENABLE_CLOUD_SERVICES_ANALYTICS
         AnalyticsResult analyticsResult = Analytics.CustomEvent("levelWon", new Dictionary<string, object>

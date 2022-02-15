@@ -94,6 +94,7 @@ public class CubeControllerNew : MonoBehaviour
                 Vector3 toCenterVector = this.transform.position - currenPos;
 
                 StartCoroutine(Roll(midPos, Vector3.Cross(toCenterVector, toTargetVector)));
+                UIController.instance.AddStep();
             }
         }
     }
