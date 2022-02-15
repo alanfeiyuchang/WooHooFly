@@ -16,11 +16,12 @@ public class GameManager : MonoBehaviour
 
     //variables
     private List<GameObject> ChangableTiles = new List<GameObject>();
-    public GameState CurrentState = GameState.playing;
+    public GameState CurrentState = GameState.starting;
     [HideInInspector]
     public Direction levelDirection = Direction.None;
     public enum GameState
     {
+        starting,
         restart,
         playing,
         paused,

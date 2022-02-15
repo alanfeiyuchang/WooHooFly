@@ -18,8 +18,10 @@ public class UIController : MonoBehaviour
         instance = this;
     }
 
+    [SerializeField] private GameObject StartMenu;
     [SerializeField] private GameObject WinPanel;
     [SerializeField] private GameObject PauseMene;
+    [SerializeField] private CubeControllerNew CubeControllerNewScript;
 
     [SerializeField] private TMP_Text StepCountText;
     private int _stepCount = 0;
@@ -35,8 +37,9 @@ public class UIController : MonoBehaviour
 
     private void Start()
     {
+        CubeControllerNewScript.enabled = false;
         CloseMenu();
-
+        StartMenu.SetActive(true);
         //enable step counter
         stepCounterActive = true;
         Debug.Log("New Game");
@@ -51,6 +54,7 @@ public class UIController : MonoBehaviour
 
     private void CloseMenu()
     {
+        StartMenu.SetActive(false);
         WinPanel.SetActive(false);
         PauseMene.SetActive(false);
     }
@@ -63,6 +67,13 @@ public class UIController : MonoBehaviour
         stepCounterActive = false;
         StepCount++;
         // Send analytic event for steps
+    }
+
+    public void StartButtonPressed()
+    {
+        CloseMenu();
+        GameManager.instance.CurrentState = GameManager.GameState.playing;
+        CubeControllerNewScript.enabled = true;
     }
 
     public void RestartButtonPressed()
