@@ -42,6 +42,23 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void WinGame()
+    {
+        CurrentState = GameState.win;
+        Debug.Log("***************WON***************");
+        UIController.instance.WinUI();
+        levelComplete = true;
+
+        // Send analytics data on winnning the level
+#if ENABLE_CLOUD_SERVICES_ANALYTICS
+        AnalyticsResult analyticsResult = Analytics.CustomEvent("levelWon", new Dictionary<string, object>
+        {
+            { "level", 1 },
+            { "steps", UIController.instance.GetStep() }
+        });
+        Debug.Log("Analytics data sent: " + analyticsResult);
+#endif
+    }
 
     public void CheckWin()
     {
@@ -60,20 +77,7 @@ public class GameManager : MonoBehaviour
 
         if (win)
         {
-            CurrentState = GameState.win;
-            Debug.Log("***************WON***************");
-            UIController.instance.WinUI();
-            levelComplete = true;
-
-            // Send analytics data on winnning the level
-#if ENABLE_CLOUD_SERVICES_ANALYTICS
-            AnalyticsResult analyticsResult = Analytics.CustomEvent("levelWon", new Dictionary<string, object>
-        {
-            { "level", 1 },
-            { "steps", UIController.instance.GetStep() }
-        });
-            Debug.Log("Analytics data sent: " + analyticsResult);
-#endif
+            WinGame();
         }
         else
         {
