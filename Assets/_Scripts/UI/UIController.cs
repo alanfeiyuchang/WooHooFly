@@ -93,7 +93,6 @@ public class UIController : MonoBehaviour
 
         // disable step counter
         stepCounterActive = false;
-        StepCount++;
         // Send analytic event for steps
     }
 
