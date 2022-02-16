@@ -28,6 +28,8 @@ public class UIController : MonoBehaviour
 
     [SerializeField] private TMP_Text StepCountText;
     private int _stepCount = 0;
+    private float pauseStart;
+    private float pauseDuration;
     public int StepCount
     {
         get => _stepCount;
@@ -98,6 +100,7 @@ public class UIController : MonoBehaviour
         InGamePanel.SetActive(true);
         GameManager.instance.CurrentState = GameManager.GameState.playing;
         EnableController();
+        GameManager.instance.startTime = Time.time;
     }
 
     public void RestartButtonPressed()
@@ -117,11 +120,14 @@ public class UIController : MonoBehaviour
         {
             PauseMene.SetActive(false);
             GameManager.instance.CurrentState = GameManager.GameState.playing;
+            pauseDuration = Time.time - pauseStart;
+            GameManager.instance.totalPauseDuration += pauseDuration;
         }
         else
         {
             PauseMene.SetActive(true);
             GameManager.instance.CurrentState = GameManager.GameState.paused;
+            pauseStart = Time.time;
         }
     }
 
