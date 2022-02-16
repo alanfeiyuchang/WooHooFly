@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
     private List<GameObject> ChangableTiles = new List<GameObject>();
     public GameState CurrentState = GameState.starting;
     [SerializeField] private CubeControllerNew CubeControllerNewScript;
+    public float startTime;
+    public float totalPauseDuration;
 
     [HideInInspector]
     public Direction levelDirection = Direction.None;
@@ -55,12 +57,18 @@ public class GameManager : MonoBehaviour
         // disable player controller
         CubeControllerNewScript.enabled = false;
 
+        // Get level duration
+        float duration = Time.time - startTime - totalPauseDuration;
+        duration = Mathf.Round(duration * 100.0f) * 0.01f;
+        Debug.Log("Time taken: " + duration + " seconds.");
+
         // Send analytics data on winnning the level
 #if ENABLE_CLOUD_SERVICES_ANALYTICS
-        AnalyticsResult analyticsResult = Analytics.CustomEvent("levelWon", new Dictionary<string, object>
+        AnalyticsResult analyticsResult = Analytics.CustomEvent("levelComplete", new Dictionary<string, object>
         {
             { "level", 1 },
-            { "steps", UIController.instance.GetStep() }
+            { "steps", UIController.instance.GetStep() },
+            { "duration" , duration}
         });
         Debug.Log("Analytics data sent: " + analyticsResult);
 #endif
