@@ -19,6 +19,7 @@ public class UIController : MonoBehaviour
     }
 
     [SerializeField] private GameObject StartMenu;
+    [SerializeField] private GameObject Title;
     [SerializeField] private GameObject WinPanel;
     [SerializeField] private GameObject PauseMene;
     [SerializeField] private GameObject InGamePanel;
@@ -47,6 +48,7 @@ public class UIController : MonoBehaviour
 
         // Reset UI
         CloseMenu();
+        Title.SetActive(true);
         StartMenu.SetActive(true);
         InGamePanel.SetActive(false);
 
@@ -67,6 +69,7 @@ public class UIController : MonoBehaviour
 
     private void CloseMenu()
     {
+        Title.SetActive(false);
         StartMenu.SetActive(false);
         WinPanel.SetActive(false);
         PauseMene.SetActive(false);
