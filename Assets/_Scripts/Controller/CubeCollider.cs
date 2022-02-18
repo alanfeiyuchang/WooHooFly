@@ -6,16 +6,8 @@ public class CubeCollider : MonoBehaviour
 {
     // Start is called before the first frame update
     public static CubeCollider instance;
-    public enum color{
-        green,
-        red,
-        grey
-    };
-    public color Color;
-    public Material Green;
-    public Material Red;
-    public Material Grey;
-    private MapColorChange map;
+    public TileManager.colors Color;
+    private TileManager map;
 
     private MapTag mapTag;
     
@@ -39,33 +31,21 @@ public class CubeCollider : MonoBehaviour
     {
         
         //change mapCube's color
-        if (other.gameObject.tag == "MapCube")
+        if (other.gameObject.tag == "ChangeTile")
         {
-            map = other.gameObject.GetComponent<MapColorChange>();
+            map = other.gameObject.GetComponent<TileManager>();
             map.ColorChange(Color);
    
         }
         //change playerCube's color
-        else if(other.gameObject.tag == "ColorCube")
+        else if(other.gameObject.tag == "ColorTile")
         {
-            Debug.Log("color");
-            map = other.gameObject.GetComponent<MapColorChange>();
-            color c = map.MapColor;
-            MeshRenderer mesh = gameObject.GetComponent<MeshRenderer>();
-            switch (c)
-            {
-                case color.green:
-                    mesh.material = Green;
-                    break;
-                case color.red:
-                    mesh.material = Red;
-                    break;
-                case color.grey:
-                    mesh.material = Grey;
-                    break;
-                default:
-                    break;
-            }
+            
+            map = other.gameObject.GetComponent<TileManager>();
+            TileManager.colors c = map.MapColor;
+            Debug.Log(c);
+            Color = c;
+            TileManager.instance.changeColor(gameObject, c);
         }
     }
 
