@@ -17,7 +17,6 @@ public class GameManager : MonoBehaviour
     //variables
     private List<GameObject> ChangableTiles = new List<GameObject>();
     public GameState CurrentState = GameState.starting;
-    [SerializeField] private CubeControllerNew CubeControllerNewScript;
     public float startTime;
     public float totalPauseDuration;
 
@@ -55,7 +54,7 @@ public class GameManager : MonoBehaviour
         levelComplete = true;
 
         // disable player controller
-        CubeControllerNewScript.enabled = false;
+        MapTransition.instance.GetCurrentCubeControllerScript().enabled = false;
 
         // Get level duration
         float duration = Time.time - startTime - totalPauseDuration;

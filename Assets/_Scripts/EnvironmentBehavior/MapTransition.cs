@@ -13,9 +13,17 @@ public class MapTransition : MonoBehaviour
     private List<GameObject> _toMapCubes;
     private List<GameObject> _toMapFlags;
     private GameObject _toMapPlayerCube;
+
+    private GameObject _dummyLevel;
+
     private void Awake()
     {
         instance = this;
+        foreach (LevelManager levelManager in LevelList)
+        {
+            levelManager.gameObject.SetActive(false);
+        }
+        ChangeLevel();
     }
     private LevelManager _fromLevel;
     private LevelManager _toLevel;
@@ -31,24 +39,53 @@ public class MapTransition : MonoBehaviour
     [Tooltip("How far each cube will drop")]
     [SerializeField] private float DropHeight = 5f;
 
-    private void Start()
+
+    private void Update()
     {
-        foreach (LevelManager levelManager in LevelList)
+        if (Input.GetKeyDown(KeyCode.T))
         {
-            levelManager.gameObject.SetActive(false);
+            LevelTransition();
         }
-        ChangeLevel();
-        //LevelTransition();
+    }
+
+    public CubeControllerNew GetCurrentCubeControllerScript()
+    {
+        return LevelList[_currentLevel].PlayerCube.GetComponent<CubeControllerNew>();
+    }
+
+    public MouseRotation GetCurrentMouseRotationScript()
+    {
+        return LevelList[_currentLevel].GetComponent<MouseRotation>();
+    }
+
+    public void DisableController()
+    {
+        GetCurrentCubeControllerScript().enabled = false;
+        GetCurrentMouseRotationScript().enabled = false;
+    }
+
+    public void EnableController()
+    {
+        GetCurrentCubeControllerScript().enabled = true;
+        GetCurrentMouseRotationScript().enabled = true;
     }
 
     private void ChangeLevel()
     {
+        _canDoTransition = false;
         if (_currentLevel < LevelList.Count)
         {
+            //set up dummy level
+            _dummyLevel = GameObject.Instantiate(LevelList[_currentLevel].gameObject);
+            _dummyLevel.SetActive(false);
+            _dummyLevel.transform.position = LevelList[_currentLevel].transform.position;
+            _dummyLevel.name = "Level " + (_currentLevel + 1);
+
             _fromLevel = LevelList[_currentLevel];
             _fromMapCubes = _fromLevel.MapCubes;
             _fromMapFlags = _fromLevel.Flags;
             _fromMapPlayerCube = _fromLevel.PlayerCube;
+            EnableController();
 
             _fromLevel.gameObject.SetActive(true);
 
@@ -60,11 +97,17 @@ public class MapTransition : MonoBehaviour
                 _toMapPlayerCube = _toLevel.PlayerCube;
                 _canDoTransition = true;
                 _toLevel.gameObject.SetActive(false);
+                UIController.instance.NextButton.SetActive(true);
+            }
+            else
+            {
+                UIController.instance.NextButton.SetActive(true);
             }
         }
         else
         {
             _canDoTransition = false;
+            UIController.instance.NextButton.SetActive(true);
         }
     }
 
@@ -75,11 +118,23 @@ public class MapTransition : MonoBehaviour
         {
             Shuffle(_fromMapCubes);
             Shuffle(_toMapCubes);
-            StartCoroutine(LevelCrashOneByOne(DropTime, DropHeight));
+            StartCoroutine(LevelCrashOneByOne(DropTime, DropHeight, 1));
         }
     }
 
-    IEnumerator LevelCrashOneByOne(float dropTime, float dropHeight)
+    public void RestartLevel()
+    {
+        _toLevel = _dummyLevel.GetComponent<LevelManager>();
+        _toMapCubes = _toLevel.MapCubes;
+        _toMapFlags = _toLevel.Flags;
+        _toMapPlayerCube = _toLevel.PlayerCube;
+
+        Shuffle(_fromMapCubes);
+        Shuffle(_toMapCubes);
+        StartCoroutine(LevelCrashOneByOne(DropTime, DropHeight, 0));
+    }
+
+    IEnumerator LevelCrashOneByOne(float dropTime, float dropHeight, int plus)
     {
         //from map drops
         float betweenTime = TotalCrashTime / _fromMapCubes.Count();
@@ -98,6 +153,7 @@ public class MapTransition : MonoBehaviour
 
         //switch map
         SetPosition(_fromMapCubes, _fromMapFlags, _fromMapPlayerCube, +dropHeight);
+        LevelList[_currentLevel] = _dummyLevel.GetComponent<LevelManager>();
         _fromLevel.gameObject.SetActive(false);
 
         SetPosition(_toMapCubes, _toMapFlags, _toMapPlayerCube, +dropHeight);
@@ -117,6 +173,13 @@ public class MapTransition : MonoBehaviour
         yield return new WaitForSeconds(betweenTime);
         StartCoroutine(LevelOneCubeCrash(dropTime, dropHeight, _toMapPlayerCube.transform));
         yield return new WaitForSeconds(dropTime);
+
+        //switch level
+        //Destroy(_fromLevel.gameObject);
+        DisableController();
+        _currentLevel += plus;
+        ChangeLevel();
+        GameManager.instance.CurrentState = GameManager.GameState.playing;
     }
 
     IEnumerator LevelOneCubeCrash(float dropTime, float dropHeight, Transform trans)
