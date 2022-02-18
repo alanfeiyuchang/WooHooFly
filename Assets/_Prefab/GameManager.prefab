@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1579857106348412192}
   - component: {fileID: 1579857106348412193}
+  - component: {fileID: 186178671}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -43,5 +44,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7302edc074aa0c1438f65ee413fdc055, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Tiles: []
   CurrentState: 0
+  startTime: 0
+  totalPauseDuration: 0
+  levelDirection: 4
+--- !u!114 &186178671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1579857106348412194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32f4bf256f602364abe4372f8eb37b2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentLevel: 0
+  LevelList:
+  - {fileID: 0}
+  - {fileID: 0}
+  TotalCrashTime: 1.2
+  DropTime: 1.5
+  DropHeight: 15
