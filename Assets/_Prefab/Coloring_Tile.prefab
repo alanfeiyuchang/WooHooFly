@@ -12,11 +12,11 @@ GameObject:
   - component: {fileID: 8548493523590339156}
   - component: {fileID: 5160374895661833959}
   - component: {fileID: 3662309399151909389}
-  - component: {fileID: 2487860120131449935}
+  - component: {fileID: 8411795397346023098}
   - component: {fileID: 6763991614440011052}
   m_Layer: 0
   m_Name: Coloring_Tile
-  m_TagString: ColorCube
+  m_TagString: ColorTile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -98,7 +98,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.1, y: 0.1, z: 0.1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2487860120131449935
+--- !u!114 &8411795397346023098
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -110,9 +110,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ad0b6488370dab4990bfcff1992b493, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  red: {fileID: 2100000, guid: ad17409ae82c34d4c9c3d3468da314b7, type: 2}
-  green: {fileID: 2100000, guid: e09abfbfe320b0c47b2ea02a0def6fe1, type: 2}
   MapColor: 0
+  Green: {fileID: 2100000, guid: e09abfbfe320b0c47b2ea02a0def6fe1, type: 2}
+  Red: {fileID: 2100000, guid: ad17409ae82c34d4c9c3d3468da314b7, type: 2}
+  Grey: {fileID: 2100000, guid: 7923840e39c08c441813cf8151aed45f, type: 2}
 --- !u!114 &6763991614440011052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,7 +147,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6575002801959327917
 RectTransform:
   m_ObjectHideFlags: 0

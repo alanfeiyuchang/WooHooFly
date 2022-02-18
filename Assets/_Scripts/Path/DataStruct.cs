@@ -24,7 +24,7 @@ namespace WooHooFly.NodeSystem
             Material m1 = getColor();
             Material m2 = playerColor;
             //Debug.Log("Playcube is " + m2.name + "; Mapcube is " + (m1 == null ? "invisible" : m1.name) + " Tile is " + Tile.tag);
-            if (m1 == m2 || Tile.tag == "ColorCube") {
+            if (m1 == m2 || Tile.tag == "ColorTile") {
                 return true;
             }
             return false;

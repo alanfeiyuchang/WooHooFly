@@ -81,7 +81,7 @@ public class GameManager : MonoBehaviour
         bool win = true;
         foreach (var tile in ChangableTiles)
         {
-            if (tile.GetComponent<MapColorChange>().MapColor == CubeCollider.color.red)
+            if (tile.GetComponent<TileManager>().MapColor == TileManager.colors.red)
             {
                 win = false;
                 break;

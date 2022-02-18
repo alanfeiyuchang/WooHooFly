@@ -260,10 +260,10 @@ namespace WooHooFly.NodeSystem
             return outputDirect;
         }
 
-        public CubeCollider.color GetCurrentColor()
+        public TileManager.colors GetCurrentColor()
         {
             // since only one tile is ative every time, we can use getComponent
-            return side.GetComponentInChildren<MapColorChange>(false).MapColor;
+            return side.GetComponentInChildren<TileManager>(false).MapColor;
         }
     }
 }
