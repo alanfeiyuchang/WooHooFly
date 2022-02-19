@@ -48,9 +48,9 @@ public class MapTransition : MonoBehaviour
         }
     }
 
-    public CubeControllerNew GetCurrentCubeControllerScript()
+    public CubeController GetCurrentCubeControllerScript()
     {
-        return LevelList[_currentLevel].PlayerCube.GetComponent<CubeControllerNew>();
+        return LevelList[_currentLevel].PlayerCube.GetComponent<CubeController>();
     }
 
     public MouseRotation GetCurrentMouseRotationScript()
