@@ -33,6 +33,16 @@ namespace WooHooFly.NodeSystem
     }
 
     [System.Serializable]
+    public class TransitEdge
+    {
+        public Node neighbor;
+        public bool isActive;
+        public Direction direction;
+        public bool atFront;
+    }
+
+
+    [System.Serializable]
     public enum Direction
     {
         None = 4, Forward = 0, Right = 1, Backward = 2, Left = 3

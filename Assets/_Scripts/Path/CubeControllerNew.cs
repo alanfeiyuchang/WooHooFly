@@ -8,12 +8,14 @@ public class CubeControllerNew : MonoBehaviour
     private Graph graph;
     private Node currentNode;
     private CubeCollider cubeCollider;
-    private Vector3 currenPos;
-    private Vector3 targetPos;
     private bool isMoving;
+    Vector3 translateVector = Vector3.zero;
+    bool translateBeforeRotate = false;
+    Node startRollNode = null, endRollNode = null;
 
-    public IllusionSpot IllusionSpot;
-    public IllusionSpot IllusionSpot2;
+
+    //public IllusionSpot IllusionSpot;
+    //public IllusionSpot IllusionSpot2;
     public GameObject SnapPoint;
     public float speed = 500;
     public string JumpDirection;
@@ -24,24 +26,23 @@ public class CubeControllerNew : MonoBehaviour
     }
     private void Start()
     {
-        currenPos = SnapPoint.transform.position;
-        SnapToNearestNode();
+        currentNode = graph?.FindClosestNode(SnapPoint.transform.position);
     }
 
     private void Update()
     {
-        if (IllusionSpot != null && IllusionSpot.ReadyForJump)
-        {
-             JumpDirection = IllusionSpot.direction;
-        }
-        else if (IllusionSpot != null && IllusionSpot2.ReadyForJump)
-        {
-            JumpDirection = IllusionSpot2.direction;
-        }
-        else
-        {
-            JumpDirection = null;
-        }
+        //if (IllusionSpot != null && IllusionSpot.ReadyForJump)
+        //{
+        //     JumpDirection = IllusionSpot.direction;
+        //}
+        //else if (IllusionSpot != null && IllusionSpot2.ReadyForJump)
+        //{
+        //    JumpDirection = IllusionSpot2.direction;
+        //}
+        //else
+        //{
+        //    JumpDirection = null;
+        //}
         if (isMoving)
             return;
         if (Input.GetKeyDown(KeyCode.W))
@@ -50,12 +51,12 @@ public class CubeControllerNew : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.A))
         {
-            if(JumpDirection == "Left")
-            {
-                IllusionSpot.IllusionJump();
-                currenPos = SnapPoint.transform.position;
-                SnapToNearestNode();
-            }
+            //if(JumpDirection == "Left")
+            //{
+            //    IllusionSpot.IllusionJump();
+            //    currenPos = SnapPoint.transform.position;
+            //    SnapToNearestNode();
+            //}
             Rolling(Direction.Left);
         }
         else if (Input.GetKeyDown(KeyCode.S))
@@ -64,12 +65,12 @@ public class CubeControllerNew : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.D))
         {
-            if (JumpDirection == "Right")
-            {
-                IllusionSpot2.IllusionJump();
-                currenPos = SnapPoint.transform.position;
-                SnapToNearestNode();
-            }
+            //if (JumpDirection == "Right")
+            //{
+            //    IllusionSpot2.IllusionJump();
+            //    currenPos = SnapPoint.transform.position;
+            //    SnapToNearestNode();
+            //}
             Rolling(Direction.Right);
         }
     }
@@ -78,23 +79,36 @@ public class CubeControllerNew : MonoBehaviour
     {
         if (currentNode != null)
         {
-            Node startRollNode = null, endRollNode = null;
+            translateVector = Vector3.zero;
             Material currentColor = gameObject.GetComponent<MeshRenderer>().sharedMaterial;
-            if (currentNode.FindNodesAtDirection(ref startRollNode, ref endRollNode, direction, GameManager.instance.levelDirection, currentColor))
+
+            if (currentNode.FindNodesAtDirection(ref startRollNode, ref endRollNode,ref translateVector, ref translateBeforeRotate,  direction, GameManager.instance.levelDirection, currentColor))
             {
                 //if (!CorrectColor(endRollNode))
                 //    return;
 
-                currenPos = startRollNode.transform.position;
-                targetPos = endRollNode.transform.position;
+                Vector3 currenPos = startRollNode.transform.position;
+                Vector3 targetPos = endRollNode.transform.position;
+
+                if (translateBeforeRotate)
+                {
+                    // translate then rotate
+                    this.transform.position = this.transform.position + translateVector;
+                    currenPos = currenPos + translateVector;
+                }
+                else
+                {
+                    // rotate then translate or there is no translate
+                    targetPos = targetPos - translateVector;
+                }
 
                 Vector3 midPos = (currenPos + targetPos) / 2;
-
                 Vector3 toTargetVector = targetPos - currenPos;
                 Vector3 toCenterVector = this.transform.position - currenPos;
 
                 StartCoroutine(Roll(midPos, Vector3.Cross(toCenterVector, toTargetVector)));
-                UIController.instance.AddStep();
+
+                //UIController.instance.AddStep();
             }
         }
     }
@@ -116,19 +130,21 @@ public class CubeControllerNew : MonoBehaviour
 
         GameManager.instance.CurrentState = GameManager.GameState.playing;
         isMoving = false;
-        currenPos = targetPos;
+        if (translateVector != Vector3.zero && !translateBeforeRotate)
+        {
+            // translate after finish rotation
+            this.transform.position = this.transform.position + translateVector;
+        }
         SnapToNearestNode();
+
+
     }
 
     private void SnapToNearestNode()
     {
-        Node nearestNode = graph?.FindClosestNode(currenPos);
-        if (nearestNode != null)
-        {
-            currentNode = nearestNode;
-            roundPosition();
-            SnapPoint.transform.position = currenPos;
-        }
+        currentNode = endRollNode;
+        roundPosition();
+        SnapPoint.transform.position = endRollNode.transform.position;
     }
 
     private void roundPosition()

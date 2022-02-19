@@ -12,10 +12,12 @@ namespace WooHooFly.NodeSystem
         [SerializeField] private Color selectedGizmoColor = Color.blue;
         [SerializeField] private Color inactiveGizmoColor = Color.gray;
         [SerializeField] private Color sameCubeGizmoColor = Color.yellow;
+        [SerializeField] private Color transitCubeGizmoColor = Color.green;
 
         // neighboring nodes + active state
         [SerializeField] private List<Edge> edges = new List<Edge>();
         [SerializeField] private List<Edge> corners = new List<Edge>();
+        [SerializeField] private List<TransitEdge> transits = new List<TransitEdge>();
 
         // Nodes specifically excluded from Edges
         [SerializeField] private List<Node> excludedNodes;
@@ -38,6 +40,8 @@ namespace WooHooFly.NodeSystem
         public Node PreviousNode { get { return previousNode; } set { previousNode = value; } }
         public List<Edge> Edges => edges;
         public List<Edge> Corners => corners;
+
+        public List<TransitEdge> Transits => transits;
 
         private static Direction[] directionList = { Direction.Forward, Direction.Right, Direction.Backward, Direction.Left };
 
@@ -74,7 +78,7 @@ namespace WooHooFly.NodeSystem
                     Gizmos.DrawLine(transform.position, e.neighbor.transform.position);
                 }
             }
-            // draws 
+            // draws a line to node in same cube space
             foreach (Edge e in corners)
             {
                 if (e.neighbor != null)
@@ -83,7 +87,75 @@ namespace WooHooFly.NodeSystem
                     Gizmos.DrawLine(transform.position, e.neighbor.transform.position);
                 }
             }
+
+            //draws a line to virtual node
+            foreach(TransitEdge e in transits)
+            {
+                if(e.neighbor != null)
+                {
+                    Vector3 virtualNeigborPos = this.transform.position + GetTranslate(e.direction);
+                    Gizmos.color = transitCubeGizmoColor;
+                    Gizmos.DrawLine(transform.position, virtualNeigborPos);
+                    Gizmos.DrawSphere(virtualNeigborPos, gizmoRadius);
+                    Gizmos.DrawLine(virtualNeigborPos, e.neighbor.transform.position);
+                }
+            }
         }
+
+
+        // node blue axis is forward, red is right
+        private Direction GetDirection(Vector3 horizontalDir)
+        {
+            Direction direction;
+
+            switch (horizontalDir)
+            {
+                case Vector3 dir when dir.Equals(transform.forward):
+                    direction = Direction.Forward;
+                    break;
+                case Vector3 dir when dir.Equals(-transform.forward):
+                    direction = Direction.Backward;
+                    break;
+                case Vector3 dir when dir.Equals(transform.right):
+                    direction = Direction.Right;
+                    break;
+                case Vector3 dir when dir.Equals(-transform.right):
+                    direction = Direction.Left;
+                    break;
+                default:
+                    direction = Direction.None;
+                    break;
+            }
+
+            return direction;
+        }
+
+        // based on the direction to get the translate Vector
+        private Vector3 GetTranslate(Direction direction)
+        {
+            Vector3 translateVector = Vector3.zero;
+
+            switch (direction)
+            {
+                case Direction.Forward:
+                    translateVector = this.transform.forward;
+                    break;
+                case Direction.Left:
+                    translateVector = -this.transform.right;
+                    break;
+                case Direction.Backward:
+                    translateVector = -this.transform.forward;
+                    break;
+                case Direction.Right:
+                    translateVector = this.transform.right;
+                    break;
+                case Direction.None:
+                    break;
+            }
+            return translateVector;
+        }
+
+
 
         // fill out edge connections to neighboring nodes automatically
         public void FindNeighbors()
@@ -101,22 +173,6 @@ namespace WooHooFly.NodeSystem
                     edges.Add(newEdge);
                 }
             }
-        }
-
-        public GameObject getActiveTile() {
-            Transform parent = transform.parent;
-            foreach (Transform child in parent)
-            {
-                if (child.gameObject.activeSelf && child.gameObject.name != "Node") {
-                    return child.gameObject;
-                }
-            }
-            return null;
-        }
-
-        public void setTile(ref GameObject tile) 
-        {
-            Tile = tile;
         }
 
         // connect nodes in the same cube space
@@ -154,6 +210,22 @@ namespace WooHooFly.NodeSystem
             }
         }
 
+        public GameObject getActiveTile() {
+            Transform parent = transform.parent;
+            foreach (Transform child in parent)
+            {
+                if (child.gameObject.activeSelf && child.gameObject.name != "Node") {
+                    return child.gameObject;
+                }
+            }
+            return null;
+        }
+
+        public void setTile(ref GameObject tile) 
+        {
+            Tile = tile;
+        }
+
         // is a Node already in the Edges List?
         private bool HasNeighbor(Node node)
         {
@@ -184,38 +256,29 @@ namespace WooHooFly.NodeSystem
             this.graph = graphToInit;
         }
 
-        // node blue axis is forward, red is right
-        private Direction GetDirection(Vector3 horizontalDir)
-        {
-            Direction direction;
-
-            switch (horizontalDir)
-            {
-                case Vector3 dir when dir.Equals(transform.forward):
-                    direction = Direction.Forward;
-                    break;
-                case Vector3 dir when dir.Equals(-transform.forward):
-                    direction = Direction.Backward;
-                    break;
-                case Vector3 dir when dir.Equals(transform.right):
-                    direction = Direction.Right;
-                    break;
-                case Vector3 dir when dir.Equals(-transform.right):
-                    direction = Direction.Left;
-                    break;
-                default:
-                    direction = Direction.None;
-                    break;
-            }
-
-            return direction;
-        }
-
+        
         // Based on the graph, moving direction and current rotation of level, output startPos and EndPos
 
-        public bool FindNodesAtDirection(ref Node startNode, ref Node endNode, Direction InputDirection, Direction LevelDirect, Material playerColor)
+        public bool FindNodesAtDirection(ref Node startNode, ref Node endNode, ref Vector3 transitVector, ref bool translateBeforeRotate, Direction InputDirection, Direction worldDirect, Material playerColor)
         {
-            Direction direction = correctDirection(LevelDirect, InputDirection);
+            Direction direction = correctDirection(worldDirect, InputDirection);
+
+            //find the transit node at that direction 
+            foreach (TransitEdge e in transits)
+            {
+                if(e.direction == direction && e.isActive)
+                {
+                    startNode = this;
+                    endNode = e.neighbor;
+
+                    translateBeforeRotate = !e.atFront;
+                    Vector3 virtualNeigborPos = this.transform.position + GetTranslate(e.direction);
+                    transitVector = endNode.transform.position - virtualNeigborPos; 
+
+                    return true;
+                }
+            }
+
             // find the neighbor node at that direction
             
             foreach (Edge e in edges)
@@ -266,4 +329,6 @@ namespace WooHooFly.NodeSystem
             return side.GetComponentInChildren<MapColorChange>(false).MapColor;
         }
     }
+
+
 }
