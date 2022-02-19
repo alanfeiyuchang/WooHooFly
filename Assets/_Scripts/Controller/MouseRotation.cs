@@ -8,28 +8,35 @@ using WooHooFly.NodeSystem;
 public class MouseRotation : MonoBehaviour
 {
     //public Transform Compass;
-    public float angle;
+    public float rotateAngle;
     private Vector3 rotationAngle;
     private Vector3 targetAngle;
+    public RotationLink[] rotationLinks;
 
     public UnityEvent rotationEvent;
     private void Start()
     {
         targetAngle = this.transform.eulerAngles;
-        UpdateOrientation();
+        UpdateOrientation(targetAngle.y);
     }
     void Update()
     {
         if (GameManager.instance.CurrentState != GameManager.GameState.playing)
             return;
         //rotationAngle = Compass.transform.up * angle;
-        rotationAngle = this.transform.up * angle;
+        rotationAngle = this.transform.up * rotateAngle;
         if (Input.GetAxis("Mouse ScrollWheel") != 0)
         {
             targetAngle += Input.GetAxis("Mouse ScrollWheel") * rotationAngle * 10;
             transform.eulerAngles = clampAngle(targetAngle);
             //StartCoroutine(RotateMap(Compass.transform.up, angle));
-            UpdateOrientation();
+
+            //float angle = Vector3.Angle(this.transform.forward, Vector3.forward);
+            //float angle2 = Vector3.Angle(this.transform.forward, Vector3.right);
+            //currentAngle = (angle2 > 90) ? 360 - angle : angle;
+
+            UpdateOrientation(transform.eulerAngles.y);
+            UpdateLinkers(transform.eulerAngles.y);
 
             if (rotationEvent != null)
                 rotationEvent.Invoke();
@@ -37,11 +44,8 @@ public class MouseRotation : MonoBehaviour
     }
 
     // How the whole level is rotated related to world axis
-    private void UpdateOrientation()
+    private void UpdateOrientation(float angle)
     {
-        float angle = Vector3.Angle(this.transform.forward, Vector3.forward);
-        float angle2 = Vector3.Angle(this.transform.forward, Vector3.right);
-        angle = (angle2 > 90) ? 360 - angle : angle;
 
         if (angle >= 0 && angle < 90)
         {
@@ -59,6 +63,34 @@ public class MouseRotation : MonoBehaviour
         {
             GameManager.instance.levelDirection = Direction.Forward;
         }
+    }
+
+    /// <summary>
+    /// Enable/Disable linker when rotate to certain angle
+    /// </summary>
+    /// <param name="angle"></param>
+    private void UpdateLinkers (float angle)
+    {
+        foreach(RotationLink link in rotationLinks)
+        {
+            if(angle == link.activeAngle)
+            {
+                EnableLink(link.nodeA, link.nodeB, true);
+            }
+            else
+            {
+                EnableLink(link.nodeA, link.nodeB, false);
+            }
+        }
+    }
+
+    private void EnableLink(Node nodeA, Node nodeB, bool state)
+    {
+        if (nodeA == null || nodeB == null)
+            return;
+
+        nodeA.EnableTransitEdge(nodeB, state);
+        nodeB.EnableTransitEdge(nodeA, state);
     }
 
     private Vector3 clampAngle(Vector3 target)
@@ -88,6 +120,8 @@ public class MouseRotation : MonoBehaviour
             z = target.z;
         return new Vector3(x, y, z);
     }
+
+     
 
 
 

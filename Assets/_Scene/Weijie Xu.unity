@@ -152,7 +152,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf2c4b5499c7b7541a46ae5a0326591d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  angle: 10
+  rotateAngle: 10
+  targetAngle: {x: 0, y: 0, z: 0}
+  rotationLinks:
+  - activeAngle: 0
+    nodeA: {fileID: 1899344799}
+    nodeB: {fileID: 668657541}
   rotationEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -387,7 +392,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf2c4b5499c7b7541a46ae5a0326591d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  angle: 0
+  rotateAngle: 0
+  targetAngle: {x: 0, y: 0, z: 0}
+  rotationLinks: []
   rotationEvent:
     m_PersistentCalls:
       m_Calls:

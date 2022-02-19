@@ -42,6 +42,15 @@ namespace WooHooFly.NodeSystem
         public bool atFront;
     }
 
+    [System.Serializable]
+    public class RotationLink
+    {
+        public float activeAngle;
+        [Header("Nodes to activate")]
+        public Node nodeA;
+        public Node nodeB;
+    }
+
 
     [System.Serializable]
     public enum Direction

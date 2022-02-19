@@ -252,6 +252,17 @@ namespace WooHooFly.NodeSystem
             }
         }
 
+        public void EnableTransitEdge(Node neighborNode, bool state)
+        {
+            foreach (TransitEdge e in transits)
+            {
+                if (e.neighbor.Equals(neighborNode))
+                {
+                    e.isActive = state;
+                }
+            }
+        }
+
         public void InitGraph(Graph graphToInit)
         {
             this.graph = graphToInit;
