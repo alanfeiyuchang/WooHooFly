@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using WooHooFly.NodeSystem;
+using WooHooFly.Colors;
+
 #if ENABLE_CLOUD_SERVICES_ANALYTICS
 using UnityEngine.Analytics;
 #endif
@@ -17,7 +19,6 @@ public class GameManager : MonoBehaviour
     //variables
     private List<GameObject> ChangableTiles = new List<GameObject>();
     public GameState CurrentState = GameState.starting;
-    [SerializeField] private CubeControllerNew CubeControllerNewScript;
     public float startTime;
     public float totalPauseDuration;
 
@@ -55,7 +56,7 @@ public class GameManager : MonoBehaviour
         levelComplete = true;
 
         // disable player controller
-        CubeControllerNewScript.enabled = false;
+        MapTransition.instance.GetCurrentCubeControllerScript().enabled = false;
 
         // Get level duration
         float duration = Time.time - startTime - totalPauseDuration;
@@ -82,7 +83,7 @@ public class GameManager : MonoBehaviour
         bool win = true;
         foreach (var tile in ChangableTiles)
         {
-            if (tile.GetComponent<MapColorChange>().MapColor == CubeCollider.color.red)
+            if (tile.GetComponent<TileManager>().MapColor == TileColor.red)
             {
                 win = false;
                 break;

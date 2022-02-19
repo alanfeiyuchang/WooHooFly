@@ -18,9 +18,9 @@ public class PlayerBottomCollider : MonoBehaviour
     void Update()
     {
         transform.position = new Vector3(playerCube.transform.position.x,
-        playerCube.transform.position.y - 0.5f,playerCube.transform.position.z);
+        playerCube.transform.position.y + 0.51f,playerCube.transform.position.z);
     }
-    private void OnTriggerEnter(Collider other)
+    /*private void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.tag == "MapCube") {
 
@@ -42,8 +42,8 @@ public class PlayerBottomCollider : MonoBehaviour
             }
             
         }
-
-    private void OnTriggerExit(Collider other)
+*/
+    /*private void OnTriggerExit(Collider other)
         {
             if (other.gameObject.tag == "MapCube") {
                 CubeControllerTemp cubeController = CubeControllerTemp.instance;
@@ -52,5 +52,5 @@ public class PlayerBottomCollider : MonoBehaviour
                 cubeController.connectDirection = new bool[4];
             }
         }
-
+*/
 }

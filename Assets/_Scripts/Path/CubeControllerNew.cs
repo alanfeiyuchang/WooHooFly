@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using WooHooFly.NodeSystem;
+using WooHooFly.Colors;
 
 public class CubeControllerNew : MonoBehaviour
 {

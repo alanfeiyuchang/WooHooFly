@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using WooHooFly.Colors;
 
 namespace WooHooFly.NodeSystem
 {
@@ -278,7 +279,9 @@ namespace WooHooFly.NodeSystem
                     return true;
                 }
             }
-
+        public bool FindNodesAtDirection(ref Node startNode, ref Node endNode, Direction InputDirection, Direction LevelDirect, TileColor playerColor)
+        {
+            Direction direction = correctDirection(LevelDirect, InputDirection);
             // find the neighbor node at that direction
             
             foreach (Edge e in edges)
@@ -323,10 +326,10 @@ namespace WooHooFly.NodeSystem
             return outputDirect;
         }
 
-        public CubeCollider.color GetCurrentColor()
+        public TileColor GetCurrentColor()
         {
             // since only one tile is ative every time, we can use getComponent
-            return side.GetComponentInChildren<MapColorChange>(false).MapColor;
+            return side.GetComponentInChildren<TileManager>(false).MapColor;
         }
     }
 

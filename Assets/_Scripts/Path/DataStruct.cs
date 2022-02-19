@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using WooHooFly.Colors;
 
 namespace WooHooFly.NodeSystem
 {
@@ -13,18 +14,18 @@ namespace WooHooFly.NodeSystem
 
         public GameObject Tile;
 
-        public Material getColor() {
+        public TileColor getColor() {
             if (Tile.GetComponent<MeshRenderer>().enabled) {
-                return Tile.GetComponent<MeshRenderer>().sharedMaterial;
+                return Tile.GetComponent<TileManager>().MapColor;
             }
-            return null;
+            return TileColor.none;
         }
         
-        public bool isWalkable(Material playerColor) {
-            Material m1 = getColor();
-            Material m2 = playerColor;
-            //Debug.Log("Playcube is " + m2.name + "; Mapcube is " + (m1 == null ? "invisible" : m1.name) + " Tile is " + Tile.tag);
-            if (m1 == m2 || Tile.tag == "ColorCube") {
+        public bool isWalkable(TileColor playerColor) {
+            TileColor m1 = getColor();
+            TileColor m2 = playerColor;
+            Debug.Log("Playcube is " + m2.ToString() + "; Mapcube is " + m1.ToString() + "; Tile is " + Tile.tag);
+            if (m1.Equals(m2) || Tile.tag != "UnchangeTile") {
                 return true;
             }
             return false;

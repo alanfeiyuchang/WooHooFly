@@ -23,11 +23,9 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject WinPanel;
     [SerializeField] private GameObject PauseMene;
     [SerializeField] private GameObject InGamePanel;
-    [SerializeField] private CubeControllerNew CubeControllerNewScript;
-    [SerializeField] private MouseRotation MouseRotationScript;
-
-
     [SerializeField] private TMP_Text StepCountText;
+
+    public GameObject NextButton;
     private int _stepCount = 0;
     private float pauseStart;
     private float pauseDuration;
@@ -44,7 +42,7 @@ public class UIController : MonoBehaviour
     private void Start()
     {
         // Disable user control
-        DisableController();
+        MapTransition.instance.DisableController();
 
         // Reset UI
         CloseMenu();
@@ -65,7 +63,10 @@ public class UIController : MonoBehaviour
         Debug.Log("Analytics data sent: " + analyticsResult);
 #endif
 
+
     }
+
+    
 
     private void CloseMenu()
     {
@@ -75,18 +76,7 @@ public class UIController : MonoBehaviour
         PauseMene.SetActive(false);
     }
 
-    private void DisableController()
-    {
-        CubeControllerNewScript.enabled = false;
-        MouseRotationScript.enabled = false;
-    }
-
-    private void EnableController()
-    {
-        CubeControllerNewScript.enabled = true;
-        MouseRotationScript.enabled = true;
-    }
-
+    
     public void WinUI()
     {
         WinPanel.SetActive(true);
@@ -101,7 +91,7 @@ public class UIController : MonoBehaviour
         CloseMenu();
         InGamePanel.SetActive(true);
         GameManager.instance.CurrentState = GameManager.GameState.playing;
-        EnableController();
+        MapTransition.instance.EnableController();
         GameManager.instance.startTime = Time.time;
     }
 
@@ -109,8 +99,7 @@ public class UIController : MonoBehaviour
     {
         CloseMenu();
         GameManager.instance.CurrentState = GameManager.GameState.restart;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        Debug.Log("Reload scene");
+        MapTransition.instance.RestartLevel();
     }
 
     public void PauseMenuClicked()
