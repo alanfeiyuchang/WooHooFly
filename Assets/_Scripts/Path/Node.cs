@@ -257,31 +257,29 @@ namespace WooHooFly.NodeSystem
             this.graph = graphToInit;
         }
 
-        
+
         // Based on the graph, moving direction and current rotation of level, output startPos and EndPos
 
-        public bool FindNodesAtDirection(ref Node startNode, ref Node endNode, ref Vector3 transitVector, ref bool translateBeforeRotate, Direction InputDirection, Direction worldDirect, Material playerColor)
+        public bool FindNodesAtDirection(ref Node startNode, ref Node endNode, ref Vector3 transitVector, ref bool translateBeforeRotate, Direction InputDirection, Direction worldDirect, TileColor playerColor)
         {
             Direction direction = correctDirection(worldDirect, InputDirection);
 
             //find the transit node at that direction 
             foreach (TransitEdge e in transits)
             {
-                if(e.direction == direction && e.isActive)
+                if (e.direction == direction && e.isActive)
                 {
                     startNode = this;
                     endNode = e.neighbor;
 
                     translateBeforeRotate = !e.atFront;
                     Vector3 virtualNeigborPos = this.transform.position + GetTranslate(e.direction);
-                    transitVector = endNode.transform.position - virtualNeigborPos; 
+                    transitVector = endNode.transform.position - virtualNeigborPos;
 
                     return true;
                 }
             }
-        public bool FindNodesAtDirection(ref Node startNode, ref Node endNode, Direction InputDirection, Direction LevelDirect, TileColor playerColor)
-        {
-            Direction direction = correctDirection(LevelDirect, InputDirection);
+
             // find the neighbor node at that direction
             
             foreach (Edge e in edges)

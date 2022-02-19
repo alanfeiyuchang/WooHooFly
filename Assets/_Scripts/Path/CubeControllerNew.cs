@@ -81,7 +81,7 @@ public class CubeControllerNew : MonoBehaviour
         if (currentNode != null)
         {
             translateVector = Vector3.zero;
-            Material currentColor = gameObject.GetComponent<MeshRenderer>().sharedMaterial;
+            TileColor currentColor = gameObject.GetComponent<CubeCollider>().Color;
 
             if (currentNode.FindNodesAtDirection(ref startRollNode, ref endRollNode,ref translateVector, ref translateBeforeRotate,  direction, GameManager.instance.levelDirection, currentColor))
             {
