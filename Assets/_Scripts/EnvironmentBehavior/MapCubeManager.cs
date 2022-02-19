@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using WooHooFly.Colors;
 
 public class MapCubeManager : MonoBehaviour
 {
@@ -21,12 +22,12 @@ public class MapCubeManager : MonoBehaviour
     public TileType sideFType;
 
     [Header("Side Tile Color")]
-    public TileManager.colors sideAColor;
-    public TileManager.colors sideBColor;
-    public TileManager.colors sideCColor;
-    public TileManager.colors sideDColor;
-    public TileManager.colors sideEColor;
-    public TileManager.colors sideFColor;
+    public TileColor sideAColor;
+    public TileColor sideBColor;
+    public TileColor sideCColor;
+    public TileColor sideDColor;
+    public TileColor sideEColor;
+    public TileColor sideFColor;
 
     public Material Green;
     public Material Red;
@@ -56,25 +57,25 @@ public class MapCubeManager : MonoBehaviour
     {
         
     }
-    public void changeColor(GameObject ob, TileManager.colors c)
+    public void changeColor(GameObject ob, TileColor c)
     {
         MeshRenderer mesh = ob.GetComponent<MeshRenderer>();
         switch (c)
         {
-            case TileManager.colors.green:
+            case TileColor.green:
                 mesh.material = Green;
                 break;
-            case TileManager.colors.red:
+            case TileColor.red:
                 mesh.material = Red;
                 break;
-            case TileManager.colors.grey:
+            case TileColor.grey:
                 mesh.material = Grey;
                 break;
             default:
                 break;
         }
     }
-    public void changeTileColor(GameObject side, TileManager.colors c)
+    public void changeTileColor(GameObject side, TileColor c)
     {
         GameObject tile = side.transform.GetChild(0).gameObject;
         //Debug.Log("Here" + tile.name);
@@ -112,20 +113,24 @@ public class MapCubeManager : MonoBehaviour
         }*/
         GameObject tile = side.transform.GetChild(0).gameObject;
         GameObject plusSign = tile.transform.GetChild(0).gameObject;
+        GameObject circleSign = tile.transform.GetChild(1).gameObject;
         tile.SetActive(true);
         switch (type)
         {
             case TileType.Changeable:
                 tile.tag = "ChangeTile";
                 plusSign.SetActive(false);
+                circleSign.SetActive(true);
                 break;
             case TileType.Unchangeable:
                 tile.tag = "UnchangeTile";
                 plusSign.SetActive(false);
+                circleSign.SetActive(false);
                 break;
             case TileType.Color:
                 tile.tag = "ColorTile";
                 plusSign.SetActive(true);
+                circleSign.SetActive(false);
                 break;
             default:
                 break;

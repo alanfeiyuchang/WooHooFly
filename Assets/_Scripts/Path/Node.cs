@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using WooHooFly.Colors;
 
 namespace WooHooFly.NodeSystem
 {
@@ -213,7 +214,7 @@ namespace WooHooFly.NodeSystem
 
         // Based on the graph, moving direction and current rotation of level, output startPos and EndPos
 
-        public bool FindNodesAtDirection(ref Node startNode, ref Node endNode, Direction InputDirection, Direction LevelDirect, Material playerColor)
+        public bool FindNodesAtDirection(ref Node startNode, ref Node endNode, Direction InputDirection, Direction LevelDirect, TileColor playerColor)
         {
             Direction direction = correctDirection(LevelDirect, InputDirection);
             // find the neighbor node at that direction
@@ -260,7 +261,7 @@ namespace WooHooFly.NodeSystem
             return outputDirect;
         }
 
-        public TileManager.colors GetCurrentColor()
+        public TileColor GetCurrentColor()
         {
             // since only one tile is ative every time, we can use getComponent
             return side.GetComponentInChildren<TileManager>(false).MapColor;

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using WooHooFly.Colors;
 
 public class TileManager : MonoBehaviour
 {
@@ -9,16 +10,10 @@ public class TileManager : MonoBehaviour
     {
         instance = this;
     }
-    public colors MapColor;
+    public TileColor MapColor;
     public Material Green;
     public Material Red;
     public Material Grey;
-    public enum colors
-    {
-        green,
-        red,
-        grey
-    };
     // Start is called before the first frame update
     void Start()
     {
@@ -53,19 +48,19 @@ public class TileManager : MonoBehaviour
     {
 
     }
-    public void matchColor(colors c)
+    public void matchColor(TileColor c)
     {
         //Debug.Log(c);
         MeshRenderer mesh = gameObject.GetComponent<MeshRenderer>();
         switch (c)
         {
-            case colors.green:
+            case TileColor.green:
                 mesh.material = Green;
                 break;
-            case colors.red:
+            case TileColor.red:
                 mesh.material = Red;
                 break;
-            case colors.grey:
+            case TileColor.grey:
                 mesh.material = Grey;
                 break;
             default:
@@ -96,24 +91,24 @@ public class TileManager : MonoBehaviour
                 break;
         }
     }
-    public void ColorChange(colors color)
+    public void ColorChange(TileColor color)
     {
         MapColor = color;
         changeColor(gameObject, color);
         //GameManager.instance.CheckWin();
     }
-    public void changeColor(GameObject ob, colors c)
+    public void changeColor(GameObject ob, TileColor c)
     {
         MeshRenderer mesh = ob.GetComponent<MeshRenderer>();
         switch (c)
         {
-            case colors.green:
+            case TileColor.green:
                 mesh.material = Green;
                 break;
-            case colors.red:
+            case TileColor.red:
                 mesh.material = Red;
                 break;
-            case colors.grey:
+            case TileColor.grey:
                 mesh.material = Grey;
                 break;
             default:

@@ -1,23 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using WooHooFly.Colors;
 
 public class CubeCollider : MonoBehaviour
 {
     // Start is called before the first frame update
     public static CubeCollider instance;
-    public TileManager.colors Color;
+    //Will become this color once game starts
+    public TileColor Color;
     private TileManager map;
 
-    private MapTag mapTag;
-    
     private void Awake()
     {
         instance = this;
     }
     void Start()
     {
-        
+        TileManager.instance.changeColor(gameObject, Color);
     }
 
     // Update is called once per frame
@@ -42,7 +42,7 @@ public class CubeCollider : MonoBehaviour
         {
             
             map = other.gameObject.GetComponent<TileManager>();
-            TileManager.colors c = map.MapColor;
+            TileColor c = map.MapColor;
             Debug.Log(c);
             Color = c;
             TileManager.instance.changeColor(gameObject, c);

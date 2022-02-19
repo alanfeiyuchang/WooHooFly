@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using WooHooFly.NodeSystem;
+using WooHooFly.Colors;
+
 #if ENABLE_CLOUD_SERVICES_ANALYTICS
 using UnityEngine.Analytics;
 #endif
@@ -81,7 +83,7 @@ public class GameManager : MonoBehaviour
         bool win = true;
         foreach (var tile in ChangableTiles)
         {
-            if (tile.GetComponent<TileManager>().MapColor == TileManager.colors.red)
+            if (tile.GetComponent<TileManager>().MapColor == TileColor.red)
             {
                 win = false;
                 break;

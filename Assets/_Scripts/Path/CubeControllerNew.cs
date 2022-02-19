@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using WooHooFly.NodeSystem;
+using WooHooFly.Colors;
 
 public class CubeControllerNew : MonoBehaviour
 {
@@ -79,7 +80,7 @@ public class CubeControllerNew : MonoBehaviour
         if (currentNode != null)
         {
             Node startRollNode = null, endRollNode = null;
-            Material currentColor = gameObject.GetComponent<MeshRenderer>().sharedMaterial;
+            TileColor currentColor = gameObject.GetComponent<CubeCollider>().Color;
             if (currentNode.FindNodesAtDirection(ref startRollNode, ref endRollNode, direction, GameManager.instance.levelDirection, currentColor))
             {
                 //if (!CorrectColor(endRollNode))
