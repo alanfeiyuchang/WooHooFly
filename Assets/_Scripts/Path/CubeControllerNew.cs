@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using WooHooFly.NodeSystem;
 using WooHooFly.Colors;
+using UnityEngine.Events;
 
 public class CubeControllerNew : MonoBehaviour
 {
@@ -19,7 +20,8 @@ public class CubeControllerNew : MonoBehaviour
     //public IllusionSpot IllusionSpot2;
     public GameObject SnapPoint;
     public float speed = 500;
-    public string JumpDirection;
+    //public string JumpDirection;
+    public UnityEvent RotationEvent;
     private void Awake()
     {
         graph = FindObjectOfType<Graph>();
@@ -109,6 +111,7 @@ public class CubeControllerNew : MonoBehaviour
 
                 StartCoroutine(Roll(midPos, Vector3.Cross(toCenterVector, toTargetVector)));
 
+                RotationEvent.Invoke();
                 //UIController.instance.AddStep();
             }
         }
