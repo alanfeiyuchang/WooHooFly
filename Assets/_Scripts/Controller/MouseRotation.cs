@@ -35,8 +35,9 @@ public class MouseRotation : MonoBehaviour
             //float angle2 = Vector3.Angle(this.transform.forward, Vector3.right);
             //currentAngle = (angle2 > 90) ? 360 - angle : angle;
 
-            UpdateOrientation(transform.eulerAngles.y);
-            UpdateLinkers(transform.eulerAngles.y);
+            Debug.Log(transform.eulerAngles.y);
+            UpdateOrientation(Mathf.RoundToInt(transform.eulerAngles.y));
+            UpdateLinkers(Mathf.RoundToInt(transform.eulerAngles.y));
 
             if (rotationEvent != null)
                 rotationEvent.Invoke();
