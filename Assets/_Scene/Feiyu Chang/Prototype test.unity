@@ -971,7 +971,7 @@ PrefabInstance:
     - target: {fileID: 1194931782501344553, guid: 7342918a9cdced044a52ec91d8b0f1b6, type: 3}
       propertyPath: CubeControllerNewScript
       value: 
-      objectReference: {fileID: 355485517}
+      objectReference: {fileID: 0}
     - target: {fileID: 1539220767455263154, guid: 7342918a9cdced044a52ec91d8b0f1b6, type: 3}
       propertyPath: m_Name
       value: UI
@@ -1022,30 +1022,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7342918a9cdced044a52ec91d8b0f1b6, type: 3}
---- !u!1 &186178670 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1579857106348412194, guid: 6a4d9fab7a7ba43479e94e429f5f4944, type: 3}
+--- !u!114 &186178671 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 186178671, guid: 6a4d9fab7a7ba43479e94e429f5f4944, type: 3}
   m_PrefabInstance: {fileID: 1579857106149721747}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &186178671
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 186178670}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 32f4bf256f602364abe4372f8eb37b2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentLevel: 0
-  LevelList:
-  - {fileID: 591463311}
-  - {fileID: 1582642133}
-  TotalCrashTime: 1.2
-  DropTime: 1.5
-  DropHeight: 15
 --- !u!1 &200895352
 GameObject:
   m_ObjectHideFlags: 0
@@ -1408,17 +1395,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5201491358786116025, guid: 241e7c310de5db541b1d6039424e9fe1, type: 3}
   m_PrefabInstance: {fileID: 579513313}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &355485517 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5201491358786116031, guid: 241e7c310de5db541b1d6039424e9fe1, type: 3}
-  m_PrefabInstance: {fileID: 579513313}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 355485514}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4be8189c831e104f853bfdd2e009ccc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &361809932
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2091,7 +2067,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf2c4b5499c7b7541a46ae5a0326591d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  angle: 5
+  rotateAngle: 0
+  rotationLinks: []
   rotationEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -4580,7 +4557,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf2c4b5499c7b7541a46ae5a0326591d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  angle: 5
+  rotateAngle: 0
+  rotationLinks: []
   rotationEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -5881,6 +5859,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 186178671, guid: 6a4d9fab7a7ba43479e94e429f5f4944, type: 3}
+      propertyPath: LevelList.Array.data[0]
+      value: 
+      objectReference: {fileID: 591463311}
+    - target: {fileID: 186178671, guid: 6a4d9fab7a7ba43479e94e429f5f4944, type: 3}
+      propertyPath: LevelList.Array.data[1]
+      value: 
+      objectReference: {fileID: 1582642133}
     - target: {fileID: 1579857106348412192, guid: 6a4d9fab7a7ba43479e94e429f5f4944, type: 3}
       propertyPath: m_RootOrder
       value: 18
@@ -5925,14 +5911,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1579857106348412193, guid: 6a4d9fab7a7ba43479e94e429f5f4944, type: 3}
-      propertyPath: Tiles.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1579857106348412193, guid: 6a4d9fab7a7ba43479e94e429f5f4944, type: 3}
-      propertyPath: CubeControllerNewScript
-      value: 
-      objectReference: {fileID: 355485517}
     - target: {fileID: 1579857106348412194, guid: 6a4d9fab7a7ba43479e94e429f5f4944, type: 3}
       propertyPath: m_Name
       value: GameManager
