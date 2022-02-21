@@ -97,17 +97,16 @@ public class MapTransition : MonoBehaviour
                 _toMapPlayerCube = _toLevel.PlayerCube;
                 _canDoTransition = true;
                 _toLevel.gameObject.SetActive(false);
-                UIController.instance.NextButton.SetActive(true);
             }
             else
             {
-                UIController.instance.NextButton.SetActive(true);
+                UIController.instance.NextButton.SetActive(false);
             }
         }
         else
         {
             _canDoTransition = false;
-            UIController.instance.NextButton.SetActive(true);
+            UIController.instance.NextButton.SetActive(false);
         }
     }
 
