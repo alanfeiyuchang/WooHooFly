@@ -88,6 +88,8 @@ public class MapTransition : MonoBehaviour
             _fromMapCubes = _fromLevel.MapCubes;
             _fromMapFlags = _fromLevel.Flags;
             _fromMapPlayerCube = _fromLevel.PlayerCube;
+
+            graph.ReInitPath();
             EnableController();
 
             _fromLevel.gameObject.SetActive(true);
@@ -111,7 +113,6 @@ public class MapTransition : MonoBehaviour
             _canDoTransition = false;
             UIController.instance.NextButton.SetActive(false);
         }
-        graph.ReInitPath();
     }
 
 
