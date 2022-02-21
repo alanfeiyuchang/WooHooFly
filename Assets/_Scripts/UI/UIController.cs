@@ -11,7 +11,8 @@ using UnityEngine.Analytics;
 public class UIController : MonoBehaviour
 {
     public static UIController instance;
-    private bool stepCounterActive = false;
+    [HideInInspector]
+    public bool stepCounterActive = false;
 
     private void Awake()
     {
@@ -98,6 +99,7 @@ public class UIController : MonoBehaviour
     public void RestartButtonPressed()
     {
         CloseMenu();
+        stepCounterActive = true;
         GameManager.instance.CurrentState = GameManager.GameState.restart;
         MapTransition.instance.RestartLevel();
     }

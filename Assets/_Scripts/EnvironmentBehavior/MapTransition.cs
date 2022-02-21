@@ -188,6 +188,7 @@ public class MapTransition : MonoBehaviour
         _currentLevel += plus;
         ChangeLevel();
         GameManager.instance.CurrentState = GameManager.GameState.playing;
+        UIController.instance.stepCounterActive = true;
     }
 
     IEnumerator LevelOneCubeCrash(float dropTime, float dropHeight, Transform trans)
