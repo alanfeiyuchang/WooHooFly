@@ -154,6 +154,7 @@ public class MapTransition : MonoBehaviour
         }
         
         yield return new WaitForSeconds(dropTime);
+        UIController.instance.StepCount = 0;
 
         //switch map
         SetPosition(_fromMapCubes, _fromMapFlags, _fromMapPlayerCube, +dropHeight);
@@ -178,7 +179,6 @@ public class MapTransition : MonoBehaviour
         }
         yield return new WaitForSeconds(dropTime+0.5f);
 
-        UIController.instance.StepCount = 0;
 
         //switch level
         //Destroy(_fromLevel.gameObject);
