@@ -169,13 +169,13 @@ public class MapTransition : MonoBehaviour
             StartCoroutine(LevelOneCubeCrash(dropTime, dropHeight, go.transform));
             yield return new WaitForSeconds(betweenTime);
         }
+        StartCoroutine(LevelOneCubeCrash(dropTime, dropHeight, _toMapPlayerCube.transform));
+        yield return new WaitForSeconds(betweenTime);
         foreach (GameObject flag in _toMapFlags)
         {
             StartCoroutine(LevelOneCubeCrash(dropTime, dropHeight, flag.transform));
         }
-        yield return new WaitForSeconds(betweenTime);
-        StartCoroutine(LevelOneCubeCrash(dropTime, dropHeight, _toMapPlayerCube.transform));
-        yield return new WaitForSeconds(dropTime);
+        yield return new WaitForSeconds(dropTime+0.5f);
 
         //switch level
         //Destroy(_fromLevel.gameObject);
@@ -198,6 +198,8 @@ public class MapTransition : MonoBehaviour
             timeElapsed += Time.deltaTime;
             yield return null;
         }
+        Vector3 finalPos = trans.position;
+        finalPos[1] = (int)Math.Round(finalPos[1]);
     }
 
     private void SetPosition(List<GameObject> cubes, List<GameObject> flags, GameObject playerCube, float height)
