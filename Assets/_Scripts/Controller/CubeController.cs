@@ -85,8 +85,9 @@ public class CubeController : MonoBehaviour
 
             StartCoroutine(Roll(midPos, Vector3.Cross(toCenterVector, toTargetVector)));
 
-            RotationEvent.Invoke();
-            //UIController.instance.AddStep();
+            //RotationEvent.Invoke();
+            if(UIController.instance != null)
+                UIController.instance.AddStep();
         }
     }
 
@@ -113,8 +114,6 @@ public class CubeController : MonoBehaviour
             this.transform.position = this.transform.position + translateVector;
         }
         SnapToNearestNode();
-
-
     }
 
     private void SnapToNearestNode()
