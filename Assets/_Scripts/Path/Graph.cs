@@ -22,7 +22,13 @@ namespace WooHooFly.NodeSystem
 
         private void Start()
         {
+            InitNeighbors();
+        }
 
+        public void ReInitPath()
+        {
+            allNodes = FindObjectsOfType<Node>().ToList();
+            InitNodes();
             InitNeighbors();
         }
 

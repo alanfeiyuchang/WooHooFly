@@ -15,12 +15,8 @@ public class CubeController : MonoBehaviour
     bool translateBeforeRotate = false;
     Node startRollNode = null, endRollNode = null;
 
-
-    //public IllusionSpot IllusionSpot;
-    //public IllusionSpot IllusionSpot2;
     public GameObject SnapPoint;
     public float speed = 500;
-    //public string JumpDirection;
     public UnityEvent RotationEvent;
     private void Awake()
     {
@@ -29,23 +25,10 @@ public class CubeController : MonoBehaviour
     }
     private void Start()
     {
-        currentNode = graph?.FindClosestNode(SnapPoint.transform.position);
     }
 
     private void Update()
     {
-        //if (IllusionSpot != null && IllusionSpot.ReadyForJump)
-        //{
-        //     JumpDirection = IllusionSpot.direction;
-        //}
-        //else if (IllusionSpot != null && IllusionSpot2.ReadyForJump)
-        //{
-        //    JumpDirection = IllusionSpot2.direction;
-        //}
-        //else
-        //{
-        //    JumpDirection = null;
-        //}
         if (isMoving)
             return;
         if (Input.GetKeyDown(KeyCode.W))
@@ -54,12 +37,6 @@ public class CubeController : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.A))
         {
-            //if(JumpDirection == "Left")
-            //{
-            //    IllusionSpot.IllusionJump();
-            //    currenPos = SnapPoint.transform.position;
-            //    SnapToNearestNode();
-            //}
             Rolling(Direction.Left);
         }
         else if (Input.GetKeyDown(KeyCode.S))
@@ -68,52 +45,48 @@ public class CubeController : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.D))
         {
-            //if (JumpDirection == "Right")
-            //{
-            //    IllusionSpot2.IllusionJump();
-            //    currenPos = SnapPoint.transform.position;
-            //    SnapToNearestNode();
-            //}
             Rolling(Direction.Right);
         }
     }
 
     private void Rolling(Direction direction)
     {
-        if (currentNode != null)
+        if (currentNode == null)
         {
-            translateVector = Vector3.zero;
-            TileColor currentColor = gameObject.GetComponent<CubeCollider>().Color;
+            currentNode = graph?.FindClosestNode(SnapPoint.transform.position);
+        }
 
-            if (currentNode.FindNodesAtDirection(ref startRollNode, ref endRollNode,ref translateVector, ref translateBeforeRotate,  direction, GameManager.instance.levelDirection, currentColor))
+        translateVector = Vector3.zero;
+        TileColor currentColor = gameObject.GetComponent<CubeCollider>().Color;
+
+        if (currentNode.FindNodesAtDirection(ref startRollNode, ref endRollNode, ref translateVector, ref translateBeforeRotate, direction, GameManager.instance.levelDirection, currentColor))
+        {
+            //if (!CorrectColor(endRollNode))
+            //    return;
+
+            Vector3 currenPos = startRollNode.transform.position;
+            Vector3 targetPos = endRollNode.transform.position;
+
+            if (translateBeforeRotate)
             {
-                //if (!CorrectColor(endRollNode))
-                //    return;
-
-                Vector3 currenPos = startRollNode.transform.position;
-                Vector3 targetPos = endRollNode.transform.position;
-
-                if (translateBeforeRotate)
-                {
-                    // translate then rotate
-                    this.transform.position = this.transform.position + translateVector;
-                    currenPos = currenPos + translateVector;
-                }
-                else
-                {
-                    // rotate then translate or there is no translate
-                    targetPos = targetPos - translateVector;
-                }
-
-                Vector3 midPos = (currenPos + targetPos) / 2;
-                Vector3 toTargetVector = targetPos - currenPos;
-                Vector3 toCenterVector = this.transform.position - currenPos;
-
-                StartCoroutine(Roll(midPos, Vector3.Cross(toCenterVector, toTargetVector)));
-
-                RotationEvent.Invoke();
-                //UIController.instance.AddStep();
+                // translate then rotate
+                this.transform.position = this.transform.position + translateVector;
+                currenPos = currenPos + translateVector;
             }
+            else
+            {
+                // rotate then translate or there is no translate
+                targetPos = targetPos - translateVector;
+            }
+
+            Vector3 midPos = (currenPos + targetPos) / 2;
+            Vector3 toTargetVector = targetPos - currenPos;
+            Vector3 toCenterVector = this.transform.position - currenPos;
+
+            StartCoroutine(Roll(midPos, Vector3.Cross(toCenterVector, toTargetVector)));
+
+            RotationEvent.Invoke();
+            //UIController.instance.AddStep();
         }
     }
 

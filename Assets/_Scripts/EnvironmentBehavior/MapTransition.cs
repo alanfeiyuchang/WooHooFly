@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Linq;
+using WooHooFly.NodeSystem;
 
 public class MapTransition : MonoBehaviour
 {
@@ -32,6 +33,8 @@ public class MapTransition : MonoBehaviour
     [SerializeField] private int _currentLevel = 0;
     [Tooltip("All the levels in order")]
     [SerializeField] private List<LevelManager> LevelList;
+    [Tooltip("Calculate Path on the current Level")]
+    [SerializeField] private Graph graph;
     [Tooltip("The total crash time between the start falling of the first cube and last cube")]
     [SerializeField] private float TotalCrashTime = 1.5f;
     [Tooltip("How long each cube will drop")]
@@ -109,6 +112,7 @@ public class MapTransition : MonoBehaviour
             _canDoTransition = false;
             UIController.instance.NextButton.SetActive(true);
         }
+        graph.ReInitPath();
     }
 
 
