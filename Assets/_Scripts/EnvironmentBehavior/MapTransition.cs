@@ -139,6 +139,7 @@ public class MapTransition : MonoBehaviour
 
     IEnumerator LevelCrashOneByOne(float dropTime, float dropHeight, int plus)
     {
+        GameManager.instance.CurrentState = GameManager.GameState.falling;
         //from map drops
         float betweenTime = TotalCrashTime / _fromMapCubes.Count();
         foreach (GameObject go in _fromMapCubes)

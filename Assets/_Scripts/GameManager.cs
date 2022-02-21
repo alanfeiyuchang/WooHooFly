@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
         playing,
         paused,
         rotating,
+        falling,
         win
     };
     private bool levelComplete = false;
