@@ -19,10 +19,6 @@ public class MapTransition : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        foreach (LevelManager levelManager in LevelList)
-        {
-            levelManager.gameObject.SetActive(false);
-        }
         ChangeLevel();
     }
     private LevelManager _fromLevel;
@@ -45,6 +41,14 @@ public class MapTransition : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.T))
         {
             LevelTransition();
+        }
+    }
+
+    private void Start()
+    {
+        foreach (LevelManager levelManager in LevelList)
+        {
+            levelManager.gameObject.SetActive(false);
         }
     }
 
