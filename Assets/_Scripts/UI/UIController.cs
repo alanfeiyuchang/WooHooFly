@@ -55,19 +55,22 @@ public class UIController : MonoBehaviour
         stepCounterActive = true;
 
         // Analytics data
-        Debug.Log("New Game");
-#if ENABLE_CLOUD_SERVICES_ANALYTICS
-        AnalyticsResult analyticsResult = Analytics.CustomEvent("newGame", new Dictionary<string, object>
-        {
-            { "level", 1 }
-        });
-        Debug.Log("Analytics data sent: " + analyticsResult);
-#endif
+        SendStartAnalytics();
 
 
     }
 
-    
+    private void SendStartAnalytics()
+    {
+        Debug.Log("[Analytics] New Game");
+#if ENABLE_CLOUD_SERVICES_ANALYTICS
+        AnalyticsResult analyticsResult = Analytics.CustomEvent("newGame", new Dictionary<string, object>
+        {
+            { "level", GameManager.instance.currentLevel }
+        });
+        Debug.Log("[Analytics] sent: " + analyticsResult);
+#endif
+    }
 
     private void CloseMenu()
     {
@@ -84,7 +87,6 @@ public class UIController : MonoBehaviour
 
         // disable step counter
         stepCounterActive = false;
-        // Send analytic event for steps
     }
 
     public void StartButtonPressed()
@@ -100,8 +102,16 @@ public class UIController : MonoBehaviour
     {
         CloseMenu();
         stepCounterActive = true;
+        
+        // if player did not complete the level, record analytics data
+        if ( ! GameManager.instance.IsLevelCompleted() )
+        {
+            GameManager.instance.SendRestartAnalytics();
+        }
+
         GameManager.instance.CurrentState = GameManager.GameState.restart;
         MapTransition.instance.RestartLevel();
+       
     }
 
     public void PauseMenuClicked()
