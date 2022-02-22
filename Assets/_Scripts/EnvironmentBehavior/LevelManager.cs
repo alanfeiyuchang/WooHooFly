@@ -7,4 +7,9 @@ public class LevelManager : MonoBehaviour
     public List<GameObject> MapCubes;
     public List<GameObject> Flags;
     public GameObject PlayerCube;
+
+    private void Start()
+    {
+        MapTransition.instance.RedefineNode();
+    }
 }

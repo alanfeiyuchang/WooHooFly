@@ -91,7 +91,8 @@ public class UIController : MonoBehaviour
     {
         CloseMenu();
         InGamePanel.SetActive(true);
-        MapTransition.instance.RestartLevel();
+        
+        //MapTransition.instance.LevelTransition();
         GameManager.instance.CurrentState = GameManager.GameState.playing;
         MapTransition.instance.EnableController();
         GameManager.instance.startTime = Time.time;

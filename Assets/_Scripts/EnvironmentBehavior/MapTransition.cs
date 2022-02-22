@@ -73,6 +73,11 @@ public class MapTransition : MonoBehaviour
         GetCurrentMouseRotationScript().enabled = true;
     }
 
+    public void RedefineNode()
+    {
+        graph.ReInitPath();
+    }
+
     private void ChangeLevel()
     {
         _canDoTransition = false;

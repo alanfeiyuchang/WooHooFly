@@ -51,6 +51,8 @@ public class CubeController : MonoBehaviour
 
     private void Rolling(Direction direction)
     {
+        if (GameManager.instance.CurrentState != GameManager.GameState.playing) 
+            return;
         if (currentNode == null)
         {
             currentNode = graph?.FindClosestNode(SnapPoint.transform.position);

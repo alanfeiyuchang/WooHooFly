@@ -11,12 +11,13 @@ public class MouseRotation : MonoBehaviour
     public float rotateAngle;
     private Vector3 rotationAngle;
     private Vector3 targetAngle;
+    [SerializeField] private Transform Axis;
     public RotationLink[] rotationLinks;
 
     public UnityEvent rotationEvent;
     private void Start()
     {
-        targetAngle = this.transform.eulerAngles;
+        targetAngle = Axis.eulerAngles;
         UpdateOrientation(targetAngle.y);
     }
     void Update()
