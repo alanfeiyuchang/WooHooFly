@@ -136,8 +136,6 @@ public class MapTransition : MonoBehaviour
         Shuffle(_fromMapCubes);
         Shuffle(_toMapCubes);
         StartCoroutine(LevelCrashOneByOne(DropTime, DropHeight, 0));
-        // Reset Analytics timers and pass level info
-        GameManager.instance.resetAnalyticsTimer(_currentLevel);
     }
 
     IEnumerator LevelCrashOneByOne(float dropTime, float dropHeight, int plus)
@@ -191,8 +189,6 @@ public class MapTransition : MonoBehaviour
         ChangeLevel();
         GameManager.instance.CurrentState = GameManager.GameState.playing;
         UIController.instance.stepCounterActive = true;
-        // Reset Analytics timers and pass level info
-        GameManager.instance.resetAnalyticsTimer(_currentLevel);
     }
 
     IEnumerator LevelOneCubeCrash(float dropTime, float dropHeight, Transform trans)
