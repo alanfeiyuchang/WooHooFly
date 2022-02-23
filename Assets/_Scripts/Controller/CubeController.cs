@@ -21,7 +21,6 @@ public class CubeController : MonoBehaviour
     private void Awake()
     {
         graph = FindObjectOfType<Graph>();
-        cubeCollider = this.GetComponent<CubeCollider>();
     }
     private void Start()
     {
@@ -59,12 +58,12 @@ public class CubeController : MonoBehaviour
         }
 
         translateVector = Vector3.zero;
-        TileColor currentColor = gameObject.GetComponent<CubeCollider>().Color;
+        // TileColor currentColor = gameObject.GetComponent<CubeCollider>().Color;
 
-        if (currentNode.FindNodesAtDirection(ref startRollNode, ref endRollNode, ref translateVector, ref translateBeforeRotate, direction, GameManager.instance.levelDirection, currentColor))
+        if (currentNode.FindNodesAtDirection(ref startRollNode, ref endRollNode, ref translateVector, ref translateBeforeRotate, direction, GameManager.instance.levelDirection))
         {
-            //if (!CorrectColor(endRollNode))
-            //    return;
+            if (!CorrectColor(endRollNode))
+               return;
 
             Vector3 currenPos = startRollNode.transform.position;
             Vector3 targetPos = endRollNode.transform.position;
@@ -133,8 +132,13 @@ public class CubeController : MonoBehaviour
 
     private bool CorrectColor(Node nextNode)
     {
-        if(nextNode.GetCurrentColor() == cubeCollider.Color)
+        TileColor currentColor = gameObject.GetComponent<CubeCollider>().Color;
+        GameObject mapTile = nextNode.GetTile();
+        TileColor mapColor = mapTile.GetComponent<TileManager>().MapColor;
+        Debug.Log("Playcube is " + currentColor.ToString() + "; Mapcube is " + mapColor.ToString()+ "; Tile is " + mapTile.tag);
+        if (currentColor.Equals(mapColor)|| mapTile.tag != "UnchangeTile") {
             return true;
+        }
         return false;
     }
 }

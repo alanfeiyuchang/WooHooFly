@@ -11,26 +11,6 @@ namespace WooHooFly.NodeSystem
         public Node neighbor;
         public bool isActive;
         public Direction direction;
-
-        public GameObject Tile;
-
-        public TileColor getColor() {
-            if (Tile.GetComponent<MeshRenderer>().enabled) {
-                return Tile.GetComponent<TileManager>().MapColor;
-            }
-            return TileColor.none;
-        }
-        
-        public bool isWalkable(TileColor playerColor) {
-            TileColor m1 = getColor();
-            TileColor m2 = playerColor;
-            Debug.Log("Playcube is " + m2.ToString() + "; Mapcube is " + m1.ToString() + "; Tile is " + Tile.tag);
-            if (m1.Equals(m2) || Tile.tag != "UnchangeTile") {
-                return true;
-            }
-            return false;
-        }
-
     }
 
     [System.Serializable]
