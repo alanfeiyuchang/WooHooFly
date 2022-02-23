@@ -20,10 +20,10 @@ public class MapTransition : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        foreach (LevelManager levelManager in LevelList)
+        /*foreach (LevelManager levelManager in LevelList)
         {
             levelManager.gameObject.SetActive(false);
-        }
+        }*/
         ChangeLevel();
     }
     private LevelManager _fromLevel;
