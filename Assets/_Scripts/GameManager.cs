@@ -21,7 +21,9 @@ public class GameManager : MonoBehaviour
     public GameState CurrentState = GameState.starting;
     public float startTime;
     public float totalPauseDuration;
-
+    public int currentLevel = 1;
+    private bool levelComplete = false;
+    
     [HideInInspector]
     public Direction levelDirection = Direction.None;
     public enum GameState
@@ -34,7 +36,7 @@ public class GameManager : MonoBehaviour
         falling,
         win
     };
-    private bool levelComplete = false;
+   
 
     private void Start()
     {
@@ -65,15 +67,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Time taken: " + duration + " seconds.");
 
         // Send analytics data on winnning the level
-#if ENABLE_CLOUD_SERVICES_ANALYTICS
-        AnalyticsResult analyticsResult = Analytics.CustomEvent("levelComplete", new Dictionary<string, object>
-        {
-            { "level", 1 },
-            { "steps", UIController.instance.GetStep() },
-            { "duration" , duration}
-        });
-        Debug.Log("Analytics data sent: " + analyticsResult);
-#endif
+        SendLevelCompleteAnalytics();
     }
 
     public void CheckWin()
@@ -99,5 +93,53 @@ public class GameManager : MonoBehaviour
         {
             //Debug.Log("Not yet");
         }
+    }
+
+    public bool IsLevelCompleted()
+    {
+        return levelComplete;
+    }
+
+    public void resetAnalyticsTimer(int levelIndex)
+    {
+        levelComplete = false;
+        startTime = Time.time;
+        totalPauseDuration = 0;
+        currentLevel = levelIndex + 1;
+    }
+
+    public void SendLevelCompleteAnalytics()
+    {
+        int steps = UIController.instance.GetStep();
+        float duration = Time.time - startTime - totalPauseDuration;
+        duration = Mathf.Round(duration * 100.0f) * 0.01f;
+        Debug.Log("[Analytics] Completed level: " + currentLevel + " in " + steps + " steps. Duration: " + duration + "s");
+
+#if ENABLE_CLOUD_SERVICES_ANALYTICS
+        AnalyticsResult analyticsResult = Analytics.CustomEvent("levelComplete", new Dictionary<string, object>
+        {
+            { "level", currentLevel },
+            { "steps", steps },
+            { "duration" , duration }
+        });
+        Debug.Log("[Analytics] Sent: " + analyticsResult);
+#endif
+    }
+
+    public void SendRestartAnalytics()
+    {
+        int steps = UIController.instance.GetStep();
+        float duration = Time.time - startTime - totalPauseDuration;
+        duration = Mathf.Round(duration * 100.0f) * 0.01f;
+        Debug.Log("[Analytics] Restarted level: " + currentLevel + " after " + steps + " steps. Duration: " + duration + "s");
+#if ENABLE_CLOUD_SERVICES_ANALYTICS
+        AnalyticsResult analyticsResult = Analytics.CustomEvent("levelRestart", new Dictionary<string, object>
+        {
+            { "level", currentLevel },
+            { "steps", steps },
+            { "duration" , duration }
+        });
+        Debug.Log("[Analytics] Sent: " + analyticsResult);
+#endif
     }
 }
