@@ -91,14 +91,16 @@ namespace WooHooFly.NodeSystem
             //draws a line to virtual node
             foreach(TransitEdge e in transits)
             {
-                if(e.neighbor != null)
-                {
-                    Vector3 virtualNeigborPos = this.transform.position + GetTranslate(e.direction);
-                    Gizmos.color = transitCubeGizmoColor;
-                    Gizmos.DrawLine(transform.position, virtualNeigborPos);
-                    Gizmos.DrawSphere(virtualNeigborPos, gizmoRadius);
-                    Gizmos.DrawLine(virtualNeigborPos, e.neighbor.transform.position);
-                }
+                    if (e.neighbor != null)
+                    {
+                        Vector3 virtualNeigborPos = this.transform.position + GetTranslate(e.direction);
+                        Gizmos.color = transitCubeGizmoColor;
+                        Gizmos.DrawLine(transform.position, virtualNeigborPos);
+                        Gizmos.DrawSphere(virtualNeigborPos, gizmoRadius);
+                        Gizmos.DrawLine(virtualNeigborPos, e.neighbor.transform.position);
+                    }
+                
+               
             }
         }
 
@@ -239,10 +241,12 @@ namespace WooHooFly.NodeSystem
         {
             foreach (TransitEdge e in transits)
             {
-                if (e.neighbor.Equals(neighborNode))
-                {
-                    e.isActive = state;
-                }
+                    if (e.neighbor.Equals(neighborNode))
+                    {
+                        e.isActive = state;
+                    }
+                
+                  
             }
         }
 
@@ -257,20 +261,24 @@ namespace WooHooFly.NodeSystem
         public bool FindNodesAtDirection(ref Node startNode, ref Node endNode, ref Vector3 transitVector, ref bool translateBeforeRotate, Direction InputDirection, Direction worldDirect )
         {
             Direction direction = correctDirection(worldDirect, InputDirection);
-
+            
             //find the transit node at that direction 
             foreach (TransitEdge e in transits)
             {
-                if (e.direction == direction && e.isActive)
+                
+                if (e.neighbor.isActiveAndEnabled)
                 {
-                    startNode = this;
-                    endNode = e.neighbor;
+                    if (e.direction == direction && e.isActive)
+                    {
+                        startNode = this;
+                        endNode = e.neighbor;
 
-                    translateBeforeRotate = !e.atFront;
-                    Vector3 virtualNeigborPos = this.transform.position + GetTranslate(e.direction);
-                    transitVector = endNode.transform.position - virtualNeigborPos;
+                        translateBeforeRotate = !e.atFront;
+                        Vector3 virtualNeigborPos = this.transform.position + GetTranslate(e.direction);
+                        transitVector = endNode.transform.position - virtualNeigborPos;
 
-                    return true;
+                        return true;
+                    }
                 }
             }
 
