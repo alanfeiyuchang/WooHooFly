@@ -75,13 +75,47 @@ public class MouseRotation : MonoBehaviour
     {
         foreach(RotationLink link in rotationLinks)
         {
-            if(angle == link.activeAngle)
+            if(link.checkNodeATransform == null && link.checkNodeBTransform == null)
             {
-                EnableLink(link.nodeA, link.nodeB, true);
+                if (angle == link.activeAngle)
+                {
+                    EnableLink(link.nodeA, link.nodeB, true);
+                }
+                else
+                {
+                    EnableLink(link.nodeA, link.nodeB, false);
+                }
             }
             else
             {
-                EnableLink(link.nodeA, link.nodeB, false);
+                if (link.checkNodeATransform != null)
+                {
+                    if(link.checkNodeATransform.transform.localPosition == link.transform)
+                    {
+                        if (angle == link.activeAngle)
+                        {
+                            EnableLink(link.nodeA, link.nodeB, true);
+                        }
+                        else
+                        {
+                            EnableLink(link.nodeA, link.nodeB, false);
+                        }
+                    }   
+                }
+                else if (link.checkNodeBTransform != null)
+                {
+                    if (link.checkNodeBTransform.transform.localPosition == link.transform)
+                    {
+                        if (angle == link.activeAngle)
+                        {
+                            EnableLink(link.nodeA, link.nodeB, true);
+                        }
+                        else
+                        {
+                            EnableLink(link.nodeA, link.nodeB, false);
+                        }
+                    }
+                }
             }
         }
     }

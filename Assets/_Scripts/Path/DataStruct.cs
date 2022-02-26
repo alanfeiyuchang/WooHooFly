@@ -26,6 +26,9 @@ namespace WooHooFly.NodeSystem
     public class RotationLink
     {
         public float activeAngle;
+        public GameObject checkNodeATransform;
+        public GameObject checkNodeBTransform;
+        public Vector3 transform;
         [Header("Nodes to activate")]
         public Node nodeA;
         public Node nodeB;
