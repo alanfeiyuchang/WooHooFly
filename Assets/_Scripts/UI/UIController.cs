@@ -43,13 +43,13 @@ public class UIController : MonoBehaviour
     private void Start()
     {
         // Disable user control
-        MapTransition.instance.DisableController();
+        //MapTransition.instance.DisableController();
 
         // Reset UI
         CloseMenu();
-        Title.SetActive(true);
-        StartMenu.SetActive(true);
-        InGamePanel.SetActive(false);
+        //Title.SetActive(true);
+        //StartMenu.SetActive(true);
+        InGamePanel.SetActive(true);
 
         // Enable step counter
         stepCounterActive = true;
@@ -112,6 +112,13 @@ private void SendStartAnalytics()
         }
     }
 
+    public void HomeButtonPressed()
+    {
+        CloseMenu();
+        InGamePanel.SetActive(true);
+        MapTransition.instance.SelectLevel();
+    }
+
     public void RestartButtonPressed()
     {
         CloseMenu();
@@ -135,6 +142,7 @@ private void SendStartAnalytics()
         if (PauseMene.activeInHierarchy)
         {
             PauseMene.SetActive(false);
+            InGamePanel.SetActive(true);
             GameManager.instance.CurrentState = GameManager.GameState.playing;
             pauseDuration = Time.time - pauseStart;
             GameManager.instance.totalPauseDuration += pauseDuration;
@@ -142,6 +150,7 @@ private void SendStartAnalytics()
         else
         {
             PauseMene.SetActive(true);
+            InGamePanel.SetActive(false);
             GameManager.instance.CurrentState = GameManager.GameState.paused;
             pauseStart = Time.time;
         }

@@ -27,7 +27,7 @@ public class MapTransition : MonoBehaviour
     private bool _canDoTransition = false;
     private GameObject _dummyFolder;
 
-    [SerializeField] private int _currentLevel = 0;
+    public int CurrentLevel = 0;
     [Tooltip("All the levels in order")]
     [SerializeField] private List<LevelManager> LevelList;
     [Tooltip("Calculate Path on the current Level")]
@@ -55,7 +55,7 @@ public class MapTransition : MonoBehaviour
             dummy.SetActive(false);
             levelIndex++;
         }
-        LevelList[_currentLevel].gameObject.SetActive(true);
+        LevelList[CurrentLevel].gameObject.SetActive(true);
 
     }
 
@@ -69,12 +69,12 @@ public class MapTransition : MonoBehaviour
 
     public CubeController GetCurrentCubeControllerScript()
     {
-        return LevelList[_currentLevel].PlayerCube.GetComponent<CubeController>();
+        return LevelList[CurrentLevel].PlayerCube.GetComponent<CubeController>();
     }
 
     public MouseRotation GetCurrentMouseRotationScript()
     {
-        return LevelList[_currentLevel].GetComponent<MouseRotation>();
+        return LevelList[CurrentLevel].GetComponent<MouseRotation>();
     }
 
     public void DisableController()
@@ -140,16 +140,16 @@ public class MapTransition : MonoBehaviour
     {
         
         _canDoTransition = false;
-        if (_currentLevel < LevelList.Count)
+        if (CurrentLevel < LevelList.Count)
         {
             //set up dummy level
-            _dummyLevel = GameObject.Instantiate(LevelList[_currentLevel].Dummy);
+            _dummyLevel = GameObject.Instantiate(LevelList[CurrentLevel].Dummy);
             _dummyLevel.SetActive(false);
-            _dummyLevel.name = "Level " + (_currentLevel);
-            _dummyLevel.GetComponent<LevelManager>().Dummy = LevelList[_currentLevel].Dummy;
+            _dummyLevel.name = "Level " + (CurrentLevel);
+            _dummyLevel.GetComponent<LevelManager>().Dummy = LevelList[CurrentLevel].Dummy;
 
 
-            _fromLevel = LevelList[_currentLevel];
+            _fromLevel = LevelList[CurrentLevel];
             _fromMapCubes = _fromLevel.MapCubes;
             _fromMapFlags = _fromLevel.Flags;
             _fromMapPlayerCube = _fromLevel.PlayerCube;
@@ -161,7 +161,7 @@ public class MapTransition : MonoBehaviour
 
             if (levelIndex + 1 < LevelList.Count)
             {
-                if (_currentLevel == levelIndex)
+                if (CurrentLevel == levelIndex)
                     _toLevel = _dummyLevel.GetComponent<LevelManager>();
                 else
                     _toLevel = LevelList[levelIndex];
@@ -184,10 +184,15 @@ public class MapTransition : MonoBehaviour
         }
     }
 
-
+    public void SelectLevel()
+    {
+        LevelList[0].GetComponent<LevelSelectionManager>().LoadLevelSelection();
+        LevelList[0].GetComponent<LevelSelectionManager>().UpdateLevelSelection();
+        StartCoroutine(LevelCrashOneByOne(DropTime, DropHeight, 1, 0));
+    }
     public void LevelTransition()
     {
-        StartCoroutine(LevelCrashOneByOne(DropTime, DropHeight, 1, _currentLevel+1));
+        StartCoroutine(LevelCrashOneByOne(DropTime, DropHeight, 1, CurrentLevel+1));
     }
 
     public void LevelTransition(int levelIndex)
@@ -197,7 +202,7 @@ public class MapTransition : MonoBehaviour
 
     public void RestartLevel()
     {
-        LevelTransition(_currentLevel);
+        LevelTransition(CurrentLevel);
         /*_toLevel = _dummyLevel.GetComponent<LevelManager>();
         _toMapCubes = _toLevel.MapCubes;
         _toMapFlags = _toLevel.Flags;
@@ -238,7 +243,7 @@ public class MapTransition : MonoBehaviour
 
         //switch map
         SetPosition(_fromMapCubes, _fromMapFlags, _fromMapPlayerCube, +dropHeight);
-        LevelList[_currentLevel] = _dummyLevel.GetComponent<LevelManager>();
+        LevelList[CurrentLevel] = _dummyLevel.GetComponent<LevelManager>();
         _fromLevel.gameObject.SetActive(false);
         Destroy(_fromLevel.gameObject);
 
@@ -263,13 +268,13 @@ public class MapTransition : MonoBehaviour
 
         //switch level
         EnableController();
-        _currentLevel = levelIndex;
+        CurrentLevel = levelIndex;
         
         GameManager.instance.CurrentState = GameManager.GameState.playing;
         UIController.instance.stepCounterActive = true;
 
         // Reset Analytics timers and pass level info
-        GameManager.instance.resetAnalyticsTimer(_currentLevel);
+        GameManager.instance.resetAnalyticsTimer(CurrentLevel);
     }
 
     IEnumerator LevelOneCubeCrash(float dropTime, float dropHeight, Transform trans)

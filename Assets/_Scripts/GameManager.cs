@@ -58,6 +58,14 @@ public class GameManager : MonoBehaviour
         UIController.instance.WinUI();
         levelComplete = true;
 
+        //set unlock
+        if (MapTransition.instance.CurrentLevel == LevelSelectionManager.instance.LevelUnlocked)
+        {
+            LevelSelectionManager.instance.LevelUnlocked++;
+            LevelSelectionManager.instance.UpdateLevelSelection();
+        }
+        
+
         // disable player controller
         MapTransition.instance.GetCurrentCubeControllerScript().enabled = false;
 
