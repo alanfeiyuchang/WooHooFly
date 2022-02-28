@@ -85,10 +85,15 @@ private void SendStartAnalytics()
     public void WinUI()
     {
         WinPanel.SetActive(true);
-
+        
         // disable step counter
         stepCounterActive = false;
         // Send analytic event for steps
+
+        //End Tutorial if available
+        if (TutorialManager.current != null) {
+            TutorialManager.current.EndPositionEnter();
+        }
     }
 
     public void StartButtonPressed()
@@ -100,6 +105,11 @@ private void SendStartAnalytics()
         GameManager.instance.CurrentState = GameManager.GameState.playing;
         MapTransition.instance.EnableController();
         GameManager.instance.startTime = Time.time;
+
+        //Show Tutorial if available
+        if (TutorialManager.current != null) {
+            TutorialManager.current.StartPositionEnter();
+        }
     }
 
     public void RestartButtonPressed()
