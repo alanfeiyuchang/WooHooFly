@@ -187,8 +187,8 @@ public class MapTransition : MonoBehaviour
 
     public void SelectLevel()
     {
-        LevelList[0].GetComponent<LevelSelectionManager>().LoadLevelSelection();
-        LevelList[0].GetComponent<LevelSelectionManager>().UpdateLevelSelection();
+        /*LevelList[0].GetComponent<LevelSelectionManager>().LoadLevelSelection();
+        LevelList[0].GetComponent<LevelSelectionManager>().UpdateLevelSelection();*/
         StartCoroutine(LevelCrashOneByOne(DropTime, DropHeight, 1, 0));
     }
     public void LevelTransition()
