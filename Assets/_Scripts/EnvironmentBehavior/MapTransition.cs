@@ -65,6 +65,7 @@ public class MapTransition : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.T))
         {
             LevelTransition();
+            
         }
     }
 
