@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class GoalReached : MonoBehaviour
 {
+    private bool touched = false;
     private void OnTriggerEnter(Collider other)
     {
-        GameManager.instance.WinGame();
+        if (!touched && other.CompareTag("Player"))
+        {
+            GameManager.instance.WinGame();
+            touched = true;
+        }
+        
     }
 }

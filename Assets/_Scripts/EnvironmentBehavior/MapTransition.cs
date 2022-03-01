@@ -38,7 +38,8 @@ public class MapTransition : MonoBehaviour
     [SerializeField] private float DropTime = 1.5f;
     [Tooltip("How far each cube will drop")]
     [SerializeField] private float DropHeight = 5f;
-    
+    public int LevelUnlocked = 1;
+
 
     private void Start()
     {

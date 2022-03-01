@@ -22,7 +22,6 @@ public class LevelSelectionManager : MonoBehaviour
     public List<LevelTriggerData> LevelTriggers;
     public Transform PlayerCubeTrans;
 
-    public int LevelUnlocked = 1;
 
     private void Start()
     {
@@ -33,7 +32,7 @@ public class LevelSelectionManager : MonoBehaviour
     public void LoadLevelSelection()
     {
         if (PlayerPrefs.HasKey("LevelUnlocked"))
-            LevelUnlocked = PlayerPrefs.GetInt("LevelUnlocked");
+            MapTransition.instance.LevelUnlocked = PlayerPrefs.GetInt("LevelUnlocked");
         foreach (LevelTriggerData data in LevelTriggers)
         {
             string s = "LevelStars" + (data.LevelIndex).ToString();
@@ -44,8 +43,8 @@ public class LevelSelectionManager : MonoBehaviour
 
     public void UpdateLevelSelection()
     {
-        PlayerPrefs.SetInt("LevelUnlocked", LevelUnlocked);
-        for (int i = 0; i < LevelUnlocked; i++)
+        PlayerPrefs.SetInt("LevelUnlocked", MapTransition.instance.LevelUnlocked);
+        for (int i = 0; i < MapTransition.instance.LevelUnlocked; i++)
         {
             if (i >= LevelTriggers.Count)
                 break;

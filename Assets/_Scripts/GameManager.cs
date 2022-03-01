@@ -79,10 +79,10 @@ public class GameManager : MonoBehaviour
         // WinGame() was called twice after winning
 
         //set unlock
-        if (MapTransition.instance.CurrentLevel == LevelSelectionManager.instance.LevelUnlocked)
+        if (MapTransition.instance.CurrentLevel == MapTransition.instance.LevelUnlocked)
         {
-            LevelSelectionManager.instance.LevelUnlocked++;
-            LevelSelectionManager.instance.UpdateLevelSelection();
+            MapTransition.instance.LevelUnlocked++;
+            //LevelSelectionManager.instance.UpdateLevelSelection();
         }
         
 
