@@ -22,15 +22,40 @@ public class TutorialManager : MonoBehaviour
     private void Start()
     {
         // Initiate TutorialManager event listeners
-        TutorialManager.current.onStartPositionEnter +=  ShowTutorialText;
-        TutorialManager.current.onEndPositionEnter += StopTutorial;
+        GameManager.instance.onGameStateChanged += StartTutorial;
+        // TutorialManager.current.onStartPositionEnter +=  ShowTutorialText;
+        // TutorialManager.current.onEndPositionEnter += StopTutorial;
         _text = transform.GetChild(0).gameObject;
+        ShowTutorialText();
         // _goal = transform.GetChild(1).gameObject;
+    }
+
+    private void OnDestroy() {
+        // Debug.Log("DESTROYED");
+        GameManager.instance.onGameStateChanged -= StartTutorial;
+    }
+
+    private void OnDisable() {
     }
 
 
     public event Action onStartPositionEnter;
     public event Action onEndPositionEnter;
+
+
+    public void StartTutorial(GameManager.GameState state) {
+
+        if (state == GameManager.GameState.starting) {
+
+            if (!isPlaying){
+                ShowTutorialText();
+            }
+        }
+        else if (state != GameManager.GameState.playing && state != GameManager.GameState.rotating) {
+            StopTutorial();
+        }
+
+    }
 
     public void StartPositionEnter() {
         if (onStartPositionEnter != null) {
@@ -47,8 +72,10 @@ public class TutorialManager : MonoBehaviour
     // ----- Tutotial UI methods ------
     private void ShowTutorialText()
     {
+        Debug.Log("tutorial starts");
         isPlaying = true;
         _text.SetActive(true);
+       
         StartCoroutine(ShowTutorialGoal());
     }
 
@@ -59,13 +86,16 @@ public class TutorialManager : MonoBehaviour
         { 
             yield return StartCoroutine(FadeTextToFullAlpha(1f, _text.GetComponent<Text>(),TutorialTexts[index++]));
 
+            // _text.GetComponent<Text>().text = TutorialTexts[index++];
+
             if (index == TutorialTexts.Count)
                 index = 0;
 
-            yield return new WaitForSeconds(3.0f);
+            yield return new WaitForSeconds(2.0f);
             yield return StartCoroutine(FadeTextToZeroAlpha(1f, _text.GetComponent<Text>()));
+            
         }
-       
+       Debug.Log("tutorial stops");
         // _goal.SetActive(true);
     }
 
@@ -77,6 +107,7 @@ public class TutorialManager : MonoBehaviour
 
     public IEnumerator FadeTextToFullAlpha(float t, Text i, String text)
     {
+        
         i.color = new Color(i.color.r, i.color.g, i.color.b, 0);
         i.text = text;
         while (i.color.a < 1.0f)

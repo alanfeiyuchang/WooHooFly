@@ -50,7 +50,7 @@ public class CubeController : MonoBehaviour
 
     private void Rolling(Direction direction)
     {
-        if (GameManager.instance.CurrentState != GameManager.GameState.playing) 
+        if (GameManager.instance.CurrentState != GameManager.GameState.playing && GameManager.instance.CurrentState != GameManager.GameState.starting) 
             return;
         if (currentNode == null)
         {
