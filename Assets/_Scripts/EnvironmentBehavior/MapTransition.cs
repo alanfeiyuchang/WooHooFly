@@ -274,6 +274,7 @@ public class MapTransition : MonoBehaviour
         UIController.instance.stepCounterActive = true;
 
         // Reset Analytics timers and pass level info
+        Debug.Log("[Analytics] Level "+ (GameManager.instance.currentLevel + 1) + " started");
         GameManager.instance.resetAnalyticsTimer(CurrentLevel);
     }
 

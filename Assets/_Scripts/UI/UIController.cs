@@ -62,7 +62,7 @@ public class UIController : MonoBehaviour
 
 private void SendStartAnalytics()
     {
-        Debug.Log("[Analytics] New Game");
+        Debug.Log("[Analytics] Level "+ GameManager.instance.currentLevel + " started");
 #if ENABLE_CLOUD_SERVICES_ANALYTICS
         AnalyticsResult analyticsResult = Analytics.CustomEvent("newGame", new Dictionary<string, object>
         {

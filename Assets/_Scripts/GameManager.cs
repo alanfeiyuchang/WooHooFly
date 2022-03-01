@@ -75,6 +75,8 @@ public class GameManager : MonoBehaviour
         Debug.Log("***************WON***************");
         UIController.instance.WinUI();
         levelComplete = true;
+        
+        // WinGame() was called twice after winning
 
         //set unlock
         if (MapTransition.instance.CurrentLevel == LevelSelectionManager.instance.LevelUnlocked)
@@ -90,7 +92,7 @@ public class GameManager : MonoBehaviour
         // Get level duration
         float duration = Time.time - startTime - totalPauseDuration;
         duration = Mathf.Round(duration * 100.0f) * 0.01f;
-        Debug.Log("Time taken: " + duration + " seconds.");
+        Debug.Log("[Analytics] Won, Time taken: " + duration + " seconds.");
 
         // Send analytics data on winnning the level
         SendLevelCompleteAnalytics();
