@@ -119,6 +119,11 @@ private void SendStartAnalytics()
         MapTransition.instance.SelectLevel();
     }
 
+    public void NextButtonPressed()
+    {
+        CloseMenu();
+        MapTransition.instance.LevelTransition();
+    }
     public void RestartButtonPressed()
     {
         CloseMenu();
