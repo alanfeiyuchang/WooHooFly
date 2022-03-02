@@ -5,16 +5,20 @@ using WooHooFly.NodeSystem;
 using WooHooFly.Colors;
 using UnityEngine.Events;
 
+public enum InputType { MouseInput, KeyboardInput}
+
 public class CubeController : MonoBehaviour
 {
     private Graph graph;
     private Node currentNode;
     private CubeCollider cubeCollider;
     private bool isMoving;
+    private Clickable[] clickables;
     Vector3 translateVector = Vector3.zero;
     bool translateBeforeRotate = false;
     Node startRollNode = null, endRollNode = null;
 
+    public InputType inputType;
     public GameObject SnapPoint;
     public float speed = 500;
     public UnityEvent RotationEvent;
@@ -22,9 +26,27 @@ public class CubeController : MonoBehaviour
     {
         graph = FindObjectOfType<Graph>();
         cubeCollider = this.GetComponent<CubeCollider>();
+        clickables = FindObjectsOfType<Clickable>();
     }
     private void Start()
     {
+        foreach (Clickable c in clickables)
+        {
+            c.clickAction += OnClick;
+        }
+    }
+
+    private void OnDisable()
+    {
+        // unsubscribe from clickEvents when disabled
+        foreach (Clickable c in clickables)
+        {
+            c.clickAction -= OnClick;
+        }
+    }
+    private void OnClick(Clickable clickable, Vector3 position)
+    {
+
     }
 
     private void Update()

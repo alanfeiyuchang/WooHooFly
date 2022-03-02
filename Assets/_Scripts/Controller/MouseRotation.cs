@@ -47,20 +47,20 @@ public class MouseRotation : MonoBehaviour
     // How the whole level is rotated related to world axis
     private void UpdateOrientation(float angle)
     {
-
-        if (angle >= 0 && angle < 90)
+        //Debug.Log(angle);
+        if (angle > 0 && angle <= 90)
         {
             GameManager.instance.levelDirection = Direction.Right;
         }
-        else if (angle >= 90 && angle < 180)
+        else if (angle > 90 && angle <= 180)
         {
             GameManager.instance.levelDirection = Direction.Backward;
         }
-        else if (angle >= 180 && angle < 270)
+        else if (angle > 180 && angle <= 270)
         {
             GameManager.instance.levelDirection = Direction.Left;
         }
-        else if (angle >= 270 && angle < 360)
+        else if (angle > 270 && angle <= 360)
         {
             GameManager.instance.levelDirection = Direction.Forward;
         }

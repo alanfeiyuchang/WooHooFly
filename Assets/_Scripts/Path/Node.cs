@@ -179,35 +179,50 @@ namespace WooHooFly.NodeSystem
         // connect nodes in the same cube space
         public void FindCorners()
         {
-            Vector3[] horizontalDirection = { transform.forward, -transform.forward, transform.right, -transform.right };
-            Vector3[] verticalDirection = { transform.up, -transform.up };
+            Vector3[] cornerDirection = {   new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, -0.5f, 0f),
+                                            new Vector3(-0.5f, 0.5f, 0f), new Vector3(-0.5f, -0.5f, 0f),
+                                            new Vector3(0.5f, 0f, 0.5f), new Vector3(0.5f, 0, -0.5f),
+                                            new Vector3(-0.5f, 0f, 0.5f), new Vector3(-0.5f, 0, -0.5f),
+                                            new Vector3(0f, 0.5f, 0.5f), new Vector3(0f, 0.5f, -0.5f),
+                                            new Vector3(0f, -0.5f, 0.5f), new Vector3(0f, -0.5f, -0.5f),
+            };
 
             // search through possible corners offsets, they are in the same cube space
-            foreach (Vector3 horizontaldirection in horizontalDirection)
+            // 12 points
+            //UR->R, UF->F, UL->L, UB->B, 
+            //RF->R, RB->R, LF->L, LB->L
+            //DR->R, DF->F, DL->L, DB->B
+
+            foreach (Vector3 direction in cornerDirection)
             {
-                foreach (Vector3 verticaldirection in verticalDirection)
+                Node newNode = graph?.FindNodeAt(transform.position + direction);
+
+                if (newNode == null)
+                    continue;
+
+                if (this.transform.parent.parent == newNode.transform.parent.parent)
                 {
-                    Vector3 direction = horizontaldirection / 2 + verticaldirection / 2;
-
-                    Node newNode = graph?.FindNodeAt(transform.position + direction);
-
-                    if (newNode == null)
-                        continue;
-
-                    if (this.transform.parent.parent == newNode.transform.parent.parent)
-                    {
-                        // two node at same cube which is not traversable
-                        continue;
-                    }
-
-                    // add to edges list if not already included and not excluded specifically
-                    if (!HasNeighbor(newNode) && !excludedNodes.Contains(newNode))
-                    {
-                        Edge newEdge = new Edge { neighbor = newNode, isActive = true, direction = GetDirection(horizontaldirection) };
-                        corners.Add(newEdge);
-                    }
+                    // two node at same cube which is not traversable
+                    continue;
                 }
 
+                Vector3 movingDirection = Vector3.zero;
+                if (direction.x > 0)
+                    movingDirection = transform.right;
+                else if (direction.x < 0)
+                    movingDirection = -transform.right;
+                else if (direction.z > 0)
+                    movingDirection = transform.forward;
+                else if (direction.z < 0)
+                    movingDirection = -transform.forward;
+
+                // add to edges list if not already included and not excluded specifically
+                if (!HasNeighbor(newNode) && !excludedNodes.Contains(newNode))
+                {
+
+                    Edge newEdge = new Edge { neighbor = newNode, isActive = true, direction = GetDirection(movingDirection) };
+                    corners.Add(newEdge);
+                }
             }
         }
 
@@ -297,7 +312,6 @@ namespace WooHooFly.NodeSystem
             {
                 if (e.direction == direction && e.isActive)
                 {
-                    
                     if (e.isWalkable(playerColor)) {
                         startNode = this;
                         endNode = e.neighbor;
@@ -307,14 +321,14 @@ namespace WooHooFly.NodeSystem
             }
 
             // check if other node at same cube space have neighbor node
+            // if so it will found avaiable node path at neighbor node
             foreach (Edge c in corners)
             {
-                Debug.Log(c.direction);
-                Debug.Log(direction);
-                if (c.direction == direction && c.isActive)
+                if ( c.isActive)
                 {
                     foreach (Edge e in c.neighbor.Edges)
                     {
+                        //Direction neigborDirection = correctDirection(worldDirect, direction);
                         if (e.direction == direction && e.isActive)
                         {
                             startNode = c.neighbor;
