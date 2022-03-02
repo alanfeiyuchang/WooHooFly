@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,7 +19,24 @@ public class GameManager : MonoBehaviour
 
     //variables
     private List<GameObject> ChangableTiles = new List<GameObject>();
-    public GameState CurrentState = GameState.starting;
+    private GameState _CurrentState = GameState.starting;
+    //----- publish state change -----
+    public GameState CurrentState {
+        get {
+            return _CurrentState;
+        }
+        set {
+            _CurrentState = value;
+            GameStateChanged(value);
+        }
+    }
+    public event Action<GameState> onGameStateChanged;
+    public void GameStateChanged(GameState state) {
+        if (onGameStateChanged != null) {
+            onGameStateChanged(state);
+        }
+    }
+    //----- end ----
     public float startTime;
     public float totalPauseDuration;
     public int currentLevel = 1;
@@ -40,7 +58,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        CurrentState = GameState.playing;
+        CurrentState = GameState.starting;
 
         foreach (GameObject Obj in GameObject.FindGameObjectsWithTag("MapCube"))
         {
@@ -57,6 +75,16 @@ public class GameManager : MonoBehaviour
         Debug.Log("***************WON***************");
         UIController.instance.WinUI();
         levelComplete = true;
+        
+        // WinGame() was called twice after winning
+
+        //set unlock
+        if (MapTransition.instance.CurrentLevel == MapTransition.instance.LevelUnlocked)
+        {
+            MapTransition.instance.LevelUnlocked++;
+            //LevelSelectionManager.instance.UpdateLevelSelection();
+        }
+        
 
         // disable player controller
         MapTransition.instance.GetCurrentCubeControllerScript().enabled = false;
@@ -64,7 +92,7 @@ public class GameManager : MonoBehaviour
         // Get level duration
         float duration = Time.time - startTime - totalPauseDuration;
         duration = Mathf.Round(duration * 100.0f) * 0.01f;
-        Debug.Log("Time taken: " + duration + " seconds.");
+        Debug.Log("[Analytics] Won, Time taken: " + duration + " seconds.");
 
         // Send analytics data on winnning the level
         SendLevelCompleteAnalytics();

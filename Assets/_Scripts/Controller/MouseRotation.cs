@@ -17,7 +17,7 @@ public class MouseRotation : MonoBehaviour
     public UnityEvent rotationEvent;
     private void Start()
     {
-        targetAngle = Axis.eulerAngles;
+        targetAngle = transform.eulerAngles;
         UpdateOrientation(targetAngle.y);
     }
     void Update()
@@ -28,8 +28,9 @@ public class MouseRotation : MonoBehaviour
         rotationAngle = this.transform.up * rotateAngle;
         if (Input.GetAxis("Mouse ScrollWheel") != 0)
         {
-            targetAngle += Input.GetAxis("Mouse ScrollWheel") * rotationAngle * 10;
-            transform.eulerAngles = clampAngle(targetAngle);
+            targetAngle = Input.GetAxis("Mouse ScrollWheel") * rotationAngle * 10;
+            //transform.eulerAngles = clampAngle(targetAngle);
+            transform.RotateAround(Axis.position, Vector3.up, targetAngle.y);
             //StartCoroutine(RotateMap(Compass.transform.up, angle));
 
             //float angle = Vector3.Angle(this.transform.forward, Vector3.forward);
@@ -74,13 +75,47 @@ public class MouseRotation : MonoBehaviour
     {
         foreach(RotationLink link in rotationLinks)
         {
-            if(angle == link.activeAngle)
+            if(link.checkNodeATransform == null && link.checkNodeBTransform == null)
             {
-                EnableLink(link.nodeA, link.nodeB, true);
+                if (angle == link.activeAngle)
+                {
+                    EnableLink(link.nodeA, link.nodeB, true);
+                }
+                else
+                {
+                    EnableLink(link.nodeA, link.nodeB, false);
+                }
             }
             else
             {
-                EnableLink(link.nodeA, link.nodeB, false);
+                if (link.checkNodeATransform != null)
+                {
+                    if(link.checkNodeATransform.transform.localPosition == link.transform)
+                    {
+                        if (angle == link.activeAngle)
+                        {
+                            EnableLink(link.nodeA, link.nodeB, true);
+                        }
+                        else
+                        {
+                            EnableLink(link.nodeA, link.nodeB, false);
+                        }
+                    }   
+                }
+                else if (link.checkNodeBTransform != null)
+                {
+                    if (link.checkNodeBTransform.transform.localPosition == link.transform)
+                    {
+                        if (angle == link.activeAngle)
+                        {
+                            EnableLink(link.nodeA, link.nodeB, true);
+                        }
+                        else
+                        {
+                            EnableLink(link.nodeA, link.nodeB, false);
+                        }
+                    }
+                }
             }
         }
     }

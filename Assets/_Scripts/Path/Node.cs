@@ -30,7 +30,6 @@ namespace WooHooFly.NodeSystem
         private Node previousNode;
 
         // the current Node belong to
-        private GameObject side;
         private GameObject Tile;
 
         // invoked when Player enters this node
@@ -48,7 +47,7 @@ namespace WooHooFly.NodeSystem
 
         private void Start()
         {
-            side = this.transform.parent.gameObject;
+            Tile = this.transform.parent.gameObject.transform.GetChild(0).gameObject;
             // automatic connect Edges with horizontal Nodes
             //if (graph != null)
             //{
@@ -92,14 +91,16 @@ namespace WooHooFly.NodeSystem
             //draws a line to virtual node
             foreach(TransitEdge e in transits)
             {
-                if(e.neighbor != null)
-                {
-                    Vector3 virtualNeigborPos = this.transform.position + GetTranslate(e.direction);
-                    Gizmos.color = transitCubeGizmoColor;
-                    Gizmos.DrawLine(transform.position, virtualNeigborPos);
-                    Gizmos.DrawSphere(virtualNeigborPos, gizmoRadius);
-                    Gizmos.DrawLine(virtualNeigborPos, e.neighbor.transform.position);
-                }
+                    if (e.neighbor != null)
+                    {
+                        Vector3 virtualNeigborPos = this.transform.position + GetTranslate(e.direction);
+                        Gizmos.color = transitCubeGizmoColor;
+                        Gizmos.DrawLine(transform.position, virtualNeigborPos);
+                        Gizmos.DrawSphere(virtualNeigborPos, gizmoRadius);
+                        Gizmos.DrawLine(virtualNeigborPos, e.neighbor.transform.position);
+                    }
+                
+               
             }
         }
 
@@ -170,7 +171,7 @@ namespace WooHooFly.NodeSystem
                 // add to edges list if not already included and not excluded specifically
                 if (newNode != null && !HasNeighbor(newNode) && !excludedNodes.Contains(newNode))
                 {                  
-                    Edge newEdge = new Edge { neighbor = newNode, isActive = true, direction = GetDirection(direction), Tile = newNode.getActiveTile() };
+                    Edge newEdge = new Edge { neighbor = newNode, isActive = true, direction = GetDirection(direction)};
                     edges.Add(newEdge);
                 }
             }
@@ -226,22 +227,6 @@ namespace WooHooFly.NodeSystem
             }
         }
 
-        public GameObject getActiveTile() {
-            Transform parent = transform.parent;
-            foreach (Transform child in parent)
-            {
-                if (child.gameObject.activeSelf && child.gameObject.name != "Node") {
-                    return child.gameObject;
-                }
-            }
-            return null;
-        }
-
-        public void setTile(ref GameObject tile) 
-        {
-            Tile = tile;
-        }
-
         // is a Node already in the Edges List?
         private bool HasNeighbor(Node node)
         {
@@ -271,10 +256,12 @@ namespace WooHooFly.NodeSystem
         {
             foreach (TransitEdge e in transits)
             {
-                if (e.neighbor.Equals(neighborNode))
-                {
-                    e.isActive = state;
-                }
+                    if (e.neighbor.Equals(neighborNode))
+                    {
+                        e.isActive = state;
+                    }
+                
+                  
             }
         }
 
@@ -286,23 +273,27 @@ namespace WooHooFly.NodeSystem
 
         // Based on the graph, moving direction and current rotation of level, output startPos and EndPos
 
-        public bool FindNodesAtDirection(ref Node startNode, ref Node endNode, ref Vector3 transitVector, ref bool translateBeforeRotate, Direction InputDirection, Direction worldDirect, TileColor playerColor)
+        public bool FindNodesAtDirection(ref Node startNode, ref Node endNode, ref Vector3 transitVector, ref bool translateBeforeRotate, Direction InputDirection, Direction worldDirect )
         {
             Direction direction = correctDirection(worldDirect, InputDirection);
-
+            
             //find the transit node at that direction 
             foreach (TransitEdge e in transits)
             {
-                if (e.direction == direction && e.isActive)
+                
+                if (e.neighbor.isActiveAndEnabled)
                 {
-                    startNode = this;
-                    endNode = e.neighbor;
+                    if (e.direction == direction && e.isActive)
+                    {
+                        startNode = this;
+                        endNode = e.neighbor;
 
-                    translateBeforeRotate = !e.atFront;
-                    Vector3 virtualNeigborPos = this.transform.position + GetTranslate(e.direction);
-                    transitVector = endNode.transform.position - virtualNeigborPos;
+                        translateBeforeRotate = !e.atFront;
+                        Vector3 virtualNeigborPos = this.transform.position + GetTranslate(e.direction);
+                        transitVector = endNode.transform.position - virtualNeigborPos;
 
-                    return true;
+                        return true;
+                    }
                 }
             }
 
@@ -312,11 +303,10 @@ namespace WooHooFly.NodeSystem
             {
                 if (e.direction == direction && e.isActive)
                 {
-                    if (e.isWalkable(playerColor)) {
                         startNode = this;
                         endNode = e.neighbor;
                         return true;
-                    }
+                    
                 }
             }
 
@@ -349,11 +339,16 @@ namespace WooHooFly.NodeSystem
             return outputDirect;
         }
 
-        public TileColor GetCurrentColor()
+        // public TileColor GetCurrentColor()
+        // {
+        //     // since only one tile is ative every time, we can use getComponent
+        //     return side.GetComponentInChildren<TileManager>(false).MapColor;
+        // }
+
+        public GameObject GetTile()
         {
-            // since only one tile is ative every time, we can use getComponent
-            return side.GetComponentInChildren<TileManager>(false).MapColor;
-        }
+            return Tile;
+        } 
     }
 
 

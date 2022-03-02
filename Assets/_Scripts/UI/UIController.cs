@@ -43,13 +43,13 @@ public class UIController : MonoBehaviour
     private void Start()
     {
         // Disable user control
-        MapTransition.instance.DisableController();
+        //MapTransition.instance.DisableController();
 
         // Reset UI
         CloseMenu();
-        Title.SetActive(true);
-        StartMenu.SetActive(true);
-        InGamePanel.SetActive(false);
+        //Title.SetActive(true);
+        //StartMenu.SetActive(true);
+        InGamePanel.SetActive(true);
 
         // Enable step counter
         stepCounterActive = true;
@@ -62,7 +62,7 @@ public class UIController : MonoBehaviour
 
 private void SendStartAnalytics()
     {
-        Debug.Log("[Analytics] New Game");
+        Debug.Log("[Analytics] Level "+ GameManager.instance.currentLevel + " started");
 #if ENABLE_CLOUD_SERVICES_ANALYTICS
         AnalyticsResult analyticsResult = Analytics.CustomEvent("newGame", new Dictionary<string, object>
         {
@@ -85,10 +85,15 @@ private void SendStartAnalytics()
     public void WinUI()
     {
         WinPanel.SetActive(true);
-
+        
         // disable step counter
         stepCounterActive = false;
         // Send analytic event for steps
+
+        //End Tutorial if available
+        if (TutorialManager.current != null) {
+            TutorialManager.current.EndPositionEnter();
+        }
     }
 
     public void StartButtonPressed()
@@ -100,8 +105,25 @@ private void SendStartAnalytics()
         GameManager.instance.CurrentState = GameManager.GameState.playing;
         MapTransition.instance.EnableController();
         GameManager.instance.startTime = Time.time;
+
+        //Show Tutorial if available
+        if (TutorialManager.current != null) {
+            TutorialManager.current.StartPositionEnter();
+        }
     }
 
+    public void HomeButtonPressed()
+    {
+        CloseMenu();
+        InGamePanel.SetActive(true);
+        MapTransition.instance.SelectLevel();
+    }
+
+    public void NextButtonPressed()
+    {
+        CloseMenu();
+        MapTransition.instance.LevelTransition();
+    }
     public void RestartButtonPressed()
     {
         CloseMenu();
@@ -125,6 +147,7 @@ private void SendStartAnalytics()
         if (PauseMene.activeInHierarchy)
         {
             PauseMene.SetActive(false);
+            InGamePanel.SetActive(true);
             GameManager.instance.CurrentState = GameManager.GameState.playing;
             pauseDuration = Time.time - pauseStart;
             GameManager.instance.totalPauseDuration += pauseDuration;
@@ -132,6 +155,7 @@ private void SendStartAnalytics()
         else
         {
             PauseMene.SetActive(true);
+            InGamePanel.SetActive(false);
             GameManager.instance.CurrentState = GameManager.GameState.paused;
             pauseStart = Time.time;
         }
