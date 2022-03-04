@@ -5,93 +5,131 @@ using WooHooFly.NodeSystem;
 using WooHooFly.Colors;
 using UnityEngine.Events;
 
+public enum InputType { MouseInput, KeyboardInput}
+
 public class CubeController : MonoBehaviour
 {
     private Graph graph;
     private Node currentNode;
     private CubeCollider cubeCollider;
     private bool isMoving;
-    Vector3 translateVector = Vector3.zero;
-    bool translateBeforeRotate = false;
-    Node startRollNode = null, endRollNode = null;
+    private Clickable[] clickables;
+    private NodeMovingInfo movingInfo;
 
+    public InputType inputType;
     public GameObject SnapPoint;
     public float speed = 500;
     public UnityEvent RotationEvent;
     private void Awake()
     {
         graph = FindObjectOfType<Graph>();
+        cubeCollider = this.GetComponent<CubeCollider>();
+        clickables = FindObjectsOfType<Clickable>();
     }
     private void Start()
     {
+        foreach (Clickable c in clickables)
+        {
+            c.clickAction += OnClick;
+        }
+
+        currentNode = graph?.FindClosestNode(SnapPoint.transform.position);
+        graph.FindAccessibleNode(currentNode);
     }
 
+    #region mouse_controller
+    private void OnDisable()
+    {
+        // unsubscribe from clickEvents when disabled
+        foreach (Clickable c in clickables)
+        {
+            c.clickAction -= OnClick;
+        }
+    }
+    private void OnClick(Clickable clickable, Vector3 position)
+    {
+        if (inputType != InputType.MouseInput)
+            return;
+
+        if (isMoving)
+            return;
+
+        movingInfo = currentNode.MovingInfo(clickable.clickedNode);
+        Rolling();
+    }
+    #endregion
+
+
+    #region keyboard_control    
     private void Update()
     {
+        if (inputType != InputType.KeyboardInput)
+            return;
         if (isMoving)
             return;
         if (Input.GetKeyDown(KeyCode.W))
         {
-            Rolling(Direction.Forward);
+            RollAtDirection(Direction.Forward);
         }
         else if (Input.GetKeyDown(KeyCode.A))
         {
-            Rolling(Direction.Left);
+            RollAtDirection(Direction.Left);
         }
         else if (Input.GetKeyDown(KeyCode.S))
         {
-            Rolling(Direction.Backward);
+            RollAtDirection(Direction.Backward);
         }
         else if (Input.GetKeyDown(KeyCode.D))
         {
-            Rolling(Direction.Right);
+            RollAtDirection(Direction.Right);
         }
     }
 
-    private void Rolling(Direction direction)
+    private void RollAtDirection(Direction direction)
     {
-        if (GameManager.instance.CurrentState != GameManager.GameState.playing && GameManager.instance.CurrentState != GameManager.GameState.starting) 
+        movingInfo = currentNode.FindNodesAtDirection(direction, GameManager.instance.levelDirection);
+        Rolling();
+    }
+    #endregion
+
+
+    private void Rolling()
+    {
+        if (GameManager.instance.CurrentState != GameManager.GameState.playing && GameManager.instance.CurrentState != GameManager.GameState.starting)
             return;
-        if (currentNode == null)
+
+        if (movingInfo.endNode == null)
+            return;
+
+        if (!CorrectColor(movingInfo.endNode))
+            return;
+
+        Vector3 rotateStartPos = movingInfo.startNode.transform.position;
+        Vector3 rotateEndPos = movingInfo.endNode.transform.position;
+
+        //endRollNode = movingInfo.endNode;
+
+        if (movingInfo.transitState == TransitState.MoveRotate)
         {
-            currentNode = graph?.FindClosestNode(SnapPoint.transform.position);
+            // translate then rotate
+            this.transform.position = this.transform.position + movingInfo.transitVector;
+            rotateStartPos = movingInfo.transitNodePos;
+        }
+        else if(movingInfo.transitState == TransitState.RotateMove)
+        {
+            // rotate then translate
+            rotateEndPos = movingInfo.transitNodePos;
         }
 
-        translateVector = Vector3.zero;
-        // TileColor currentColor = gameObject.GetComponent<CubeCollider>().Color;
-        if (currentNode.FindNodesAtDirection(ref startRollNode, ref endRollNode, ref translateVector, ref translateBeforeRotate, direction, GameManager.instance.levelDirection))
-        {
-          
-            if (!CorrectColor(endRollNode))
-                return;
-            
-            
+        Vector3 midPos = (rotateStartPos + rotateEndPos) / 2;
+        Vector3 toTargetVector = rotateEndPos - rotateStartPos;
+        Vector3 toCenterVector = this.transform.position - rotateStartPos;
 
-            Vector3 currenPos = startRollNode.transform.position;
-            Vector3 targetPos = endRollNode.transform.position;
+        StartCoroutine(Roll(midPos, Vector3.Cross(toCenterVector, toTargetVector)));
 
-            if (translateBeforeRotate)
-            {
-                // translate then rotate
-                this.transform.position = this.transform.position + translateVector;
-                currenPos = currenPos + translateVector;
-            }
-            else
-            {
-                // rotate then translate or there is no translate
-                targetPos = targetPos - translateVector;
-            }
-
-            Vector3 midPos = (currenPos + targetPos) / 2;
-            Vector3 toTargetVector = targetPos - currenPos;
-            Vector3 toCenterVector = this.transform.position - currenPos;
-
-            StartCoroutine(Roll(midPos, Vector3.Cross(toCenterVector, toTargetVector)));
-
-            //RotationEvent.Invoke();
-            if(UIController.instance != null)
-                UIController.instance.AddStep();
-        }
+        //RotationEvent.Invoke();
+        if(UIController.instance != null)
+            UIController.instance.AddStep();
     }
 
     IEnumerator Roll(Vector3 rotationPoint, Vector3 rotationAxis)
@@ -111,19 +149,23 @@ public class CubeController : MonoBehaviour
 
         GameManager.instance.CurrentState = GameManager.GameState.playing;
         isMoving = false;
-        if (translateVector != Vector3.zero && !translateBeforeRotate)
+
+        if (movingInfo.transitState == TransitState.RotateMove)
         {
             // translate after finish rotation
-            this.transform.position = this.transform.position + translateVector;
+            this.transform.position = this.transform.position + movingInfo.transitVector;
         }
+
+        currentNode = movingInfo.endNode;
         SnapToNearestNode();
+
+        graph.FindAccessibleNode(currentNode);
     }
 
     private void SnapToNearestNode()
     {
-        currentNode = endRollNode;
         roundPosition();
-        SnapPoint.transform.position = endRollNode.transform.position;
+        SnapPoint.transform.position = currentNode.transform.position;
     }
 
     private void roundPosition()
@@ -137,13 +179,11 @@ public class CubeController : MonoBehaviour
         TileColor currentColor = gameObject.GetComponent<CubeCollider>().Color;
         GameObject mapTile = nextNode.GetTile();
         TileColor mapColor = mapTile.GetComponent<TileManager>().MapColor;
-        Debug.Log("Playcube is " + currentColor.ToString() + "; Mapcube is " + mapColor.ToString() + "; Tile is " + mapTile.tag);
+        //Debug.Log("Playcube is " + currentColor.ToString() + "; Mapcube is " + mapColor.ToString() + "; Tile is " + mapTile.tag);
         if (currentColor.Equals(mapColor) || mapTile.tag != "UnchangeTile")
         {
                 return true;
         }
-        
-        
         return false;
     }
 }

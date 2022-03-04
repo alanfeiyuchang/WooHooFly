@@ -175,5 +175,25 @@ private void SendStartAnalytics()
         return StepCount;
     }
 
+    public void RotateCW()
+    {
+        
+        if (MouseRotation.instance != null)
+        {
+            Debug.Log(MouseRotation.instance.name);
+            MouseRotation.instance.RotateMapCW();
+        }
+    }
+
+    public void RotateCCW()
+    {
+        
+        if (MouseRotation.instance != null)
+        {
+            Debug.Log(MouseRotation.instance.name);
+            MouseRotation.instance.RotateMapCCW();
+        }
+    }
+
     // add more methods to track other stats
 }

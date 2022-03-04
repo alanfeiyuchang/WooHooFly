@@ -31,6 +31,7 @@ namespace WooHooFly.NodeSystem
 
         // the current Node belong to
         private GameObject Tile;
+        public Clickable ClickableTile { get; private set; }
 
         // invoked when Player enters this node
         //public UnityEvent gameEvent;
@@ -48,6 +49,7 @@ namespace WooHooFly.NodeSystem
         private void Start()
         {
             Tile = this.transform.parent.gameObject.transform.GetChild(0).gameObject;
+            ClickableTile = this.transform.parent.GetComponentInChildren<Clickable>();
             // automatic connect Edges with horizontal Nodes
             //if (graph != null)
             //{
@@ -180,35 +182,50 @@ namespace WooHooFly.NodeSystem
         // connect nodes in the same cube space
         public void FindCorners()
         {
-            Vector3[] horizontalDirection = { transform.forward, -transform.forward, transform.right, -transform.right };
-            Vector3[] verticalDirection = { transform.up, -transform.up };
+            Vector3[] cornerDirection = {   new Vector3(0.5f, 0.5f, 0f), new Vector3(0.5f, -0.5f, 0f),
+                                            new Vector3(-0.5f, 0.5f, 0f), new Vector3(-0.5f, -0.5f, 0f),
+                                            new Vector3(0.5f, 0f, 0.5f), new Vector3(0.5f, 0, -0.5f),
+                                            new Vector3(-0.5f, 0f, 0.5f), new Vector3(-0.5f, 0, -0.5f),
+                                            new Vector3(0f, 0.5f, 0.5f), new Vector3(0f, 0.5f, -0.5f),
+                                            new Vector3(0f, -0.5f, 0.5f), new Vector3(0f, -0.5f, -0.5f),
+            };
 
             // search through possible corners offsets, they are in the same cube space
-            foreach (Vector3 horizontaldirection in horizontalDirection)
+            // 12 points
+            //UR->R, UF->F, UL->L, UB->B, 
+            //RF->R, RB->R, LF->L, LB->L
+            //DR->R, DF->F, DL->L, DB->B
+
+            foreach (Vector3 direction in cornerDirection)
             {
-                foreach (Vector3 verticaldirection in verticalDirection)
+                Node newNode = graph?.FindNodeAt(transform.position + direction);
+
+                if (newNode == null)
+                    continue;
+
+                if (this.transform.parent.parent == newNode.transform.parent.parent)
                 {
-                    Vector3 direction = horizontaldirection / 2 + verticaldirection / 2;
-
-                    Node newNode = graph?.FindNodeAt(transform.position + direction);
-
-                    if (newNode == null)
-                        continue;
-
-                    if (this.transform.parent.parent == newNode.transform.parent.parent)
-                    {
-                        // two node at same cube which is not traversable
-                        continue;
-                    }
-
-                    // add to edges list if not already included and not excluded specifically
-                    if (!HasNeighbor(newNode) && !excludedNodes.Contains(newNode))
-                    {
-                        Edge newEdge = new Edge { neighbor = newNode, isActive = true, direction = GetDirection(horizontaldirection) };
-                        corners.Add(newEdge);
-                    }
+                    // two node at same cube which is not traversable
+                    continue;
                 }
 
+                Vector3 movingDirection = Vector3.zero;
+                if (direction.x > 0)
+                    movingDirection = transform.right;
+                else if (direction.x < 0)
+                    movingDirection = -transform.right;
+                else if (direction.z > 0)
+                    movingDirection = transform.forward;
+                else if (direction.z < 0)
+                    movingDirection = -transform.forward;
+
+                // add to edges list if not already included and not excluded specifically
+                if (!HasNeighbor(newNode) && !excludedNodes.Contains(newNode))
+                {
+
+                    Edge newEdge = new Edge { neighbor = newNode, isActive = true, direction = GetDirection(movingDirection) };
+                    corners.Add(newEdge);
+                }
             }
         }
 
@@ -258,8 +275,9 @@ namespace WooHooFly.NodeSystem
 
         // Based on the graph, moving direction and current rotation of level, output startPos and EndPos
 
-        public bool FindNodesAtDirection(ref Node startNode, ref Node endNode, ref Vector3 transitVector, ref bool translateBeforeRotate, Direction InputDirection, Direction worldDirect )
+        public NodeMovingInfo FindNodesAtDirection( Direction InputDirection, Direction worldDirect )
         {
+            NodeMovingInfo movingInfo = new NodeMovingInfo();
             Direction direction = correctDirection(worldDirect, InputDirection);
             
             //find the transit node at that direction 
@@ -270,14 +288,21 @@ namespace WooHooFly.NodeSystem
                 {
                     if (e.direction == direction && e.isActive)
                     {
-                        startNode = this;
-                        endNode = e.neighbor;
+                        movingInfo.startNode = this;
+                        movingInfo.endNode = e.neighbor;
+                        movingInfo.transitVector = movingInfo.endNode.transform.position - this.transform.position - GetTranslate(e.direction);
+                        if (e.atFront)
+                        {
+                            movingInfo.transitState = TransitState.RotateMove;
+                            movingInfo.transitNodePos = this.transform.position + GetTranslate(e.direction);
+                        }
+                        else
+                        {
+                            movingInfo.transitState = TransitState.MoveRotate;
+                            movingInfo.transitNodePos = e.neighbor.transform.position - GetTranslate(e.direction);
+                        }
 
-                        translateBeforeRotate = !e.atFront;
-                        Vector3 virtualNeigborPos = this.transform.position + GetTranslate(e.direction);
-                        transitVector = endNode.transform.position - virtualNeigborPos;
-
-                        return true;
+                        return movingInfo;
                     }
                 }
             }
@@ -288,35 +313,105 @@ namespace WooHooFly.NodeSystem
             {
                 if (e.direction == direction && e.isActive)
                 {
-                    
-                    
-                        startNode = this;
-                        endNode = e.neighbor;
-                        return true;
-                    
+                    movingInfo.startNode = this;
+                    movingInfo.endNode = e.neighbor;
+                    movingInfo.transitState = TransitState.None;
+
+                    return movingInfo;
                 }
             }
 
             // check if other node at same cube space have neighbor node
+            // if so it will found avaiable node path at neighbor node
             foreach (Edge c in corners)
             {
-                Debug.Log(c.direction);
-                Debug.Log(direction);
-                if (c.direction == direction && c.isActive)
+                if ( c.isActive)
                 {
                     foreach (Edge e in c.neighbor.Edges)
                     {
+                        //Direction neigborDirection = correctDirection(worldDirect, direction);
                         if (e.direction == direction && e.isActive)
                         {
-                            startNode = c.neighbor;
-                            endNode = e.neighbor;
-                            return true;
+                            movingInfo.startNode = c.neighbor;
+                            movingInfo.endNode = e.neighbor;
+                            movingInfo.transitState = TransitState.MoveRotate;
+                            Vector3 startNodePos = this.transform.position + this.transform.up / 2;
+                            Vector3 cornerNodePos = c.neighbor.transform.position + c.neighbor.transform.up / 2;
+                            movingInfo.transitNodePos = c.neighbor.transform.position;
+                            movingInfo.transitVector = cornerNodePos - startNodePos;
+                            return movingInfo;
                         }
                     }
                 }
             }
-            return false;
+            return movingInfo;
         }
+
+
+        public NodeMovingInfo MovingInfo(Node endNode)
+        {
+            NodeMovingInfo movingInfo = new NodeMovingInfo();
+
+            //find the transit node at that direction 
+            foreach (TransitEdge e in transits)
+            {
+                if(e.neighbor.isActiveAndEnabled && e.isActive && e.neighbor == endNode)
+                {
+                    movingInfo.startNode = this;
+                    movingInfo.endNode = e.neighbor;
+                    movingInfo.transitVector = endNode.transform.position - this.transform.position - GetTranslate(e.direction);
+                    if (e.atFront)
+                    {
+                        movingInfo.transitState = TransitState.RotateMove;
+                        movingInfo.transitNodePos = this.transform.position + GetTranslate(e.direction);
+                    }
+                    else
+                    {
+                        movingInfo.transitState = TransitState.MoveRotate;
+                        movingInfo.transitNodePos = e.neighbor.transform.position - GetTranslate(e.direction);
+                    }
+                    
+                    return movingInfo;
+                }
+            }
+
+            // find the neighbor node at that direction
+            foreach (Edge e in edges)
+            {
+                if (e.neighbor.isActiveAndEnabled && e.isActive && e.neighbor == endNode)
+                {
+                    movingInfo.startNode = this;
+                    movingInfo.endNode = e.neighbor;
+                    movingInfo.transitState = TransitState.None;
+                    movingInfo.transitNodePos = e.neighbor.transform.position;
+                    return movingInfo;
+                }
+            }
+            // find the node at same cube space but different start node
+            foreach (Edge c in corners)
+            {
+                if (c.isActive)
+                {
+                    foreach(Edge e in c.neighbor.Edges)
+                    {
+                        if(e.neighbor.isActiveAndEnabled && e.isActive && e.neighbor == endNode)
+                        {
+                            movingInfo.startNode = c.neighbor;
+                            movingInfo.endNode = e.neighbor;
+                            movingInfo.transitState = TransitState.MoveRotate;
+                            Vector3 startNodePos = this.transform.position + this.transform.up / 2;
+                            Vector3 cornerNodePos = c.neighbor.transform.position + c.neighbor.transform.up / 2;
+                            movingInfo.transitNodePos = c.neighbor.transform.position;
+                            movingInfo.transitVector = cornerNodePos - startNodePos;
+                            return movingInfo;
+                        }
+                    }
+                }
+            }
+
+            return movingInfo;
+        }
+
 
         // Based on the rotationAngle and face correct direction
         // e.g. rotate level 90' to right, would make node on the top face: forward(edge)->right(input) ...
@@ -325,6 +420,8 @@ namespace WooHooFly.NodeSystem
             Direction outputDirect = directionList[((int)InputDirect - (int)LevelDirect + 4) % 4];
             return outputDirect;
         }
+
+       
 
         // public TileColor GetCurrentColor()
         // {
@@ -336,6 +433,7 @@ namespace WooHooFly.NodeSystem
         {
             return Tile;
         } 
+
     }
 
 
