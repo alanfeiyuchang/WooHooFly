@@ -124,7 +124,12 @@ public class MouseRotation : MonoBehaviour
     {
         if (nodeA == null || nodeB == null)
             return;
-
+        if (TutorialManager.current != null) {
+            if (state) {
+                TutorialManager.current.HighLightPosEnter();
+            }
+        }
+        
         nodeA.EnableTransitEdge(nodeB, state);
         nodeB.EnableTransitEdge(nodeA, state);
     }

@@ -90,10 +90,10 @@ private void SendStartAnalytics()
         stepCounterActive = false;
         // Send analytic event for steps
 
-        //End Tutorial if available
-        if (TutorialManager.current != null) {
-            TutorialManager.current.EndPositionEnter();
-        }
+        // //End Tutorial if available
+        // if (TutorialManager.current != null) {
+        //     TutorialManager.current.EndPositionEnter();
+        // }
     }
 
     public void StartButtonPressed()
@@ -106,10 +106,10 @@ private void SendStartAnalytics()
         MapTransition.instance.EnableController();
         GameManager.instance.startTime = Time.time;
 
-        //Show Tutorial if available
-        if (TutorialManager.current != null) {
-            TutorialManager.current.StartPositionEnter();
-        }
+        // //Show Tutorial if available
+        // if (TutorialManager.current != null) {
+        //     TutorialManager.current.StartPositionEnter();
+        // }
     }
 
     public void HomeButtonPressed()

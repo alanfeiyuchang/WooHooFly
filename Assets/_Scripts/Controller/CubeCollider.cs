@@ -47,6 +47,7 @@ public class CubeCollider : MonoBehaviour
             Color = c;
             TileManager.instance.changeColor(gameObject, c);
         }
+
     }
 
 
