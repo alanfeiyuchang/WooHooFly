@@ -22,6 +22,15 @@ namespace WooHooFly.NodeSystem
         public bool atFront;
     }
 
+    public class NodeMovingInfo
+    {
+        public Node startNode;
+        public Node endNode;
+        public Vector3 transitNodePos;
+        public Vector3 transitVector;
+        public TransitState transitState;
+    }
+
     [System.Serializable]
     public class RotationLink
     {
@@ -45,7 +54,10 @@ namespace WooHooFly.NodeSystem
     {
         None, Bottom, Top, Front, Back, Left, Right
     }
-    
+    public enum TransitState
+    {
+        MoveRotate, RotateMove, None
+    }
 
 
 }

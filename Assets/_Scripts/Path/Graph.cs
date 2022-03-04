@@ -14,6 +14,10 @@ namespace WooHooFly.NodeSystem
         private Node goalNode;
         private Node GoalNode => goalNode;
 
+        [SerializeField] private List<Node> accessibleNodes = new List<Node>();
+
+        public List<Node> AccessibleNodes => accessibleNodes;
+
         private void Awake()
         {
             allNodes = FindObjectsOfType<Node>().ToList();
@@ -109,6 +113,49 @@ namespace WooHooFly.NodeSystem
                 }
             }
         }
+
+        public void FindAccessibleNode(Node currentNode)
+        {
+            EnableClikable(false);
+            accessibleNodes.Clear();
+            foreach (TransitEdge e in currentNode.Transits)
+            {
+                if (e.neighbor.isActiveAndEnabled && e.isActive)
+                {
+                    accessibleNodes.Add(e.neighbor); 
+                }
+            }
+            foreach (Edge e in currentNode.Edges)
+            {
+                if (e.isActive)
+                {
+                    accessibleNodes.Add(e.neighbor);
+                }
+            }
+            foreach (Edge c in currentNode.Corners)
+            {
+                if (c.isActive)
+                {
+                    foreach (Edge e in c.neighbor.Edges)
+                    {
+                        if (e.isActive)
+                        {
+                            accessibleNodes.Add(e.neighbor);
+                        }
+                    }
+                }
+            }
+            EnableClikable(true);
+        }
+
+        private void EnableClikable(bool enabled)
+        {
+            foreach(Node node in accessibleNodes)
+            {
+                node.ClickableTile.EnablePointer(enabled);
+            }
+        }
+
     }
 
 }

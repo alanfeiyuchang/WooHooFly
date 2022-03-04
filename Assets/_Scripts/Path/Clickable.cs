@@ -8,13 +8,22 @@ namespace WooHooFly.NodeSystem {
 
     public class Clickable : MonoBehaviour, IPointerDownHandler
     { 
-        private Node currentNode;
-
-        public Action<Clickable, Vector3> clickAction; 
+        public Node clickedNode;
+        public bool Enable;
+        public Action<Clickable, Vector3> clickAction;
         private void Awake()
         {
-            currentNode = this.GetComponent<Node>();
+            clickedNode = this.transform.parent.GetComponentInChildren<Node>();
+            EnablePointer(false);
         }
+
+        public void EnablePointer(bool enable)
+        {
+            var pointer = this.GetComponent<IPointerDownHandler>() as MonoBehaviour;
+            if (pointer != null)
+                pointer.enabled = enable; 
+        }
+
         public void OnPointerDown(PointerEventData eventData)
         {
             Debug.Log("Click on object");
