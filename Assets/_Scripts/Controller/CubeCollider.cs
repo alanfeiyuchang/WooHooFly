@@ -51,6 +51,7 @@ public class CubeCollider : MonoBehaviour
         {
             ArrowManager.instance.NextArrow();
         }
+
     }
 
 
