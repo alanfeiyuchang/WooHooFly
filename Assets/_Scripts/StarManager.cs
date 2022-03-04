@@ -27,8 +27,8 @@ public class StarManager : MonoBehaviour
     {
         for(int i = 0; i < 3; i++)
         {
-            Debug.Log(star[i, 0]);
-            Debug.Log(star[i, 1]);
+            // Debug.Log(star[i, 0]);
+            // Debug.Log(star[i, 1]);
             if (num > 0)
             {
                 star[i, 0].SetActive(true);
