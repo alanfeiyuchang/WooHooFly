@@ -126,7 +126,7 @@ public class MouseRotation : MonoBehaviour
             return;
         if (TutorialManager.current != null) {
             if (state) {
-                TutorialManager.current.HighLightPosEnter();
+                TutorialManager.current.HighlightPath();
             }
         }
         

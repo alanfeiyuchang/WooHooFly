@@ -148,7 +148,7 @@ private void SendStartAnalytics()
         {
             PauseMene.SetActive(false);
             InGamePanel.SetActive(true);
-            GameManager.instance.CurrentState = GameManager.GameState.playing;
+            GameManager.instance.CurrentState = GameManager.GameState.starting;
             pauseDuration = Time.time - pauseStart;
             GameManager.instance.totalPauseDuration += pauseDuration;
         }
