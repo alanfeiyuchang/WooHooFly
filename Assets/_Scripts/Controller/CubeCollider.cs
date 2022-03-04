@@ -47,11 +47,14 @@ public class CubeCollider : MonoBehaviour
             Color = c;
             TileManager.instance.changeColor(gameObject, c);
         }
+<<<<<<< HEAD
         else if(other.gameObject.tag == "Arrow")
         {
             ArrowManager.instance.NextArrow();
         }
 
+=======
+>>>>>>> parent of 568eaf6 (arrow sequence in tutorial one)
     }
 
 
