@@ -47,6 +47,10 @@ public class CubeCollider : MonoBehaviour
             Color = c;
             TileManager.instance.changeColor(gameObject, c);
         }
+        else if(other.gameObject.tag == "Arrow")
+        {
+            ArrowManager.instance.NextArrow();
+        }
     }
 
 
