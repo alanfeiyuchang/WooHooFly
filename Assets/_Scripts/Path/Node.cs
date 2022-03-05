@@ -258,12 +258,21 @@ namespace WooHooFly.NodeSystem
         {
             foreach (TransitEdge e in transits)
             {
-                    if (e.neighbor.Equals(neighborNode))
-                    {
-                        e.isActive = state;
-                    }
-                
-                  
+                if (e.neighbor.Equals(neighborNode))
+                {
+                    e.isActive = state;
+                }
+            }
+        }
+
+        public void EnableCornerEdge(Node cornerNode, bool state)
+        {
+            foreach (Edge e in corners)
+            {
+                if (e.neighbor.Equals(cornerNode))
+                {
+                    e.isActive = state;
+                }
             }
         }
 

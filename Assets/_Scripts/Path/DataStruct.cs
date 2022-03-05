@@ -43,6 +43,16 @@ namespace WooHooFly.NodeSystem
         public Node nodeB;
     }
 
+    [System.Serializable]
+    public class RotationLinker
+    {
+        public float activeAngle;
+        [Header("Nodes to activate")]
+        public Node nodeA;
+        public Node nodeB;
+        public string NodeA_Annotation;
+        public string NodeB_Annotation;
+    }
 
     [System.Serializable]
     public enum Direction

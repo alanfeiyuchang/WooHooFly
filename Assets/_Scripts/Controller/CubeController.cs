@@ -34,7 +34,8 @@ public class CubeController : MonoBehaviour
         }
 
         currentNode = graph?.FindClosestNode(SnapPoint.transform.position);
-        graph.FindAccessibleNode(currentNode);
+
+        FindAccessibleNode();
     }
 
     #region mouse_controller
@@ -56,6 +57,12 @@ public class CubeController : MonoBehaviour
 
         movingInfo = currentNode.MovingInfo(clickable.clickedNode);
         Rolling();
+    }
+
+    public void FindAccessibleNode()
+    {
+        if (inputType == InputType.MouseInput)
+            graph.FindAccessibleNode(currentNode);
     }
     #endregion
 
@@ -158,8 +165,7 @@ public class CubeController : MonoBehaviour
 
         currentNode = movingInfo.endNode;
         SnapToNearestNode();
-
-        graph.FindAccessibleNode(currentNode);
+        FindAccessibleNode();
     }
 
     private void SnapToNearestNode()

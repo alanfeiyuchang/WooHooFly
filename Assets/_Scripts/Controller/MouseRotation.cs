@@ -5,6 +5,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using WooHooFly.NodeSystem;
 
+[ExecuteInEditMode]
 public class MouseRotation : MonoBehaviour
 {
     //public Transform Compass;
@@ -13,17 +14,28 @@ public class MouseRotation : MonoBehaviour
     private Vector3 targetAngle;
     [SerializeField] private Transform Axis;
     public RotationLink[] rotationLinks;
+    public RotationLinker[] rotationLinksTransit;
+    public RotationLinker[] rotationLinksCorner;
 
     public UnityEvent rotationEvent;
     private void Start()
     {
         targetAngle = transform.eulerAngles;
         UpdateOrientation(targetAngle.y);
+        UpdateLinkers(Mathf.RoundToInt(transform.eulerAngles.y));
     }
+
     void Update()
     {
-        if (GameManager.instance.CurrentState != GameManager.GameState.playing)
+
+        if (!Application.isPlaying)
+        {
+            UpdateLinkerParents();
             return;
+        }
+
+        //if (GameManager.instance.CurrentState != GameManager.GameState.playing)
+        //    return;
         //rotationAngle = Compass.transform.up * angle;
         rotationAngle = this.transform.up * rotateAngle;
         if (Input.GetAxis("Mouse ScrollWheel") != 0)
@@ -38,11 +50,14 @@ public class MouseRotation : MonoBehaviour
             //currentAngle = (angle2 > 90) ? 360 - angle : angle;
 
             UpdateOrientation(Mathf.RoundToInt(transform.eulerAngles.y));
+            UpdateLinkersOld(Mathf.RoundToInt(transform.eulerAngles.y));
             UpdateLinkers(Mathf.RoundToInt(transform.eulerAngles.y));
+
 
             if (rotationEvent != null)
                 rotationEvent.Invoke();
         }
+
     }
 
     // How the whole level is rotated related to world axis
@@ -71,7 +86,7 @@ public class MouseRotation : MonoBehaviour
     /// Enable/Disable linker when rotate to certain angle
     /// </summary>
     /// <param name="angle"></param>
-    private void UpdateLinkers (float angle)
+    private void UpdateLinkersOld (float angle)
     {
         foreach(RotationLink link in rotationLinks)
         {
@@ -132,6 +147,82 @@ public class MouseRotation : MonoBehaviour
         
         nodeA.EnableTransitEdge(nodeB, state);
         nodeB.EnableTransitEdge(nodeA, state);
+        nodeA.EnableCornerEdge(nodeB, state);
+        nodeB.EnableCornerEdge(nodeA, state);
+    }
+
+    private void UpdateLinkers(float angle)
+    {
+
+        foreach (RotationLinker link in rotationLinksTransit)
+        {
+            if (angle == link.activeAngle)
+            {
+                EnableTransitLink(link.nodeA, link.nodeB, true);
+            }
+            else
+            {
+                EnableTransitLink(link.nodeA, link.nodeB, false);
+            }
+        }
+
+        foreach (RotationLinker link in rotationLinksCorner)
+        {
+            if (angle == link.activeAngle)
+            {
+                EnableCornerLink(link.nodeA, link.nodeB, true);
+            }
+            else
+            {
+                EnableCornerLink(link.nodeA, link.nodeB, false);
+            }
+        }
+    }
+
+    private void EnableTransitLink(Node nodeA, Node nodeB, bool state)
+    {
+        if (nodeA == null || nodeB == null)
+            return;
+
+        nodeA.EnableTransitEdge(nodeB, state);
+        nodeB.EnableTransitEdge(nodeA, state);
+    }
+
+    private void EnableCornerLink(Node nodeA, Node nodeB, bool state)
+    {
+        if (nodeA == null || nodeB == null)
+            return;
+
+        nodeA.EnableCornerEdge(nodeB, state);
+        nodeB.EnableCornerEdge(nodeA, state);
+    }
+
+    private void UpdateLinkerParents()
+    {
+        foreach (RotationLinker link in rotationLinksTransit)
+        {
+            if (link.nodeA == null)
+                continue;
+            link.NodeA_Annotation = GetAnnotation(link.nodeA);
+            if (link.nodeB == null)
+                continue;
+            link.NodeB_Annotation = GetAnnotation(link.nodeB);
+        }
+
+        foreach (RotationLinker link in rotationLinksCorner)
+        {
+            if (link.nodeA == null)
+                continue;
+            link.NodeA_Annotation = GetAnnotation(link.nodeA);
+            if (link.nodeB == null)
+                continue;
+            link.NodeB_Annotation = GetAnnotation(link.nodeB);
+        }
+    }
+
+    private string GetAnnotation(Node node)
+    {
+        return node.transform.parent.parent.name + "_" + node.transform.parent.name;
     }
 
     private Vector3 clampAngle(Vector3 target)
