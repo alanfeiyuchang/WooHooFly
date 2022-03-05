@@ -148,7 +148,7 @@ private void SendStartAnalytics()
         {
             PauseMene.SetActive(false);
             InGamePanel.SetActive(true);
-            GameManager.instance.CurrentState = GameManager.GameState.playing;
+            GameManager.instance.CurrentState = GameManager.GameState.starting;
             pauseDuration = Time.time - pauseStart;
             GameManager.instance.totalPauseDuration += pauseDuration;
         }
@@ -173,6 +173,26 @@ private void SendStartAnalytics()
     public int GetStep()
     {
         return StepCount;
+    }
+
+    public void RotateCW()
+    {
+        
+        if (MouseRotation.instance != null)
+        {
+            Debug.Log(MouseRotation.instance.name);
+            MouseRotation.instance.RotateMapCW();
+        }
+    }
+
+    public void RotateCCW()
+    {
+        
+        if (MouseRotation.instance != null)
+        {
+            Debug.Log(MouseRotation.instance.name);
+            MouseRotation.instance.RotateMapCCW();
+        }
     }
 
     // add more methods to track other stats

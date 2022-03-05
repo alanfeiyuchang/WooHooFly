@@ -1,8 +1,21 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
+
 using System.Collections;
 using System.Collections.Generic;
+// using WooHooFly.Tutorial;
+[System.Serializable]
+public class TutorialHint
+{
+    public GameObject HintPlace;
+    public UnityEvent HintEvent;
+}
+
+// [System.Serializable]
+// public class HintEvent : UnityEvent<string> {}
+
 
 public class TutorialManager : MonoBehaviour
 {
@@ -12,11 +25,7 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] 
     private GameObject _path;
 
-    public List<string> TutorialTexts = new List<string>();
-    private Queue<string> _TutorialTextsQueue;
-
-    public List<Transform> ArrowShowUpPosition;
-    private Queue<Transform> _ArrowShowUpPositionQueue;
+    public TutorialHint[] tutorialHints;
 
     public GameObject Arrow;
     private GameObject _arrow;
@@ -30,57 +39,50 @@ public class TutorialManager : MonoBehaviour
 
     private void Start()
     {
-        // Initiate TutorialManager event listeners
-        GameManager.instance.onGameStateChanged += StartTutorial;
-        TutorialManager.current.onHighLightPosEnter +=  HighlightPath;
-        TutorialManager.current.onArrowHit += NextArrowPosition;
+        // // Initiate TutorialManager event listeners
+        GameManager.instance.onGameStateChanged += GameStateChanged;
+        // TutorialManager.current.onHighLightPosEnter +=  HighlightPath;
+        // TutorialManager.current.onArrowHit += NextArrowPosition;
+        // TutorialManager.current.onTextHit += NextTextShow;
         _text = transform.GetChild(0).gameObject;
-        // Transform[] c = gameObject.GetComponentsInChildren<Transform>(true);
-        // foreach (Transform child in c)
-        // {
-        //     if (child.gameObject.name == "Path")
-        //         _path = child.gameObject;
-        // }
-        Debug.Log("STARTED" + (_path == null));
 
-        if (ArrowShowUpPosition != null) {
-            _ArrowShowUpPositionQueue = new Queue<Transform>(ArrowShowUpPosition);
-            _TutorialTextsQueue = new Queue<string>(TutorialTexts);
-            NextArrowPosition();
+        if (tutorialHints != null) {
+            foreach (TutorialHint tutorialHint in tutorialHints)
+            {
+                Debug.Log(tutorialHint.HintPlace.name);
+                HintTrigger hintTrigger = tutorialHint.HintPlace.transform
+                                            .GetChild(0).GetChild(0).gameObject
+                                            .AddComponent<HintTrigger>();
+                hintTrigger.HintEvent = tutorialHint.HintEvent;
+            }
         }
     }
+
+    public void ShowTextHint(String i) {
+        _text.GetComponent<Text>().text = i;
+    }
+
+    public void ShowArrowHint(GameObject i) {
+        NextArrowPosition(i);
+    }
+
 
 
     private void OnDestroy() {
-        Debug.Log("DESTROYED");
-        GameManager.instance.onGameStateChanged -= StartTutorial;
-        TutorialManager.current.onHighLightPosEnter -=  HighlightPath;
-        TutorialManager.current.onArrowHit -= NextArrowPosition;
+        GameManager.instance.onGameStateChanged -= GameStateChanged;
+        // TutorialManager.current.onHighLightPosEnter -=  HighlightPath;
+        // TutorialManager.current.onArrowHit -= NextArrowPosition;
+        // TutorialManager.current.onTextHit -= NextTextShow;
     }
 
-    private void OnDisable() {
-         Debug.Log("DISABLED");
-    }
+    // private void OnDisable() {
+    //      Debug.Log("DISABLED");
+    // }
 
-
-    public event Action onHighLightPosEnter;
-    public event Action onArrowHit;
-
-    public void HighLightPosEnter() {
-        if (onHighLightPosEnter != null) {
-            onHighLightPosEnter();
-        }
-    }
-    public void ArrowHit() {
-        if (onArrowHit != null) {
-            onArrowHit();
-        }
-    }
-
-    public void StartTutorial(GameManager.GameState state) 
+    public void GameStateChanged(GameManager.GameState state) 
     {
 
-        if (state == GameManager.GameState.starting) {
+        if (state == GameManager.GameState.starting || state == GameManager.GameState.restart) {
 
             if (!isPlaying){
                 ShowTutorialText();
@@ -90,6 +92,10 @@ public class TutorialManager : MonoBehaviour
             StopTutorialText();
         }
 
+        if (state == GameManager.GameState.win) {
+            StopArrow();
+        }
+    
     }
 
     private void ShowTutorialText()
@@ -104,107 +110,89 @@ public class TutorialManager : MonoBehaviour
         _text.SetActive(false);
     }
 
-    private void NextTextShow()
-    {
-        Debug.Log("next text");
-        if (_TutorialTextsQueue.Count == 0)
-            return;
-        _text.GetComponent<Text>().text = _TutorialTextsQueue.Dequeue();
-    }
-
     public void HighlightPath() {
-        Debug.Log("highting-----" + _path.name + " " + _path.activeInHierarchy);
+        Debug.Log("highting-----");
         _path.SetActive(true);
+        StartCoroutine(FadePath());
     }
 
 
     IEnumerator FadePath() {
-        yield return new WaitForSeconds(5.0f);
-        // yield return StartCoroutine(FadePathToZeroAlpha(1f, _text.GetComponent<Text>()));
+        int glowCount = 5;
+        while (glowCount-- > 0) {
+            MeshRenderer[] glows = _path.GetComponentsInChildren<MeshRenderer>();
+            
+            yield return StartCoroutine(FadePathToFullAlpha(1f, glows ));
+            yield return new WaitForSeconds(1.0f);
+            yield return StartCoroutine(FadePathToZeroAlpha(1f, glows ));   
+            
+            
+        }
+         
     }
 
-    public IEnumerator FadePathToZeroAlpha(float t, Material i)
+    public IEnumerator FadePathToZeroAlpha(float t, MeshRenderer[] glows)
     {
-        i.color = new Color(i.color.r, i.color.g, i.color.b, 1);
-        while (i.color.a > 0.0f)
+        foreach (MeshRenderer glow in glows)
         {
-            i.color = new Color(i.color.r, i.color.g, i.color.b, i.color.a - (Time.deltaTime / t));
+            Material i = glow.material;
+            i.color = new Color(i.color.r, i.color.g, i.color.b, 1);
+        }
+        
+        float alpha  = glows[0].material.color.a ;
+
+        while (alpha > 0.0f)
+        {
+            alpha -= (Time.deltaTime / t);
+            foreach (MeshRenderer glow in glows)
+            {
+                Material i = glow.material;
+                i.color = new Color(i.color.r, i.color.g, i.color.b, alpha);
+            }         
             yield return null;
         }
     }
 
-    public void NextArrowPosition(){
+    public IEnumerator FadePathToFullAlpha(float t, MeshRenderer[] glows)
+    {
+        foreach (MeshRenderer glow in glows)
+        {
+            Material i = glow.material;
+            i.color = new Color(i.color.r, i.color.g, i.color.b, 0);
+        }
+        
+        float alpha = glows[0].material.color.a ;
+        while (alpha < 1.0f)
+        {
+            alpha += (Time.deltaTime / t);
+            foreach (MeshRenderer glow in glows)
+            {
+                Material i = glow.material;
+                i.color = new Color(i.color.r, i.color.g, i.color.b, alpha);
+            }         
+            yield return null;
+        }
+    }
+
+    // Show Arrow on Mapcube
+    private void NextArrowPosition(GameObject mapCube){
         Debug.Log("change to next postion");
         if (_arrow != null)
             Destroy(_arrow);
-        if (_ArrowShowUpPositionQueue.Count == 0)
-            return;
 
         GameObject arrow = Instantiate(Arrow, 
                     new Vector3(0, 0, 0),
                     Quaternion.Euler(new Vector3(0, 150, 90)));
         
-        arrow.transform.parent = _ArrowShowUpPositionQueue.Dequeue();
+        arrow.transform.parent = mapCube.transform;
         _arrow = arrow; 
 
-        NextTextShow();       
     }
 
-    //  // ----- Tutotial UI old methods ------
-    // private void ShowTutorialText()
-    // {
-    //     Debug.Log("tutorial starts");
-    //     isPlaying = true;
-    //     _text.SetActive(true);
-       
-    //     StartCoroutine(FadeInTextEffect());
-    // }
+    private void StopArrow() {
+        if (_arrow != null)
+            Destroy(_arrow);
+    }
 
-    // IEnumerator FadeInTextEffect()
-    // {   
-    //     int index = 0;
-    //     while (isPlaying)
-    //     { 
-    //         yield return StartCoroutine(FadeTextToFullAlpha(1f, _text.GetComponent<Text>(),TutorialTexts[index++]));
-    //         if (index == TutorialTexts.Count)
-    //             index = 0;
-
-    //         yield return new WaitForSeconds(2.0f);
-    //         yield return StartCoroutine(FadeTextToZeroAlpha(1f, _text.GetComponent<Text>()));
-            
-    //     }
-    //    Debug.Log("tutorial stops");
-    // }
-
-    // private void StopTutorial()
-    // {
-    //     isPlaying = false;
-    //     _text.SetActive(false);
-    // }
-
-
-
-
-    // public IEnumerator FadeTextToFullAlpha(float t, Text i, String text)
-    // {
-        
-    //     i.color = new Color(i.color.r, i.color.g, i.color.b, 0);
-    //     i.text = text;
-    //     while (i.color.a < 1.0f)
-    //     {
-    //         i.color = new Color(i.color.r, i.color.g, i.color.b, i.color.a + (Time.deltaTime / t));
-    //         yield return null;
-    //     }
-    // }
- 
-    // public IEnumerator FadeTextToZeroAlpha(float t, Text i)
-    // {
-    //     i.color = new Color(i.color.r, i.color.g, i.color.b, 1);
-    //     while (i.color.a > 0.0f)
-    //     {
-    //         i.color = new Color(i.color.r, i.color.g, i.color.b, i.color.a - (Time.deltaTime / t));
-    //         yield return null;
-    //     }
-    // }
 
 }

@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        CurrentState = GameState.starting;
+        CurrentState = GameState.playing;
 
         foreach (GameObject Obj in GameObject.FindGameObjectsWithTag("MapCube"))
         {

@@ -12,12 +12,19 @@ public class MouseRotation : MonoBehaviour
     public float rotateAngle;
     private Vector3 rotationAngle;
     private Vector3 targetAngle;
+    private float TurnDuration = 1f;
     [SerializeField] private Transform Axis;
+    
     public RotationLink[] rotationLinks;
     public RotationLinker[] rotationLinksTransit;
     public RotationLinker[] rotationLinksCorner;
-
     public UnityEvent rotationEvent;
+
+    public static MouseRotation instance;
+    private void Awake()
+    {
+        instance = this;
+    }
     private void Start()
     {
         targetAngle = transform.eulerAngles;
@@ -141,7 +148,7 @@ public class MouseRotation : MonoBehaviour
             return;
         if (TutorialManager.current != null) {
             if (state) {
-                TutorialManager.current.HighLightPosEnter();
+                TutorialManager.current.HighlightPath();
             }
         }
         
@@ -253,24 +260,45 @@ public class MouseRotation : MonoBehaviour
         return new Vector3(x, y, z);
     }
 
-     
+    public void RotateMapCW()
+    {
+        if (GameManager.instance.CurrentState != GameManager.GameState.playing)
+            return;
+        StartCoroutine(RotateMapAnim(rotateAngle));
+    }
+
+    public void RotateMapCCW()
+    {
+        if (GameManager.instance.CurrentState != GameManager.GameState.playing)
+            return;
+        StartCoroutine(RotateMapAnim(-1 * rotateAngle));
+    }
 
 
+    IEnumerator RotateMapAnim(float angle)
+    {
+        Debug.Log(angle);
+        GameManager.instance.CurrentState = GameManager.GameState.rotating;
+        float t = 0;
+        Vector3 startAngleY = transform.eulerAngles;
+        Vector3 endAngle = transform.eulerAngles;
+        endAngle[1] += angle;
+        endAngle = clampAngle(endAngle);
+        while (t < TurnDuration)
+        {
+            float turnAngle = (Time.deltaTime / TurnDuration) * angle;
+            t += Time.deltaTime;
+            //float rotationAngle = Mathf.Lerp(0, angle, t / TurnDuration);
+            transform.RotateAround(Axis.position, Vector3.up, turnAngle);
+            yield return null;
+        }
+        transform.eulerAngles = endAngle;
+        GameManager.instance.CurrentState = GameManager.GameState.playing;
 
-    //IEnumerator RotateMap(Vector3 direction, float angle)
-    //{
-    //    float t = 0;
-    //    float duration = 3;
-    //    while (t < duration)
-    //    {
-    //        t ++;
-    //        float rotationAngle = Mathf.Lerp(0, angle, t / duration);
-    //        transform.Rotate(direction, rotationAngle);
+        UpdateOrientation(Mathf.RoundToInt(transform.eulerAngles.y));
+        UpdateLinkers(Mathf.RoundToInt(transform.eulerAngles.y));
 
-    //        GameManager.instance.CurrentState = GameManager.GameState.rotating;
-    //        yield return null;
-    //    }
-    //    GameManager.instance.CurrentState = GameManager.GameState.playing;
-    //}
-
+        if (rotationEvent != null)
+            rotationEvent.Invoke();
+    }
 }
