@@ -34,6 +34,8 @@ public class CubeController : MonoBehaviour
         }
 
         currentNode = graph?.FindClosestNode(SnapPoint.transform.position);
+        // [Analytics] increment current node visit count
+        currentNode.VisitNode();
 
         FindAccessibleNode();
     }
@@ -164,6 +166,9 @@ public class CubeController : MonoBehaviour
         }
 
         currentNode = movingInfo.endNode;
+        // [Analytics] increment current node visit count
+        currentNode.VisitNode();
+
         SnapToNearestNode();
         FindAccessibleNode();
     }

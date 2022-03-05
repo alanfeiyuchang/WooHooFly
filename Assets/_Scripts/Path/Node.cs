@@ -46,6 +46,11 @@ namespace WooHooFly.NodeSystem
 
         private static Direction[] directionList = { Direction.Forward, Direction.Right, Direction.Backward, Direction.Left };
 
+        // Analytics variables, Used to track heatmap data
+        private int VisitedCount;
+        private Vector3 InitalPosition;
+        private Quaternion InitialRotation;
+
         private void Start()
         {
             Tile = this.transform.parent.gameObject.transform.GetChild(0).gameObject;
@@ -56,6 +61,19 @@ namespace WooHooFly.NodeSystem
             //    FindCorners();
             //    FindNeighbors();
             //}
+
+            // Inital visited count for each node
+            VisitedCount = 0;
+            InitalPosition = this.transform.position;
+            InitialRotation = this.transform.rotation;
+            //Debug.Log("[Analytics]Position: " + InitalPosition + " VisitedCount=" + VisitedCount);
+        }
+
+        // increment visit count
+        public void VisitNode()
+        {
+            this.VisitedCount++;
+            Debug.Log("[Analytics]Position: " + InitalPosition + " Rotation: " + InitialRotation  + " VisitedCount=" + VisitedCount);
         }
 
         // draws a sphere gizmo
@@ -444,6 +462,4 @@ namespace WooHooFly.NodeSystem
         } 
 
     }
-
-
 }
