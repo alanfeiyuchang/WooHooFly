@@ -133,7 +133,7 @@ public class GameManager : MonoBehaviour
         levelComplete = false;
         startTime = Time.time;
         totalPauseDuration = 0;
-        currentLevel = levelIndex + 1;
+        currentLevel = levelIndex;
     }
 
     public void SendLevelCompleteAnalytics()
