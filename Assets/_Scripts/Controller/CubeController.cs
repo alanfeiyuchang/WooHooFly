@@ -156,14 +156,14 @@ public class CubeController : MonoBehaviour
             yield return null;
         }
 
-        GameManager.instance.CurrentState = GameManager.GameState.playing;
-        isMoving = false;
-
         if (movingInfo.transitState == TransitState.RotateMove)
         {
             // translate after finish rotation
             this.transform.position = this.transform.position + movingInfo.transitVector;
         }
+
+        GameManager.instance.CurrentState = GameManager.GameState.playing;
+        isMoving = false;
 
         currentNode = movingInfo.endNode;
         // [Analytics] increment current node visit count

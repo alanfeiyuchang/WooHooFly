@@ -41,8 +41,8 @@ public class MouseRotation : MonoBehaviour
             return;
         }
 
-        //if (GameManager.instance.CurrentState != GameManager.GameState.playing)
-        //    return;
+        if (GameManager.instance.CurrentState != GameManager.GameState.playing)
+            return;
         //rotationAngle = Compass.transform.up * angle;
         rotationAngle = this.transform.up * rotateAngle;
         if (Input.GetAxis("Mouse ScrollWheel") != 0)
@@ -154,8 +154,6 @@ public class MouseRotation : MonoBehaviour
         
         nodeA.EnableTransitEdge(nodeB, state);
         nodeB.EnableTransitEdge(nodeA, state);
-        nodeA.EnableCornerEdge(nodeB, state);
-        nodeB.EnableCornerEdge(nodeA, state);
     }
 
     private void UpdateLinkers(float angle)
@@ -297,6 +295,7 @@ public class MouseRotation : MonoBehaviour
 
         UpdateOrientation(Mathf.RoundToInt(transform.eulerAngles.y));
         UpdateLinkersOld(Mathf.RoundToInt(transform.eulerAngles.y));
+        UpdateLinkers(Mathf.RoundToInt(transform.eulerAngles.y));
 
         if (rotationEvent != null)
             rotationEvent.Invoke();
