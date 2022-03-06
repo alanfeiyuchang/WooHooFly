@@ -25,7 +25,10 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject PauseMene;
     [SerializeField] private GameObject InGamePanel;
     [SerializeField] private TMP_Text StepCountText;
-
+    [SerializeField] private Animation leftAnim;
+    [SerializeField] private Animation rightAnim;
+    [SerializeField] private GameObject cwArrow;
+    [SerializeField] private GameObject ccwArrow;
     public GameObject NextButton;
     private int _stepCount = 0;
     private float pauseStart;
@@ -177,23 +180,42 @@ private void SendStartAnalytics()
 
     public void RotateCW()
     {
-        
-        if (MouseRotation.instance != null)
+        if (MapTransition.instance.mouseRotation != null)
         {
-            Debug.Log(MouseRotation.instance.name);
-            MouseRotation.instance.RotateMapCW();
+            Debug.Log(MapTransition.instance.mouseRotation.name);
+            MapTransition.instance.mouseRotation.RotateMapCW();
         }
     }
 
     public void RotateCCW()
     {
-        
-        if (MouseRotation.instance != null)
+        if (MapTransition.instance.mouseRotation != null)
         {
-            Debug.Log(MouseRotation.instance.name);
-            MouseRotation.instance.RotateMapCCW();
+            Debug.Log(MapTransition.instance.mouseRotation.name);
+            MapTransition.instance.mouseRotation.RotateMapCCW();
         }
     }
 
+    public void StartArrowAnim()
+    {
+        leftAnim.Play();
+        rightAnim.Play();
+    }
+   
+    public void StopArrowAnim()
+    {
+        leftAnim.Stop();
+        rightAnim.Stop();
+    }
+    public void HideRotateArrow()
+    {
+        cwArrow.SetActive(false);
+        ccwArrow.SetActive(false);
+    }
+    public void ShowRotateArrow()
+    {
+        cwArrow.SetActive(true);
+        ccwArrow.SetActive(true);
+    }
     // add more methods to track other stats
 }

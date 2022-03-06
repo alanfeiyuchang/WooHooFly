@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 253342371}
   - component: {fileID: 253342370}
   - component: {fileID: 253342369}
+  - component: {fileID: 78436065}
   m_Layer: 5
   m_Name: CWButton
   m_TagString: Untagged
@@ -132,6 +133,22 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+--- !u!111 &78436065
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 253342367}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: ffa5ad5e503012646809b9a016fbd9f3, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: ffa5ad5e503012646809b9a016fbd9f3, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &316802145
 GameObject:
   m_ObjectHideFlags: 0
@@ -410,6 +427,7 @@ GameObject:
   - component: {fileID: 655921055}
   - component: {fileID: 655921054}
   - component: {fileID: 655921053}
+  - component: {fileID: 1589473200}
   m_Layer: 5
   m_Name: CCWButton
   m_TagString: Untagged
@@ -530,6 +548,22 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+--- !u!111 &1589473200
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 655921051}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: ffa5ad5e503012646809b9a016fbd9f3, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: ffa5ad5e503012646809b9a016fbd9f3, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &1198817661
 GameObject:
   m_ObjectHideFlags: 0
@@ -1403,6 +1437,8 @@ MonoBehaviour:
   PauseMene: {fileID: 4497668421223440464}
   InGamePanel: {fileID: 2193078233131572822}
   StepCountText: {fileID: 1630299630441260835}
+  leftAnim: {fileID: 0}
+  rightAnim: {fileID: 0}
   NextButton: {fileID: 534371523}
 --- !u!1 &1578883422285757536
 GameObject:
@@ -1811,7 +1847,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

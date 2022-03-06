@@ -39,6 +39,8 @@ public class MapTransition : MonoBehaviour
     [Tooltip("How far each cube will drop")]
     [SerializeField] private float DropHeight = 5f;
     public int LevelUnlocked = 1;
+    [HideInInspector]
+    public MouseRotation mouseRotation;
 
 
     private void Start()
@@ -57,7 +59,7 @@ public class MapTransition : MonoBehaviour
             levelIndex++;
         }
         LevelList[CurrentLevel].gameObject.SetActive(true);
-
+        mouseRotation = LevelList[CurrentLevel].GetComponent<MouseRotation>();
     }
 
     private void Update()
@@ -251,6 +253,7 @@ public class MapTransition : MonoBehaviour
 
         SetPosition(_toMapCubes, _toMapFlags, _toMapPlayerCube, +dropHeight);
         _toLevel.gameObject.SetActive(true);
+        mouseRotation = _toLevel.GetComponent<MouseRotation>();
 
         //to map appears
         betweenTime = TotalCrashTime / _toMapCubes.Count();
