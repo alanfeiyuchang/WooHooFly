@@ -296,7 +296,7 @@ public class MouseRotation : MonoBehaviour
         GameManager.instance.CurrentState = GameManager.GameState.playing;
 
         UpdateOrientation(Mathf.RoundToInt(transform.eulerAngles.y));
-        UpdateLinkers(Mathf.RoundToInt(transform.eulerAngles.y));
+        UpdateLinkersOld(Mathf.RoundToInt(transform.eulerAngles.y));
 
         if (rotationEvent != null)
             rotationEvent.Invoke();
