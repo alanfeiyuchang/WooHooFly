@@ -25,14 +25,15 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject PauseMene;
     [SerializeField] private GameObject InGamePanel;
     [SerializeField] private TMP_Text StepCountText;
-    [SerializeField] private Animation leftAnim;
-    [SerializeField] private Animation rightAnim;
     [SerializeField] private GameObject cwArrow;
     [SerializeField] private GameObject ccwArrow;
     public GameObject NextButton;
     private int _stepCount = 0;
     private float pauseStart;
     private float pauseDuration;
+    private Animation leftAnim;
+    private Animation rightAnim;
+
     public int StepCount
     {
         get => _stepCount;
@@ -59,7 +60,8 @@ public class UIController : MonoBehaviour
 
         // Analytics data
         SendStartAnalytics();
-
+        leftAnim = cwArrow.GetComponent<Animation>();
+        rightAnim = ccwArrow.GetComponent<Animation>();
 
     }
 
