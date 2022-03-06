@@ -37,10 +37,13 @@ public class GameManager : MonoBehaviour
         }
     }
     //----- end ----
+
+    // Analytics variables
     public float startTime;
     public float totalPauseDuration;
     public int currentLevel = 1;
     private bool levelComplete = false;
+    private List<Node> allNodes = new List<Node>();
     
     [HideInInspector]
     public Direction levelDirection = Direction.None;
@@ -134,6 +137,7 @@ public class GameManager : MonoBehaviour
         startTime = Time.time;
         totalPauseDuration = 0;
         currentLevel = levelIndex;
+        allNodes = new List<Node>();
     }
 
     public void SendLevelCompleteAnalytics()
@@ -142,6 +146,10 @@ public class GameManager : MonoBehaviour
         float duration = Time.time - startTime - totalPauseDuration;
         duration = Mathf.Round(duration * 100.0f) * 0.01f;
         Debug.Log("[Analytics] Completed level: " + currentLevel + " in " + steps + " steps. Duration: " + duration + "s");
+
+        // Collect Heatmap data
+        allNodes = Graph.instance.GetAllNodes();
+        Debug.Log("[Analytics] allNodes size: " + allNodes.Count );
 
 #if ENABLE_CLOUD_SERVICES_ANALYTICS
         AnalyticsResult analyticsResult = Analytics.CustomEvent("levelComplete", new Dictionary<string, object>

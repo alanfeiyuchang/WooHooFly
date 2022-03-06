@@ -76,6 +76,11 @@ namespace WooHooFly.NodeSystem
             Debug.Log("[Analytics]Position: " + InitalPosition + " Rotation: " + InitialRotation  + " VisitedCount=" + VisitedCount);
         }
 
+        public string CheckNode()
+        {
+            return "[Analytics]Position: " + InitalPosition + " Rotation: " + InitialRotation + " VisitedCount=" + VisitedCount;
+        }
+
         // draws a sphere gizmo
         private void OnDrawGizmos()
         {

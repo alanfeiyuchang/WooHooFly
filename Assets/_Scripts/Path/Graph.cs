@@ -7,6 +7,8 @@ namespace WooHooFly.NodeSystem
     // management class for all Nodes
     public class Graph : MonoBehaviour
     {
+        public static Graph instance;
+
         // all of the Nodes in the current level/maze
         private List<Node> allNodes = new List<Node>();
 
@@ -20,6 +22,7 @@ namespace WooHooFly.NodeSystem
 
         private void Awake()
         {
+            instance = this;
             allNodes = FindObjectsOfType<Node>().ToList();
             InitNodes();
         }
@@ -27,6 +30,11 @@ namespace WooHooFly.NodeSystem
         private void Start()
         {
             InitNeighbors();
+        }
+
+        public List<Node> GetAllNodes()
+        {
+            return allNodes;
         }
 
         public void ReInitPath()
