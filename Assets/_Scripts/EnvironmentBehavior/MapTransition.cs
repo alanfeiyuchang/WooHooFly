@@ -272,7 +272,7 @@ public class MapTransition : MonoBehaviour
         EnableController();
         CurrentLevel = levelIndex;
         
-        GameManager.instance.CurrentState = GameManager.GameState.starting;
+        GameManager.instance.CurrentState = GameManager.GameState.playing;
         UIController.instance.stepCounterActive = true;
 
         // Reset Analytics timers and pass level info
