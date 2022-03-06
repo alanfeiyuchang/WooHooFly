@@ -35,11 +35,7 @@ public class TutorialManager : MonoBehaviour
     private void Awake()
     {
         current = this;
-    }
-
-    private void Start()
-    {
-        // // Initiate TutorialManager event listeners
+        // Initiate TutorialManager event listeners
         GameManager.instance.onGameStateChanged += GameStateChanged;
         // TutorialManager.current.onHighLightPosEnter +=  HighlightPath;
         // TutorialManager.current.onArrowHit += NextArrowPosition;
@@ -49,13 +45,18 @@ public class TutorialManager : MonoBehaviour
         if (tutorialHints != null) {
             foreach (TutorialHint tutorialHint in tutorialHints)
             {
-                Debug.Log(tutorialHint.HintPlace.name);
+                // Debug.Log(tutorialHint.HintPlace.name);
                 HintTrigger hintTrigger = tutorialHint.HintPlace.transform
                                             .GetChild(0).GetChild(0).gameObject
                                             .AddComponent<HintTrigger>();
                 hintTrigger.HintEvent = tutorialHint.HintEvent;
             }
         }
+    }
+
+    private void Start()
+    {
+
     }
 
     public void ShowTextHint(String i) {
@@ -81,7 +82,6 @@ public class TutorialManager : MonoBehaviour
 
     public void GameStateChanged(GameManager.GameState state) 
     {
-
         if (state == GameManager.GameState.starting || state == GameManager.GameState.restart) {
 
             if (!isPlaying){

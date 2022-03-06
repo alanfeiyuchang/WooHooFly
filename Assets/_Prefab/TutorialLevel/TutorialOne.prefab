@@ -114,17 +114,120 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _path: {fileID: 0}
-  TutorialTexts:
-  - Press "D"
-  - Press "W"
-  - Press "A"
-  - Press "S"
-  ArrowShowUpPosition:
-  - {fileID: 7286179057789529540}
-  - {fileID: 6480647060282752704}
-  - {fileID: 3976875799032636505}
-  - {fileID: 8402967710405337018}
-  Arrow: {fileID: 3450390960330176204, guid: f61407f5de7aa44b59093cf25675d23a, type: 3}
+  tutorialHints:
+  - HintPlace: {fileID: 7286179057868748576}
+    HintEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8329758595366037168}
+          m_TargetAssemblyTypeName: TutorialManager, Assembly-CSharp
+          m_MethodName: ShowTextHint
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: Press "D"
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 8329758595366037168}
+          m_TargetAssemblyTypeName: TutorialManager, Assembly-CSharp
+          m_MethodName: ShowArrowHint
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 7286179057789529592}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - HintPlace: {fileID: 7286179057789529592}
+    HintEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8329758595366037168}
+          m_TargetAssemblyTypeName: TutorialManager, Assembly-CSharp
+          m_MethodName: ShowTextHint
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: Press "W"
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 8329758595366037168}
+          m_TargetAssemblyTypeName: TutorialManager, Assembly-CSharp
+          m_MethodName: ShowArrowHint
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 6480647060282752764}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - HintPlace: {fileID: 6480647060282752764}
+    HintEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8329758595366037168}
+          m_TargetAssemblyTypeName: TutorialManager, Assembly-CSharp
+          m_MethodName: ShowTextHint
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: Press "A"
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 8329758595366037168}
+          m_TargetAssemblyTypeName: TutorialManager, Assembly-CSharp
+          m_MethodName: ShowArrowHint
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 3976875799032636517}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - HintPlace: {fileID: 3976875799032636517}
+    HintEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8329758595366037168}
+          m_TargetAssemblyTypeName: TutorialManager, Assembly-CSharp
+          m_MethodName: ShowTextHint
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: Press "S"
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 8329758595366037168}
+          m_TargetAssemblyTypeName: TutorialManager, Assembly-CSharp
+          m_MethodName: ShowArrowHint
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 2163065149374946509}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  Arrow: {fileID: 3450390960330176204, guid: e620d9816f89910419271fccc87f8653, type: 3}
 --- !u!1 &7582037680401552340
 GameObject:
   m_ObjectHideFlags: 0
@@ -504,6 +607,8 @@ MonoBehaviour:
     transform: {x: 0, y: 0, z: 0}
     nodeA: {fileID: 7881135972702357}
     nodeB: {fileID: 0}
+  rotationLinksTransit: []
+  rotationLinksCorner: []
   rotationEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -568,7 +673,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 265.00006, y: 233}
+  m_AnchoredPosition: {x: 102.00006, y: 287}
   m_SizeDelta: {x: 1500, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7858201136193968472
@@ -924,14 +1029,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
---- !u!4 &3976875799032636505 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1261258185344848921, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
-  m_PrefabInstance: {fileID: 2787817071385817152}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3976875799032636517 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1261258185344848933, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
+  m_PrefabInstance: {fileID: 2787817071385817152}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &3976875799032636505 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1261258185344848921, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
   m_PrefabInstance: {fileID: 2787817071385817152}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2920343853203216872
@@ -1031,14 +1136,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
---- !u!4 &4109471850703408625 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1261258185344848921, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
-  m_PrefabInstance: {fileID: 2920343853203216872}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4109471850703408589 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1261258185344848933, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
+  m_PrefabInstance: {fileID: 2920343853203216872}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4109471850703408625 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1261258185344848921, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
   m_PrefabInstance: {fileID: 2920343853203216872}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5219392182365825753
@@ -1355,14 +1460,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7201661bff449e74db9fdff6c1c56d67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &7286179057050908852 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1261258185344848933, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
-  m_PrefabInstance: {fileID: 8402967710893370513}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7286179057050908808 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1261258185344848921, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
+  m_PrefabInstance: {fileID: 8402967710893370513}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7286179057050908852 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1261258185344848933, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
   m_PrefabInstance: {fileID: 8402967710893370513}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8402967711140848389
@@ -1553,14 +1658,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
---- !u!4 &7286179057749385831 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1261258185344848921, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
-  m_PrefabInstance: {fileID: 8402967711256311422}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &7286179057749385819 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1261258185344848933, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
+  m_PrefabInstance: {fileID: 8402967711256311422}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7286179057749385831 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1261258185344848921, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
   m_PrefabInstance: {fileID: 8402967711256311422}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8402967711363627485
@@ -1656,14 +1761,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
---- !u!4 &7286179057789529540 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1261258185344848921, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
-  m_PrefabInstance: {fileID: 8402967711363627485}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &7286179057789529592 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1261258185344848933, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
+  m_PrefabInstance: {fileID: 8402967711363627485}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7286179057789529540 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1261258185344848921, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
   m_PrefabInstance: {fileID: 8402967711363627485}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8402967711813020713
