@@ -9,12 +9,13 @@ using WooHooFly.NodeSystem;
 public class MouseRotation : MonoBehaviour
 {
     //public Transform Compass;
-    public float rotateAngle;
+    private float rotateAngle = 90;
     private Vector3 rotationAngle;
     private Vector3 targetAngle;
     private float TurnDuration = 1f;
     [SerializeField] private Transform Axis;
-    
+
+    public bool enableMouseRotation;
     public RotationLink[] rotationLinks;
     public RotationLinker[] rotationLinksTransit;
     public RotationLinker[] rotationLinksCorner;
@@ -32,9 +33,16 @@ public class MouseRotation : MonoBehaviour
         UpdateLinkers(Mathf.RoundToInt(transform.eulerAngles.y));
     }
 
+    private void OnEnable()
+    {
+        UpdateOrientation(targetAngle.y);
+        UpdateLinkers(Mathf.RoundToInt(transform.eulerAngles.y));
+    }
+
     void Update()
     {
-
+        if (!enableMouseRotation)
+            return;
         if (!Application.isPlaying)
         {
             UpdateLinkerParents();
@@ -70,7 +78,8 @@ public class MouseRotation : MonoBehaviour
     // How the whole level is rotated related to world axis
     private void UpdateOrientation(float angle)
     {
-        //Debug.Log(angle);
+        if (GameManager.instance == null)
+            return;
         if (angle > 0 && angle <= 90)
         {
             GameManager.instance.levelDirection = Direction.Right;
@@ -83,7 +92,7 @@ public class MouseRotation : MonoBehaviour
         {
             GameManager.instance.levelDirection = Direction.Left;
         }
-        else if (angle > 270 && angle <= 360)
+        else if (angle > 270 && angle < 360 || angle == 0)
         {
             GameManager.instance.levelDirection = Direction.Forward;
         }
