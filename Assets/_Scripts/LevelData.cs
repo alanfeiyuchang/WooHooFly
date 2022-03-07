@@ -11,17 +11,19 @@ public class levelStar
     public int TwoStarStep;
     public int ThreeStarStep;
     public int StarEarned;
-
-    public int StartCount(int step)
+    public void StarCount(int step)
     {
-        if (step >= OneStarStep)
-            return 0;
-        else if (step >= TwoStarStep)
-            return 1;
-        else if (step >= ThreeStarStep)
-            return 2;
+        if (step >= OneStarStep && StarEarned <= 0)
+            StarEarned = 0;
+        else if (step >= TwoStarStep && StarEarned <= 1)
+            StarEarned = 1;
+        else if (step >= ThreeStarStep && StarEarned <= 2)
+            StarEarned = 2;
         else
-            return 3;
+            StarEarned = 3;
+        string s = "LevelStars" + LevelIndex.ToString();
+        PlayerPrefs.SetInt(s, StarEarned);
+        Debug.Log(StarEarned);
     }
 }
 [CreateAssetMenu(fileName= "LevelData", menuName = "LevelData", order = 1)]

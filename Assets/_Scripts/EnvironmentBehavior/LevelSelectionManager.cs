@@ -24,6 +24,15 @@ public class LevelSelectionManager : MonoBehaviour
     {
         if (PlayerPrefs.HasKey("LevelUnlocked"))
             MapTransition.instance.LevelUnlocked = PlayerPrefs.GetInt("LevelUnlocked");
+        GameManager.instance.LoadPlayerPrefsStars();
+        
+        
+    }
+
+    public void UpdateLevelSelection()
+    {
+        GameManager.instance.UploadPlayerPrefsStars();
+        PlayerPrefs.SetInt("LevelUnlocked", MapTransition.instance.LevelUnlocked);
         int index = 1;
         foreach (GameObject star in LevelStars)
         {
@@ -39,11 +48,6 @@ public class LevelSelectionManager : MonoBehaviour
             }
             index++;
         }
-    }
-
-    public void UpdateLevelSelection()
-    {
-        PlayerPrefs.SetInt("LevelUnlocked", MapTransition.instance.LevelUnlocked);
         for (int i = 0; i < MapTransition.instance.LevelUnlocked; i++)
         {
             if (i >= LevelTriggerBoxes.Count)
@@ -53,12 +57,12 @@ public class LevelSelectionManager : MonoBehaviour
             LevelTriggerBoxes[i].GetComponent<MapCubeManager>().
                 changeTileColor(LevelTriggerBoxes[i].GetComponent<MapCubeManager>().sideA, WooHooFly.Colors.TileColor.green);
         }
-        int index = 1;
+        /*int index = 1;
         foreach (GameObject star in LevelStars)
         {
             string s = "LevelStars" + index.ToString();
             PlayerPrefs.SetInt(s, star.GetComponent<StarManager>().starNum);
-        }
+        }*/
 
         MapTransition.instance.RedefineNode();
     }

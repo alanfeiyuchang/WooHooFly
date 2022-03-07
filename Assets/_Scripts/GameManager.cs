@@ -88,7 +88,7 @@ public class GameManager : MonoBehaviour
             MapTransition.instance.LevelUnlocked++;
             //LevelSelectionManager.instance.UpdateLevelSelection();
         }
-        
+        UpdateStars();
 
         // disable player controller
         MapTransition.instance.GetCurrentCubeControllerScript().enabled = false;
@@ -100,6 +100,32 @@ public class GameManager : MonoBehaviour
 
         // Send analytics data on winnning the level
         SendLevelCompleteAnalytics();
+    }
+
+    public void LoadPlayerPrefsStars()
+    {
+        foreach (levelStar data in levelData.levelStarData)
+        {
+            string s = "LevelStars" + data.LevelIndex.ToString();
+            if (PlayerPrefs.HasKey(s))
+            {
+                data.StarEarned = PlayerPrefs.GetInt(s);
+            }
+        }
+    }
+
+    public void UploadPlayerPrefsStars()
+    {
+        foreach (levelStar data in levelData.levelStarData)
+        {
+            string s = "LevelStars" + data.LevelIndex.ToString();
+            PlayerPrefs.SetInt(s, data.StarEarned);
+        }
+    }
+
+    public void UpdateStars()
+    {
+        levelData.levelStarData[MapTransition.instance.CurrentLevel - 1].StarCount(UIController.instance.StepCount);
     }
 
     public void CheckWin()
