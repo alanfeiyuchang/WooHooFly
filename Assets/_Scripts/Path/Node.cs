@@ -48,8 +48,8 @@ namespace WooHooFly.NodeSystem
 
         // Analytics variables, Used to track heatmap data
         private int VisitedCount;
-        private Vector3 InitalPosition;
-        private Quaternion InitialRotation;
+        private Vector3 InitialPosition;
+        private Vector3 InitialEulerAngles;
 
         private void Start()
         {
@@ -64,8 +64,8 @@ namespace WooHooFly.NodeSystem
 
             // Inital visited count for each node
             VisitedCount = 0;
-            InitalPosition = this.transform.position;
-            InitialRotation = this.transform.rotation;
+            InitialPosition = this.transform.position;
+            InitialEulerAngles = this.transform.eulerAngles;
             //Debug.Log("[Analytics]Position: " + InitalPosition + " VisitedCount=" + VisitedCount);
         }
 
@@ -73,14 +73,28 @@ namespace WooHooFly.NodeSystem
         public void VisitNode()
         {
             this.VisitedCount++;
-            Debug.Log("[Analytics]Position: " + InitalPosition + " Rotation: " + InitialRotation  + " VisitedCount=" + VisitedCount);
+            //Debug.Log("[Analytics]Position: " + InitialPosition + " Rotation: " + InitialEulerAngles + " VisitedCount=" + VisitedCount);
         }
 
         public string CheckNode()
         {
-            return "[Analytics]Position: " + InitalPosition + " Rotation: " + InitialRotation + " VisitedCount=" + VisitedCount;
+            return "[Analytics]Position: " + InitialPosition + " Rotation: " + InitialEulerAngles + " VisitedCount=" + VisitedCount;
         }
 
+        public int getVisitedCount()
+        {
+            return VisitedCount;
+        }
+
+        public Vector3 getInitialEulerAngles()
+        {
+            return InitialEulerAngles;
+        }
+
+        public Vector3 GetInitialPosition()
+        {
+            return InitialPosition;
+        }
         // draws a sphere gizmo
         private void OnDrawGizmos()
         {
