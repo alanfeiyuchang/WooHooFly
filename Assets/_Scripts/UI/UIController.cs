@@ -120,7 +120,7 @@ public class UIController : MonoBehaviour
     {
         CloseMenu();
         stepCounterActive = true;
-
+        InGamePanel.SetActive(true);
         // if player did not complete the level, record analytics data
         if ( ! GameManager.instance.IsLevelCompleted() )
         {
