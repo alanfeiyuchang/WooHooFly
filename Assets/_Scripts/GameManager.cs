@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour
     public float startTime;
     public float totalPauseDuration;
     public int currentLevel = 1;
+    public LevelData levelData;
     private bool levelComplete = false;
     private List<Node> allNodes = new List<Node>();
     
