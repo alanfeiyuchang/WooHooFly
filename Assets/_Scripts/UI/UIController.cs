@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 #if ENABLE_CLOUD_SERVICES_ANALYTICS
 using UnityEngine.Analytics;
@@ -33,7 +34,7 @@ public class UIController : MonoBehaviour
     private float pauseDuration;
     private Animation leftAnim;
     private Animation rightAnim;
-
+    private bool arrowTutorial = false;
     public int StepCount
     {
         get => _stepCount;
@@ -200,14 +201,22 @@ private void SendStartAnalytics()
 
     public void StartArrowAnim()
     {
-        leftAnim.Play();
-        rightAnim.Play();
+        if (!arrowTutorial)
+        {
+            leftAnim.Play();
+            rightAnim.Play();
+            arrowTutorial = true;
+        }  
     }
    
     public void StopArrowAnim()
     {
         leftAnim.Stop();
         rightAnim.Stop();
+        ccwArrow.GetComponent<Image>().color = Color.white;
+        cwArrow.GetComponent<Image>().color = Color.white;
+        ccwArrow.transform.localScale = new Vector3(1, 1, 1);
+        cwArrow.transform.localScale = new Vector3(1, 1, 1);
     }
     public void HideRotateArrow()
     {
