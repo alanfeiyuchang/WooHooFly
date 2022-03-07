@@ -60,23 +60,8 @@ public class UIController : MonoBehaviour
         // Enable step counter
         stepCounterActive = true;
 
-        // Analytics data
-        SendStartAnalytics();
         leftAnim = cwArrow.GetComponent<Animation>();
         rightAnim = ccwArrow.GetComponent<Animation>();
-
-    }
-
-private void SendStartAnalytics()
-    {
-        Debug.Log("[Analytics] Level "+ GameManager.instance.currentLevel + " started");
-#if ENABLE_CLOUD_SERVICES_ANALYTICS
-        AnalyticsResult analyticsResult = Analytics.CustomEvent("newGame", new Dictionary<string, object>
-        {
-            { "level", GameManager.instance.currentLevel }
-        });
-        Debug.Log("[Analytics] sent: " + analyticsResult);
-#endif
     }
     
 
@@ -139,7 +124,7 @@ private void SendStartAnalytics()
         // if player did not complete the level, record analytics data
         if ( ! GameManager.instance.IsLevelCompleted() )
         {
-            GameManager.instance.SendRestartAnalytics();
+            GameManager.instance.SendLevelAnalytics("restartLevel");
         }
         
         GameManager.instance.CurrentState = GameManager.GameState.restart;

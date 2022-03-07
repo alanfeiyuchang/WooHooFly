@@ -44,7 +44,6 @@ public class GameManager : MonoBehaviour
     public int currentLevel = 1;
     public LevelData levelData;
     private bool levelComplete = false;
-    private List<Node> allNodes = new List<Node>();
     
     [HideInInspector]
     public Direction levelDirection = Direction.None;
@@ -96,10 +95,10 @@ public class GameManager : MonoBehaviour
         // Get level duration
         float duration = Time.time - startTime - totalPauseDuration;
         duration = Mathf.Round(duration * 100.0f) * 0.01f;
-        Debug.Log("[Analytics] Won, Time taken: " + duration + " seconds.");
+        //Debug.Log("[Analytics] Won, Time taken: " + duration + " seconds.");
 
         // Send analytics data on winnning the level
-        SendLevelCompleteAnalytics();
+        SendLevelAnalytics("levelComplete");
     }
 
     public void CheckWin()
@@ -138,45 +137,55 @@ public class GameManager : MonoBehaviour
         startTime = Time.time;
         totalPauseDuration = 0;
         currentLevel = levelIndex;
-        allNodes = new List<Node>();
     }
-
-    public void SendLevelCompleteAnalytics()
+    //"[Analytics] Completed level:
+    public void SendLevelAnalytics(string levelEvent)
     {
         int steps = UIController.instance.GetStep();
         float duration = Time.time - startTime - totalPauseDuration;
         duration = Mathf.Round(duration * 100.0f) * 0.01f;
-        Debug.Log("[Analytics] Completed level: " + currentLevel + " in " + steps + " steps. Duration: " + duration + "s");
+        Debug.Log("[Analytics]  " + levelEvent + " level " + currentLevel + " in " + steps + " steps. Duration: " + duration + "s");
 
-        // Collect Heatmap data
-        allNodes = Graph.instance.GetAllNodes();
-        Debug.Log("[Analytics] allNodes size: " + allNodes.Count );
+        Dictionary<string, object> parameters = new Dictionary<string, object>();
+        parameters.Add("level", currentLevel);
+        parameters.Add("steps", steps);
+        parameters.Add("duration", duration);
+
+        // Event too big, disable this for now
+
+        /*
+        Dictionary<string, object> heatMapData = new Dictionary<string, object>();
+        heatMapData.Add("level", currentLevel);
+        CollectHeatMapData(heatMapData);
+        */
+        
 
 #if ENABLE_CLOUD_SERVICES_ANALYTICS
-        AnalyticsResult analyticsResult = Analytics.CustomEvent("levelComplete", new Dictionary<string, object>
-        {
-            { "level", currentLevel },
-            { "steps", steps },
-            { "duration" , duration }
-        });
-        Debug.Log("[Analytics] Sent: " + analyticsResult);
+        AnalyticsResult analyticsResult = Analytics.CustomEvent(levelEvent, parameters);
+        Debug.Log("[Analytics] " + levelEvent + " Sent: " + analyticsResult);
+        /*
+        analyticsResult = Analytics.CustomEvent("heatMapData", heatMapData);
+        Debug.Log("[Analytics] " + heatMapData.Count + " heatMapData Sent: " + analyticsResult);
+        */
 #endif
     }
 
-    public void SendRestartAnalytics()
+    public void CollectHeatMapData(Dictionary<string, object> heatMap)
     {
-        int steps = UIController.instance.GetStep();
-        float duration = Time.time - startTime - totalPauseDuration;
-        duration = Mathf.Round(duration * 100.0f) * 0.01f;
-        Debug.Log("[Analytics] Restarted level: " + currentLevel + " after " + steps + " steps. Duration: " + duration + "s");
-#if ENABLE_CLOUD_SERVICES_ANALYTICS
-        AnalyticsResult analyticsResult = Analytics.CustomEvent("levelRestart", new Dictionary<string, object>
+        List<Node> allNodes = Graph.instance.GetAllNodes();
+
+        int nodeId = 0;
+        foreach (Node node in allNodes)
         {
-            { "level", currentLevel },
-            { "steps", steps },
-            { "duration" , duration }
-        });
-        Debug.Log("[Analytics] Sent: " + analyticsResult);
-#endif
+            string nodeName = "Node" + nodeId;
+            HeatMapData data = new HeatMapData(node, nodeId);
+            string json = JsonUtility.ToJson(data);
+            /*nodes.Add(nodeName, json);
+            Debug.Log("[Analytics]" + nodeName + " " + json);*/
+            heatMap.Add(nodeName, json);
+            nodeId++;
+        }
+
     }
+
 }
