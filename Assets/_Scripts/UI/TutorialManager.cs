@@ -112,8 +112,11 @@ public class TutorialManager : MonoBehaviour
 
     public void HighlightPath() {
         Debug.Log("highting-----");
-        _path.SetActive(true);
-        StartCoroutine(FadePath());
+        if (_path != null) {
+            _path.SetActive(true);
+            StartCoroutine(FadePath());
+        }
+        
     }
 
 
