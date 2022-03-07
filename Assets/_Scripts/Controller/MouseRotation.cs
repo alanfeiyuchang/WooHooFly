@@ -45,7 +45,7 @@ public class MouseRotation : MonoBehaviour
             return;
         //rotationAngle = Compass.transform.up * angle;
         rotationAngle = this.transform.up * rotateAngle;
-        if (Input.GetAxis("Mouse ScrollWheel") != 0)
+        /*if (Input.GetAxis("Mouse ScrollWheel") != 0)
         {
             targetAngle = Input.GetAxis("Mouse ScrollWheel") * rotationAngle * 10;
             //transform.eulerAngles = clampAngle(targetAngle);
@@ -63,7 +63,7 @@ public class MouseRotation : MonoBehaviour
 
             if (rotationEvent != null)
                 rotationEvent.Invoke();
-        }
+        }*/
 
     }
 

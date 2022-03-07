@@ -14,7 +14,8 @@ public class UIController : MonoBehaviour
     public static UIController instance;
     [HideInInspector]
     public bool stepCounterActive = false;
-
+    [HideInInspector]
+    public bool canShowArrows = true;
     private void Awake()
     {
         instance = this;
@@ -222,11 +223,15 @@ private void SendStartAnalytics()
     {
         cwArrow.SetActive(false);
         ccwArrow.SetActive(false);
+        canShowArrows = false;
     }
     public void ShowRotateArrow()
     {
+        if (!canShowArrows)
+            return;
         cwArrow.SetActive(true);
         ccwArrow.SetActive(true);
+        canShowArrows = true;
     }
     // add more methods to track other stats
 }

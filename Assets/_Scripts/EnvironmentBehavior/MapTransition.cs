@@ -172,6 +172,8 @@ public class MapTransition : MonoBehaviour
 
     IEnumerator LevelCrashOneByOne(float dropTime, float dropHeight, int plus, int levelIndex)
     {
+        UIController.instance.HideRotateArrow();
+        UIController.instance.canShowArrows = true;
         ChangeLevel(levelIndex);
         if (!_canDoTransition)
             yield return null;
@@ -203,8 +205,10 @@ public class MapTransition : MonoBehaviour
         Destroy(_fromLevel.gameObject);
 
         SetPosition(_toMapCubes, _toMapFlags, _toMapPlayerCube, +dropHeight);
+        
         _toLevel.gameObject.SetActive(true);
         mouseRotation = _toLevel.GetComponent<MouseRotation>();
+
         
         //if it is selection level (level 0) update
         if (levelIndex == 0)
@@ -242,6 +246,8 @@ public class MapTransition : MonoBehaviour
         // Reset Analytics timers and pass level info
         Debug.Log("[Analytics] Level "+ (GameManager.instance.currentLevel + 1) + " started");
         GameManager.instance.resetAnalyticsTimer(CurrentLevel);
+
+        UIController.instance.ShowRotateArrow();
     }
 
     IEnumerator LevelOneCubeCrash(float dropTime, float dropHeight, Transform trans)
@@ -254,12 +260,17 @@ public class MapTransition : MonoBehaviour
         {
             Vector3 pos = Vector3.Lerp(beginPos, endPos, timeElapsed / dropTime);
             trans.position = pos;
+
+            //prevent from drop too low
+            if (trans.position.y <= endPos.y)
+                yield break;
+
             timeElapsed += Time.deltaTime;
             yield return null;
         }
-        Vector3 finalPos = trans.position;
-        finalPos[1] = Mathf.Round(finalPos[1]);
-        trans.position = finalPos;
+        /*Vector3 finalPos = trans.position;
+        finalPos[1] = Mathf.Round(finalPos[1]);*/
+        trans.position = endPos;
     }
 
     private void SetPosition(List<GameObject> cubes, List<GameObject> flags, GameObject playerCube, float height)
