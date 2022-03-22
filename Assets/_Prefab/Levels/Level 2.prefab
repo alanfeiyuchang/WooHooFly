@@ -1750,7 +1750,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2001951467235570600
 Transform:
   m_ObjectHideFlags: 0
@@ -4551,7 +4551,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -8.000359, y: 313}
-  m_SizeDelta: {x: 1500, y: 80}
+  m_SizeDelta: {x: 1500, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7305132480317769871
 CanvasRenderer:
@@ -4746,35 +4746,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _path: {fileID: 0}
   tutorialHints:
-  - HintPlace: {fileID: 741053123718549402}
+  - HintPlace: {fileID: 741053123036616220}
     HintEvent:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 6636983468340881599}
           m_TargetAssemblyTypeName: TutorialManager, Assembly-CSharp
-          m_MethodName: ShowTextHint
-          m_Mode: 5
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: Don't worry, this type of tile accepts any color!
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 6636983468340881599}
-          m_TargetAssemblyTypeName: TutorialManager, Assembly-CSharp
           m_MethodName: ShowArrowHint
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 741053122582267023}
+            m_ObjectArgument: {fileID: 741053123033342154}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - HintPlace: {fileID: 741053124101146607}
+        - m_Target: {fileID: 6636983468340881599}
+          m_TargetAssemblyTypeName: TutorialManager, Assembly-CSharp
+          m_MethodName: ShowTextHint
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: You can change the color of this type of tile
+            m_BoolArgument: 0
+          m_CallState: 2
+  - HintPlace: {fileID: 741053123033342154}
     HintEvent:
       m_PersistentCalls:
         m_Calls:
@@ -4787,7 +4787,7 @@ MonoBehaviour:
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
-            m_StringArgument: Don't worry, this type of tile accepts any color!
+            m_StringArgument: You can change the color of this type of tile
             m_BoolArgument: 0
           m_CallState: 2
         - m_Target: {fileID: 6636983468340881599}
@@ -4795,8 +4795,96 @@ MonoBehaviour:
           m_MethodName: ShowArrowHint
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 741053122538802999}
+            m_ObjectArgument: {fileID: 741053123036616220}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - HintPlace: {fileID: 741053122939629179}
+    HintEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6636983468340881599}
+          m_TargetAssemblyTypeName: TutorialManager, Assembly-CSharp
+          m_MethodName: ShowTextHint
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: Great! Let's get to the goal!
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 6636983468340881599}
+          m_TargetAssemblyTypeName: TutorialManager, Assembly-CSharp
+          m_MethodName: ShowArrowHint
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 2001951466857257724}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - HintPlace: {fileID: 741053124298328955}
+    HintEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6636983468340881599}
+          m_TargetAssemblyTypeName: TutorialManager, Assembly-CSharp
+          m_MethodName: ShowTextHint
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - HintPlace: {fileID: 741053124658226765}
+    HintEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6636983468340881599}
+          m_TargetAssemblyTypeName: TutorialManager, Assembly-CSharp
+          m_MethodName: ShowTextHint
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: Great! Let's get to the goal!
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 6636983468340881599}
+          m_TargetAssemblyTypeName: TutorialManager, Assembly-CSharp
+          m_MethodName: ShowArrowHint
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 2001951466857257724}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - HintPlace: {fileID: 741053122823622345}
+    HintEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6636983468340881599}
+          m_TargetAssemblyTypeName: TutorialManager, Assembly-CSharp
+          m_MethodName: ShowTextHint
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
@@ -5090,7 +5178,7 @@ PrefabInstance:
     - target: {fileID: 733009228919962329, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: e09abfbfe320b0c47b2ea02a0def6fe1, type: 2}
+      objectReference: {fileID: 2100000, guid: 7923840e39c08c441813cf8151aed45f, type: 2}
     - target: {fileID: 1261258185344848921, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
       propertyPath: m_RootOrder
       value: 14
@@ -5149,23 +5237,27 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 7923840e39c08c441813cf8151aed45f, type: 2}
     - target: {fileID: 4111165211141763716, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
       propertyPath: MapColor
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 4976110650907946318, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
+    - target: {fileID: 4841069942895014286, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4976110650907946318, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5786841926977724018, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
       propertyPath: m_TagString
-      value: ColorTile
+      value: ChangeTile
       objectReference: {fileID: 0}
     - target: {fileID: 8779953591729639600, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
       propertyPath: sideAType
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8779953591729639600, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
       propertyPath: sideAColor
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8779953591729639600, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
       propertyPath: sideBColor
@@ -5197,7 +5289,7 @@ PrefabInstance:
     - target: {fileID: 733009228919962329, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: e09abfbfe320b0c47b2ea02a0def6fe1, type: 2}
+      objectReference: {fileID: 2100000, guid: ad17409ae82c34d4c9c3d3468da314b7, type: 2}
     - target: {fileID: 1261258185344848921, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
       propertyPath: m_RootOrder
       value: 15
@@ -5248,11 +5340,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4111165211141763716, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
       propertyPath: MapColor
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4841069942895014286, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5786841926977724018, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
+      propertyPath: m_TagString
+      value: ChangeTile
+      objectReference: {fileID: 0}
+    - target: {fileID: 8779953591729639600, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
+      propertyPath: sideAType
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8779953591729639600, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
       propertyPath: sideAColor
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
@@ -6433,6 +6537,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4841069942895014286, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5786841926977724018, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
+      propertyPath: m_TagString
+      value: ChangeTile
+      objectReference: {fileID: 0}
     - target: {fileID: 8396584670387778566, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -7060,11 +7172,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5201491358786116024, guid: 241e7c310de5db541b1d6039424e9fe1, type: 3}
       propertyPath: Color
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5201491358786116025, guid: 241e7c310de5db541b1d6039424e9fe1, type: 3}
       propertyPath: m_Name
       value: PlayerCube_OneColor
+      objectReference: {fileID: 0}
+    - target: {fileID: 5201491358786116025, guid: 241e7c310de5db541b1d6039424e9fe1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5201491358786116035, guid: 241e7c310de5db541b1d6039424e9fe1, type: 3}
       propertyPath: m_RootOrder
@@ -7275,6 +7391,14 @@ PrefabInstance:
     - target: {fileID: 1261258185344848933, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
       propertyPath: m_Name
       value: MapCube (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4841069942895014286, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5786841926977724018, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
+      propertyPath: m_TagString
+      value: UnchangeTile
       objectReference: {fileID: 0}
     - target: {fileID: 8396584670387778566, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
       propertyPath: m_IsActive
@@ -10420,6 +10544,18 @@ PrefabInstance:
     - target: {fileID: 4111165211141763716, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
       propertyPath: MapColor
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4976110650907946318, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5786841926977724018, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
+      propertyPath: m_TagString
+      value: ColorTile
+      objectReference: {fileID: 0}
+    - target: {fileID: 8779953591729639600, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
+      propertyPath: sideAType
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8779953591729639600, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
       propertyPath: sideAColor

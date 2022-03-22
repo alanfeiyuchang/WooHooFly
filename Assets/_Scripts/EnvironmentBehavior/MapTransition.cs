@@ -81,6 +81,12 @@ public class MapTransition : MonoBehaviour
         return LevelList[CurrentLevel].PlayerCube.GetComponent<CubeController>();
     }
 
+    // for camera follow
+    public Transform GetCurrentPlayerTransform()
+    {
+        return LevelList[CurrentLevel].PlayerCube.transform;
+    }
+
     public MouseRotation GetCurrentMouseRotationScript()
     {
         if (LevelList[CurrentLevel].GetComponent<MouseRotation>() == null)
@@ -231,6 +237,8 @@ public class MapTransition : MonoBehaviour
         }
         yield return new WaitForSeconds(dropTime+0.5f);
 
+        //Set the camera follow target to the current player cube
+        // CameraFollow.instance.SetCameraTarget(_toMapPlayerCube.transform);
 
         //switch level
         EnableController();
