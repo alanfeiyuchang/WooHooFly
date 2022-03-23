@@ -214,4 +214,13 @@ public class GameManager : MonoBehaviour
 
     }
 
+    private void OnApplicationQuit()
+    {
+        foreach (levelStar ls in levelData.levelStarData)
+        {
+            ls.StarEarned = 0;
+        }
+        
+    }
+
 }

@@ -243,6 +243,7 @@ public class MapTransition : MonoBehaviour
         //switch level
         EnableController();
         CurrentLevel = levelIndex;
+        UIController.instance.NextButton.SetActive(true);
         if (levelIndex + 1 >= LevelList.Count)
         {
             UIController.instance.NextButton.SetActive(false);
