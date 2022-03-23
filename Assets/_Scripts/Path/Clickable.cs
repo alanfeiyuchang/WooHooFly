@@ -29,6 +29,7 @@ namespace WooHooFly.NodeSystem {
             if (clickAction != null)
             {
                 // invoke the clickAction with world space raycast hit position
+                Debug.Log("invoke");
                 clickAction.Invoke(this, eventData.pointerPressRaycast.worldPosition);
             }
         }

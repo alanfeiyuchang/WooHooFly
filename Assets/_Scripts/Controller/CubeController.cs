@@ -49,6 +49,15 @@ public class CubeController : MonoBehaviour
             c.clickAction -= OnClick;
         }
     }
+
+    private void OnEnable()
+    {
+        // subscribe from clickEvents when enabled
+        foreach (Clickable c in clickables)
+        {
+            c.clickAction += OnClick;
+        }
+    }
     private void OnClick(Clickable clickable, Vector3 position)
     {
         if (inputType != InputType.MouseInput)
