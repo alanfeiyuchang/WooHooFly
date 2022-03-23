@@ -238,7 +238,7 @@ public class MapTransition : MonoBehaviour
         yield return new WaitForSeconds(dropTime+0.5f);
 
         //Set the camera follow target to the current player cube
-        CameraFollow.instance.SetCameraTarget(_toMapPlayerCube.transform);
+        // CameraFollow.instance.SetCameraTarget(_toMapPlayerCube.transform);
 
         //switch level
         EnableController();
