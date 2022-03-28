@@ -25,10 +25,18 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject Title;
     [SerializeField] private GameObject WinPanel;
     [SerializeField] private GameObject PauseMene;
-    [SerializeField] private GameObject InGamePanel;
-    [SerializeField] private TMP_Text StepCountText;
     [SerializeField] private GameObject cwArrow;
     [SerializeField] private GameObject ccwArrow;
+    
+    [Header("InGamePanel")]
+    [SerializeField] private GameObject InGamePanel;
+    [SerializeField] private RawImage _star1;
+    [SerializeField] private RawImage _star2;
+    [SerializeField] private RawImage _star3;
+    [SerializeField] private TMP_Text StepCountText;
+    [SerializeField] private Texture _filledStar;
+    [SerializeField] private Texture _emptyStar;
+
     public GameObject NextButton;
     private int _stepCount = 0;
     private float pauseStart;
@@ -42,7 +50,70 @@ public class UIController : MonoBehaviour
         set
         {
             _stepCount = value;
-            StepCountText.text = "Steps: " + _stepCount.ToString();
+            int starStepNumber = 0;
+            levelStar curLevelData = GameManager.instance.levelData.levelStarData[MapTransition.instance.CurrentLevel - 1];
+            if (_stepCount <= curLevelData.ThreeStarStep)
+            {
+                starStepNumber = curLevelData.ThreeStarStep;
+                UpdateStar(3);
+            }
+            else if (_stepCount == curLevelData.ThreeStarStep+1)
+            {
+                starStepNumber = curLevelData.TwoStarStep;
+                UpdateStar(2);
+            }
+            else if (_stepCount <= curLevelData.TwoStarStep)
+            {
+                starStepNumber = curLevelData.TwoStarStep;
+            }
+            else if (_stepCount == curLevelData.TwoStarStep + 1)
+            {
+                starStepNumber = curLevelData.OneStarStep;
+                UpdateStar(1);
+            }
+            else if (_stepCount <= curLevelData.OneStarStep)
+            {
+                starStepNumber = curLevelData.OneStarStep;
+            }
+            else if (_stepCount == curLevelData.OneStarStep + 1)
+            {
+                starStepNumber = curLevelData.OneStarStep;
+                UpdateStar(0);
+            }
+            else
+            {
+                starStepNumber = curLevelData.OneStarStep;
+            }
+
+            StepCountText.text = "Steps: " + _stepCount.ToString() + "/" + starStepNumber.ToString();
+        }
+    }
+
+    private void UpdateStar(int starCount)
+    {
+        if (starCount == 3)
+        {
+            _star1.texture = _filledStar;
+            _star2.texture = _filledStar;
+            _star3.texture = _filledStar;
+        }
+        else if (starCount == 2)
+        {
+            _star1.texture = _filledStar;
+            _star2.texture = _filledStar;
+            _star3.texture = _emptyStar;
+        }
+        else if (starCount == 1)
+        {
+            _star1.texture = _filledStar;
+            _star2.texture = _emptyStar;
+            _star3.texture = _emptyStar;
+        }
+        else if (starCount == 0)
+        {
+            _star1.texture = _emptyStar;
+            _star2.texture = _emptyStar;
+            _star3.texture = _emptyStar;
         }
     }
 
@@ -56,6 +127,7 @@ public class UIController : MonoBehaviour
         //Title.SetActive(true);
         //StartMenu.SetActive(true);
         InGamePanel.SetActive(true);
+        StepCount = 0;
 
         // Enable step counter
         stepCounterActive = true;

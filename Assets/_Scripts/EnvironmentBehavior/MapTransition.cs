@@ -202,8 +202,7 @@ public class MapTransition : MonoBehaviour
         }
         
         yield return new WaitForSeconds(dropTime);
-        UIController.instance.StepCount = 0;
-
+        
         //switch map
         SetPosition(_fromMapCubes, _fromMapFlags, _fromMapPlayerCube, +dropHeight);
         LevelList[CurrentLevel] = _dummyLevel.GetComponent<LevelManager>();
@@ -215,12 +214,13 @@ public class MapTransition : MonoBehaviour
         _toLevel.gameObject.SetActive(true);
         mouseRotation = _toLevel.GetComponent<MouseRotation>();
 
-        
         //if it is selection level (level 0) update
         if (levelIndex == 0)
         {
             LevelList[0].GetComponent<LevelSelectionManager>().UpdateLevelSelection();
         }
+        CurrentLevel = levelIndex;
+        UIController.instance.StepCount = 0;
 
         //to map appears
         betweenTime = TotalCrashTime / _toMapCubes.Count();
@@ -242,7 +242,7 @@ public class MapTransition : MonoBehaviour
 
         //switch level
         EnableController();
-        CurrentLevel = levelIndex;
+        
         UIController.instance.NextButton.SetActive(true);
         if (levelIndex + 1 >= LevelList.Count)
         {
