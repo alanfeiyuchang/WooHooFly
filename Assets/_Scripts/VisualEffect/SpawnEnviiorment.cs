@@ -12,6 +12,7 @@ public class SpawnEnviiorment : MonoBehaviour
     }
     [SerializeField] private GameObject waterParent;
     [SerializeField] private GameObject sand;
+    [SerializeField] private GameObject grass;
     void Start()
     {
         
@@ -34,5 +35,11 @@ public class SpawnEnviiorment : MonoBehaviour
         GameObject _sand = Instantiate(sand);
         _sand.transform.SetParent(transform);
         _sand.transform.position = _pos;
+    }
+    public void spawnGrass(Vector3 _pos)
+    {
+        GameObject _grass = Instantiate(grass);
+        _grass.transform.SetParent(transform);
+        _grass.transform.position = _pos;
     }
 }

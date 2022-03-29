@@ -40,7 +40,8 @@ public class DissolveTransition : MonoBehaviour
                         manager.sideCColor == TileColor.green || manager.sideDColor == TileColor.green ||
                         manager.sideEColor == TileColor.green || manager.sideFColor == TileColor.green)
                     {
-                        SpawnEnviiorment.instanace.spawnWater(cube.transform.position);
+                        //SpawnEnviiorment.instanace.spawnWater(cube.transform.position);
+                        SpawnEnviiorment.instanace.spawnGrass(cube.transform.position);
                     }
                     else
                     {
