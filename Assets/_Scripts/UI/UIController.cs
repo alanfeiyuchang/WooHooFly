@@ -71,7 +71,7 @@ public class UIController : MonoBehaviour
                 starStepNumber = curLevelData.OneStarStep;
                 UpdateStar(1);
             }
-            else if (_stepCount <= curLevelData.OneStarStep)
+            /*else if (_stepCount <= curLevelData.OneStarStep)
             {
                 starStepNumber = curLevelData.OneStarStep;
             }
@@ -79,10 +79,10 @@ public class UIController : MonoBehaviour
             {
                 starStepNumber = curLevelData.OneStarStep;
                 UpdateStar(0);
-            }
+            }*/
             else
             {
-                starStepNumber = curLevelData.OneStarStep;
+                starStepNumber = curLevelData.TwoStarStep;
             }
 
             StepCountText.text = "Steps: " + _stepCount.ToString() + "/" + starStepNumber.ToString();
