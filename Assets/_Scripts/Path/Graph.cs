@@ -130,7 +130,7 @@ namespace WooHooFly.NodeSystem
             {
                 if (e.neighbor.isActiveAndEnabled && e.isActive)
                 {
-                    accessibleNodes.Add(e.neighbor); 
+                    accessibleNodes.Add(e.neighbor);
                 }
             }
             foreach (Edge e in currentNode.Edges)
