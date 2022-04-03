@@ -20,6 +20,7 @@ public class CubeController : MonoBehaviour
     public GameObject SnapPoint;
     public float speed = 500;
     public UnityEvent RotationEvent;
+    protected AudioSource RollMusic;
     private void Awake()
     {
         graph = FindObjectOfType<Graph>();
@@ -28,6 +29,7 @@ public class CubeController : MonoBehaviour
     }
     private void Start()
     {
+        RollMusic = GetComponent<AudioSource>();
         foreach (Clickable c in clickables)
         {
             c.clickAction += OnClick;
@@ -113,6 +115,7 @@ public class CubeController : MonoBehaviour
 
     private void Rolling()
     {
+
         if (GameManager.instance.CurrentState != GameManager.GameState.playing && GameManager.instance.CurrentState != GameManager.GameState.starting)
             return;
 
@@ -152,6 +155,7 @@ public class CubeController : MonoBehaviour
 
     IEnumerator Roll(Vector3 rotationPoint, Vector3 rotationAxis)
     {
+        RollMusic.Play();
         float remainingAngle = 90;
         isMoving = true;
         GameManager.instance.CurrentState = GameManager.GameState.rotating;
