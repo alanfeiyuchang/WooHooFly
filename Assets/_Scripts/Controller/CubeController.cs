@@ -21,6 +21,7 @@ public class CubeController : MonoBehaviour
     public float speed = 500;
     public UnityEvent RotationEvent;
     protected AudioSource RollMusic;
+    public Queue<Node> movingPath;
     private void Awake()
     {
         graph = FindObjectOfType<Graph>();
@@ -68,8 +69,9 @@ public class CubeController : MonoBehaviour
         if (isMoving)
             return;
 
-        movingInfo = currentNode.MovingInfo(clickable.clickedNode);
-        Rolling();
+        movingPath = graph.GetPath(clickable.clickedNode);
+        //movingInfo = currentNode.MovingInfo(clickable.clickedNode);
+        Rolling(movingPath.Dequeue());
     }
 
     public void FindAccessibleNode()
@@ -108,14 +110,14 @@ public class CubeController : MonoBehaviour
     private void RollAtDirection(Direction direction)
     {
         movingInfo = currentNode.FindNodesAtDirection(direction, GameManager.instance.levelDirection);
-        Rolling();
+        //Rolling();
     }
     #endregion
 
 
-    private void Rolling()
+    private void Rolling(Node targetNode)
     {
-
+        movingInfo = currentNode.MovingInfo(targetNode);
         if (GameManager.instance.CurrentState != GameManager.GameState.playing && GameManager.instance.CurrentState != GameManager.GameState.starting)
             return;
 
@@ -183,7 +185,10 @@ public class CubeController : MonoBehaviour
         currentNode.VisitNode();
 
         SnapToNearestNode();
-        FindAccessibleNode();
+        if(movingPath.Count != 0)
+            Rolling(movingPath.Dequeue());
+        else
+            FindAccessibleNode();
     }
 
     private void SnapToNearestNode()

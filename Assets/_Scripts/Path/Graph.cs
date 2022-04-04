@@ -16,9 +16,9 @@ namespace WooHooFly.NodeSystem
         private Node goalNode;
         private Node GoalNode => goalNode;
 
-        [SerializeField] private List<Node> accessibleNodes = new List<Node>();
+        [SerializeField] private List<Path> accessibleNodes = new List<Path>();
+        public List<Path> AccessibleNodes => accessibleNodes;
 
-        public List<Node> AccessibleNodes => accessibleNodes;
 
         private void Awake()
         {
@@ -126,18 +126,45 @@ namespace WooHooFly.NodeSystem
         {
             EnableClikable(false);
             accessibleNodes.Clear();
+            //foreach (TransitEdge e in currentNode.Transits)
+            //{
+            //    if (e.neighbor.isActiveAndEnabled && e.isActive)
+            //    {
+            //        accessibleNodes.Add(e.neighbor);
+            //    }
+            //}
+            //foreach (Edge e in currentNode.Edges)
+            //{
+            //    if (e.isActive)
+            //    {
+            //        accessibleNodes.Add(e.neighbor);
+            //    }
+            //}
+            //foreach (Edge c in currentNode.Corners)
+            //{
+            //    if (c.isActive)
+            //    {
+            //        foreach (Edge e in c.neighbor.Edges)
+            //        {
+            //            if (e.isActive)
+            //            {
+            //                accessibleNodes.Add(e.neighbor);
+            //            }
+            //        }
+            //    }
+            //}
             foreach (TransitEdge e in currentNode.Transits)
             {
                 if (e.neighbor.isActiveAndEnabled && e.isActive)
                 {
-                    accessibleNodes.Add(e.neighbor);
+                    FindPathAtDirection(currentNode, e.direction);
                 }
             }
             foreach (Edge e in currentNode.Edges)
             {
                 if (e.isActive)
                 {
-                    accessibleNodes.Add(e.neighbor);
+                    FindPathAtDirection(currentNode, e.direction);
                 }
             }
             foreach (Edge c in currentNode.Corners)
@@ -148,7 +175,7 @@ namespace WooHooFly.NodeSystem
                     {
                         if (e.isActive)
                         {
-                            accessibleNodes.Add(e.neighbor);
+                            FindPathAtDirection(c.neighbor, e.direction);
                         }
                     }
                 }
@@ -156,12 +183,67 @@ namespace WooHooFly.NodeSystem
             EnableClikable(true);
         }
 
+        private void FindPathAtDirection(Node node, Direction direction)
+        {
+            Path path = new Path();
+            bool hasNextAccessible;
+            do
+            {
+                hasNextAccessible = false;
+                foreach (TransitEdge e in node.Transits)
+                {
+                    if (e.isActive && e.direction == direction)
+                    {
+                        node = e.neighbor;
+                        path.Add(e.neighbor);
+                        hasNextAccessible = true;
+                        break;
+                    }
+                }
+                foreach (Edge e in node.Edges)
+                {
+                    if (e.isActive && e.direction == direction)
+                    {
+                        node = e.neighbor;
+                        path.Add(e.neighbor);
+                        hasNextAccessible = true;
+                        break;
+                    }
+                }
+
+                
+            } while (hasNextAccessible);
+            AccessibleNodes.Add(path);
+        }
+
+        public Queue<Node> GetPath(Node targetNode)
+        {
+            Queue<Node> pathQ = new Queue<Node>();
+            foreach(Path path in AccessibleNodes)
+            {
+                if (path.Contains(targetNode))
+                {
+                    foreach(Node node in path.path)
+                    {
+                        pathQ.Enqueue(node);
+                        if (node == targetNode)
+                            return pathQ;
+                    }
+                }
+            }
+            return pathQ;
+        }
+
         private void EnableClikable(bool enabled)
         {
-            foreach(Node node in accessibleNodes)
+            foreach(Path path in accessibleNodes)
             {
-                node.ClickableTile.EnablePointer(enabled);
+                foreach (Node node in path.path)
+                {
+                    node.ClickableTile.EnablePointer(enabled);
+                }
             }
+            
         }
 
     }
