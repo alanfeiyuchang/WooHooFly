@@ -257,10 +257,9 @@ namespace WooHooFly.NodeSystem
                     movingDirection = -transform.forward;
 
                 // add to edges list if not already included and not excluded specifically
-                if (!HasNeighbor(newNode) && !excludedNodes.Contains(newNode))
+                if (!HasCorner(newNode) && !excludedNodes.Contains(newNode))
                 {
-
-                    Edge newEdge = new Edge { neighbor = newNode, isActive = true, direction = GetDirection(movingDirection) };
+                    Edge newEdge = new Edge { neighbor = newNode, isActive = true, direction = Direction.None };//GetDirection(movingDirection) };
                     corners.Add(newEdge);
                 }
             }
@@ -270,6 +269,18 @@ namespace WooHooFly.NodeSystem
         private bool HasNeighbor(Node node)
         {
             foreach (Edge e in edges)
+            {
+                if (e.neighbor != null && e.neighbor.Equals(node))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private bool HasCorner(Node node)
+        {
+            foreach (Edge e in corners)
             {
                 if (e.neighbor != null && e.neighbor.Equals(node))
                 {

@@ -69,5 +69,14 @@ namespace WooHooFly.NodeSystem
         MoveRotate, RotateMove, None
     }
 
+    [System.Serializable]
+    public class Path
+    {
+        public List<Node> path = new List<Node>();
+        public void Clear() { path.Clear(); }
+        public void Add(Node node) { path.Add(node); }
+        public bool Contains(Node node) { return path.Contains(node); }
+
+    }
 
 }
