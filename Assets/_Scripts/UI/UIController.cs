@@ -27,7 +27,9 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject PauseMene;
     [SerializeField] private GameObject cwArrow;
     [SerializeField] private GameObject ccwArrow;
-    
+    [SerializeField] private GameObject homeButton;
+    [SerializeField] private GameObject restartButton;
+
     [Header("InGamePanel")]
     [SerializeField] private GameObject InGamePanel;
     [SerializeField] private RawImage _star1;
@@ -225,6 +227,13 @@ public class UIController : MonoBehaviour
         }
         else
         {
+            homeButton.SetActive(true);
+            restartButton.SetActive(true);
+            if (MapTransition.instance.CurrentLevel == 0)
+            {
+                homeButton.SetActive(false);
+                restartButton.SetActive(false);
+            }
             PauseMene.SetActive(true);
             InGamePanel.SetActive(false);
             GameManager.instance.CurrentState = GameManager.GameState.paused;
