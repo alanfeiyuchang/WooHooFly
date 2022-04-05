@@ -6,7 +6,11 @@ using static System.Math;
 public class SpawnVegetation : MonoBehaviour
 {
 
+    public float size;
+    public float clearZone;
+
     [SerializeField]  private SpawnInfo spawnInfo;
+
     public int repeat;
 
     public bool showGrass;
@@ -16,9 +20,12 @@ public class SpawnVegetation : MonoBehaviour
     
     void Start()
     {
-        minx = -0.4f;
-        minz = -0.4f;
-        range = (float) (0.8 / Sqrt(repeat));
+        // repeat = Random.Range(1, repeat+1);
+        // Debug.Log(repeat);
+        size -= clearZone * 2;
+        minx = -size / 2;
+        minz = -size / 2;
+        range = (float) (size / Sqrt(repeat));
         maxx = minx + range;
         maxz = minz + range;
         if (showGrass) {
@@ -57,11 +64,18 @@ public class SpawnVegetation : MonoBehaviour
     {
         float x = Random.Range(minx, maxx);
         float y = 0.1f;
+        if (showGrass)
+            y += 0.1f;
         float z = Random.Range(minz, maxz);
         // Debug.Log(range);
-        if (maxx + range > 0.4f){
-            minx = -0.4f;
-            minz += range;
+        if (maxx + range > size / 2){
+            minx = -size/2;
+            if (maxz + range > size / 2){
+                minz = -size/2;
+            }
+            else {
+                minz += range;
+            }
         }
         else{
             minx += range;
