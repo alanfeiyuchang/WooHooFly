@@ -5,7 +5,6 @@ namespace WooHooFly.Colors
         green,
         red,
         grey,
-
         none
     };
 }

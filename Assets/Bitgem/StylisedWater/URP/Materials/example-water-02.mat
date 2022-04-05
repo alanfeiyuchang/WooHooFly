@@ -8,8 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: example-water-02
-  m_Shader: {fileID: -6465566751694194690, guid: 2cddf2ee6a74aca44af00f5a49bd2cf1,
-    type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 2cddf2ee6a74aca44af00f5a49bd2cf1, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
@@ -52,6 +51,18 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
     - Vector1_17E53C12: 0.77
     - Vector1_244B0600: 1.5
@@ -68,6 +79,8 @@ Material:
     - Vector1_E03AB928: 0.025
     - Vector1_E5C51606: 0
     - Vector1_F38B44AA: 0.35
+    - Vector1_b8dd412d083246fd8e7d7c828bb1de1a: 0
+    - _Alpha: 0
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -96,10 +109,12 @@ Material:
     - Color_7D9A58EC: {r: 0.049127813, g: 0.21262987, b: 0.4528302, a: 0.9843137}
     - Color_F01C36BF: {r: 0.09656405, g: 0.46262187, b: 0.6603774, a: 0}
     - Vector2_37B21477: {r: 0.6, g: 0.6, b: 1, a: 1}
+    - Vector3_e59011bdc8af4b809dea3b9793d0a21e: {r: 1, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
+  m_BuildTextureStacks: []
 --- !u!114 &5702210360403225776
 MonoBehaviour:
   m_ObjectHideFlags: 11

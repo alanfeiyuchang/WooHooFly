@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class SpawnEnviiorment : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -10,9 +11,9 @@ public class SpawnEnviiorment : MonoBehaviour
     {
         instanace = this;
     }
-    [SerializeField] private GameObject waterParent;
+    [SerializeField] public GameObject waterParent;
     [SerializeField] private GameObject sand;
-    [SerializeField] private GameObject grass;
+    [SerializeField] private GameObject grassTop;
     void Start()
     {
         
@@ -28,7 +29,8 @@ public class SpawnEnviiorment : MonoBehaviour
     {
         GameObject _empty = new GameObject("WaterMark");
         _empty.transform.SetParent(waterParent.transform);
-        _empty.transform.position = _pos;
+        _empty.transform.position = new Vector3(_pos.x, _pos.y + 0.1f, _pos.z);
+        _empty.transform.localScale = new Vector3(1, 1, 1);
     }
     public void spawnSand(Vector3 _pos)
     {
@@ -38,8 +40,8 @@ public class SpawnEnviiorment : MonoBehaviour
     }
     public void spawnGrass(Vector3 _pos)
     {
-        GameObject _grass = Instantiate(grass);
+        GameObject _grass = Instantiate(grassTop);
         _grass.transform.SetParent(transform);
-        _grass.transform.position = _pos;
+        _grass.transform.position = new Vector3(_pos.x,_pos.y+0.5f,_pos.z);
     }
 }

@@ -14,6 +14,7 @@ public class TileManager : MonoBehaviour
     public Material Green;
     public Material Red;
     public Material Grey;
+    public Material Blank;
     // Start is called before the first frame update
     void Start()
     {
@@ -63,6 +64,9 @@ public class TileManager : MonoBehaviour
             case TileColor.grey:
                 mesh.material = Grey;
                 break;
+            case TileColor.none:
+                mesh.material = Blank;
+                break;
             default:
                 break;
         }
@@ -110,6 +114,9 @@ public class TileManager : MonoBehaviour
                 break;
             case TileColor.grey:
                 mesh.material = Grey;
+                break;
+            case TileColor.none:
+                mesh.material = Blank;
                 break;
             default:
                 break;

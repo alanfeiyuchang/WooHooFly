@@ -32,6 +32,7 @@ public class MapCubeManager : MonoBehaviour
     public Material Green;
     public Material Red;
     public Material Grey;
+    public Material Blank;
     [HideInInspector]
     public GameObject sideA, sideB, sideC, sideD, sideE, sideF;
     
@@ -41,7 +42,15 @@ public class MapCubeManager : MonoBehaviour
         Changeable,
         Color   
     };
-
+    private void OnValidate()
+    {
+        changeTileColor(sideA, sideAColor);
+        changeTileColor(sideB, sideBColor);
+        changeTileColor(sideC, sideCColor);
+        changeTileColor(sideD, sideDColor);
+        changeTileColor(sideE, sideEColor);
+        changeTileColor(sideF, sideFColor);
+    }
     void Start()
     {
         sideA = transform.GetChild(0).gameObject;
@@ -56,6 +65,7 @@ public class MapCubeManager : MonoBehaviour
     void Update()
     {
         
+
     }
     public void changeColor(GameObject ob, TileColor c)
     {
@@ -70,6 +80,9 @@ public class MapCubeManager : MonoBehaviour
                 break;
             case TileColor.grey:
                 mesh.material = Grey;
+                break;
+            case TileColor.none:
+                mesh.material = Blank;
                 break;
             default:
                 break;

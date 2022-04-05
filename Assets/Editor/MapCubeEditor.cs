@@ -27,12 +27,12 @@ public class MapCubeEditor : Editor
         //mapCubeManager.sideFEnabled = EditorGUILayout.Toggle("Side F Enabled", mapCubeManager.sideFEnabled);
         mapCubeManager.ChangeTileType(mapCubeManager.sideF, mapCubeManager.sideFType);
 
-        mapCubeManager.changeTileColor(mapCubeManager.sideA, mapCubeManager.sideAColor);
+        /*mapCubeManager.changeTileColor(mapCubeManager.sideA, mapCubeManager.sideAColor);
         mapCubeManager.changeTileColor(mapCubeManager.sideB, mapCubeManager.sideBColor);
         mapCubeManager.changeTileColor(mapCubeManager.sideC, mapCubeManager.sideCColor);
         mapCubeManager.changeTileColor(mapCubeManager.sideD, mapCubeManager.sideDColor);
         mapCubeManager.changeTileColor(mapCubeManager.sideE, mapCubeManager.sideEColor);
-        mapCubeManager.changeTileColor(mapCubeManager.sideF, mapCubeManager.sideFColor);
+        mapCubeManager.changeTileColor(mapCubeManager.sideF, mapCubeManager.sideFColor);*/
 
         mapCubeManager.ChangeNodeActiveStatus(mapCubeManager.sideA, mapCubeManager.NodeAEnabled);
         mapCubeManager.ChangeNodeActiveStatus(mapCubeManager.sideB, mapCubeManager.NodeBEnabled);

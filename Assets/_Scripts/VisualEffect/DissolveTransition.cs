@@ -2,23 +2,42 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using WooHooFly.Colors;
+using Bitgem.VFX.StylisedWater;
 public class DissolveTransition : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField] private Material blueDissolve;
     [SerializeField] private Material brownDissolve;
     [SerializeField] private Material greyDissolve;
+    [SerializeField] private Material WaterMaterial;
+    [SerializeField] private Material GroundMaterial;
     [SerializeField] private List<GameObject> mapCube;
     [SerializeField] private float dissolveTime = 3f;
-    void Start()
+    private void Awake()
     {
+        GroundMaterial.color = new Color(1, 1, 1, 0);
+        WaterMaterial.SetFloat("_Alpha", 1);
+        GroundMaterial.SetFloat("_Surface", 1);
+    }
+    void Start()
+    {  
         startDissolve(dissolveTime);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        /*float f = Random.Range(0, 1);
+        WaterMaterial.SetFloat("_Alpha", f);*/
+    }
+    private void OnApplicationQuit()
+    {
+        GroundMaterial.color = new Color(1, 1, 1, 1);
+        WaterMaterial.SetFloat("_Alpha", 0);
+        GroundMaterial.SetFloat("_Surface", 1);
+        blueDissolve.SetFloat("_AlphaThreshold", 1);
+        brownDissolve.SetFloat("_AlphaThreshold", 1);
+        greyDissolve.SetFloat("_AlphaThreshold", 1);
     }
 
     public void startDissolve(float time)
@@ -28,33 +47,39 @@ public class DissolveTransition : MonoBehaviour
     private IEnumerator dissolve(float time)
     {
         float timeCount = time;
+        foreach (GameObject cube in mapCube)
+        {
+            MapCubeManager manager = cube.GetComponent<MapCubeManager>();
+            SpawnEnviiorment.instanace.spawnSand(cube.transform.position);
+            if (manager.sideAColor == TileColor.green || manager.sideBColor == TileColor.green ||
+                manager.sideCColor == TileColor.green || manager.sideDColor == TileColor.green ||
+                manager.sideEColor == TileColor.green || manager.sideFColor == TileColor.green)
+            {
+                //SpawnEnviiorment.instanace.spawnWater(cube.transform.position);
+                SpawnEnviiorment.instanace.spawnWater(cube.transform.position);
+            }
+            else
+            {
+                SpawnEnviiorment.instanace.spawnGrass(cube.transform.position);
+            }
+        }
+        SpawnEnviiorment.instanace.waterParent.transform.localScale = new Vector3(1, 0.1f, 1);
         while (timeCount >= 0)
         {
             float scale = timeCount / time;
-            if (scale < 0.3f)
-            {
-                foreach (GameObject cube in mapCube)
-                {
-                    MapCubeManager manager = cube.GetComponent<MapCubeManager>();
-                    if (manager.sideAColor == TileColor.green || manager.sideBColor == TileColor.green ||
-                        manager.sideCColor == TileColor.green || manager.sideDColor == TileColor.green ||
-                        manager.sideEColor == TileColor.green || manager.sideFColor == TileColor.green)
-                    {
-                        //SpawnEnviiorment.instanace.spawnWater(cube.transform.position);
-                        SpawnEnviiorment.instanace.spawnGrass(cube.transform.position);
-                    }
-                    else
-                    {
-                        SpawnEnviiorment.instanace.spawnSand(cube.transform.position);
-                    }
-                    cube.SetActive(false);
-                }
-            }
             blueDissolve.SetFloat("_AlphaThreshold",scale);
             brownDissolve.SetFloat("_AlphaThreshold",scale);
             greyDissolve.SetFloat("_AlphaThreshold",scale);
+            GroundMaterial.color = new Color (1, 1, 1, 1-scale);
+            WaterMaterial.SetFloat("_Alpha", scale);
+            Debug.Log(WaterMaterial.GetFloat("_Alpha"));
             timeCount -= Time.deltaTime;
-            yield return null;
+            yield return new WaitForFixedUpdate();
         }
+        /*foreach (GameObject cube in mapCube)
+        {
+            cube.SetActive(false);
+        }*/
+        GroundMaterial.SetFloat("_Surface", 0);
     }
 }
