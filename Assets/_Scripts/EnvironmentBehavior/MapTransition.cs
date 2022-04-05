@@ -201,7 +201,7 @@ public class MapTransition : MonoBehaviour
             StartCoroutine(LevelOneCubeCrash(dropTime, dropHeight, flag.transform));
         }
         
-        yield return new WaitForSeconds(dropTime - 1f);
+        yield return new WaitForSeconds(dropTime);
         
         //switch map
         SetPosition(_fromMapCubes, _fromMapFlags, _fromMapPlayerCube, +dropHeight);
