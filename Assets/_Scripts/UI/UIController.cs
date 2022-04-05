@@ -44,6 +44,10 @@ public class UIController : MonoBehaviour
     private Animation leftAnim;
     private Animation rightAnim;
     private bool arrowTutorial = false;
+
+    //music
+    public AudioSource ArrowMusic;
+    public AudioSource WinMusic;
     public int StepCount
     {
         get => _stepCount;
@@ -149,7 +153,7 @@ public class UIController : MonoBehaviour
     public void WinUI()
     {
         WinPanel.SetActive(true);
-        
+        WinMusic.Play();
         // disable step counter
         stepCounterActive = false;
         // Send analytic event for steps
@@ -245,6 +249,7 @@ public class UIController : MonoBehaviour
         {
             Debug.Log(MapTransition.instance.mouseRotation.name);
             MapTransition.instance.mouseRotation.RotateMapCW();
+            ArrowMusic.Play();
         }
     }
 
@@ -254,6 +259,7 @@ public class UIController : MonoBehaviour
         {
             Debug.Log(MapTransition.instance.mouseRotation.name);
             MapTransition.instance.mouseRotation.RotateMapCCW();
+            ArrowMusic.Play();
         }
     }
 
