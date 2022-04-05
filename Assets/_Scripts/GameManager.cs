@@ -57,7 +57,6 @@ public class GameManager : MonoBehaviour
         falling,
         win
     };
-   
 
     private void Start()
     {
