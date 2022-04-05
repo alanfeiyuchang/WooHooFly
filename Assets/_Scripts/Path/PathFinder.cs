@@ -43,7 +43,6 @@ namespace WooHooFly.NodeSystem
 
         private void Awake()
         {
-            Debug.Log("dd");
             graph = GetComponent<Graph>();
         }
 
