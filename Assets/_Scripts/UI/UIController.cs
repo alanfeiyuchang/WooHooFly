@@ -55,38 +55,41 @@ public class UIController : MonoBehaviour
         {
             _stepCount = value;
             int starStepNumber = 0;
-            levelStar curLevelData = GameManager.instance.levelData.levelStarData[MapTransition.instance.CurrentLevel - 1];
-            if (_stepCount <= curLevelData.ThreeStarStep)
+            if (MapTransition.instance.CurrentLevel != 0)
             {
-                starStepNumber = curLevelData.ThreeStarStep;
-                UpdateStar(3);
-            }
-            else if (_stepCount == curLevelData.ThreeStarStep+1)
-            {
-                starStepNumber = curLevelData.TwoStarStep;
-                UpdateStar(2);
-            }
-            else if (_stepCount <= curLevelData.TwoStarStep)
-            {
-                starStepNumber = curLevelData.TwoStarStep;
-            }
-            else if (_stepCount == curLevelData.TwoStarStep + 1)
-            {
-                starStepNumber = curLevelData.OneStarStep;
-                UpdateStar(1);
-            }
-            /*else if (_stepCount <= curLevelData.OneStarStep)
-            {
-                starStepNumber = curLevelData.OneStarStep;
-            }
-            else if (_stepCount == curLevelData.OneStarStep + 1)
-            {
-                starStepNumber = curLevelData.OneStarStep;
-                UpdateStar(0);
-            }*/
-            else
-            {
-                starStepNumber = curLevelData.TwoStarStep;
+                levelStar curLevelData = GameManager.instance.levelData.levelStarData[MapTransition.instance.CurrentLevel - 1];
+                if (_stepCount <= curLevelData.ThreeStarStep)
+                {
+                    starStepNumber = curLevelData.ThreeStarStep;
+                    UpdateStar(3);
+                }
+                else if (_stepCount == curLevelData.ThreeStarStep + 1)
+                {
+                    starStepNumber = curLevelData.TwoStarStep;
+                    UpdateStar(2);
+                }
+                else if (_stepCount <= curLevelData.TwoStarStep)
+                {
+                    starStepNumber = curLevelData.TwoStarStep;
+                }
+                else if (_stepCount == curLevelData.TwoStarStep + 1)
+                {
+                    starStepNumber = curLevelData.OneStarStep;
+                    UpdateStar(1);
+                }
+                /*else if (_stepCount <= curLevelData.OneStarStep)
+                {
+                    starStepNumber = curLevelData.OneStarStep;
+                }
+                else if (_stepCount == curLevelData.OneStarStep + 1)
+                {
+                    starStepNumber = curLevelData.OneStarStep;
+                    UpdateStar(0);
+                }*/
+                else
+                {
+                    starStepNumber = curLevelData.TwoStarStep;
+                }
             }
 
             StepCountText.text = "Steps: " + _stepCount.ToString() + "/" + starStepNumber.ToString();
