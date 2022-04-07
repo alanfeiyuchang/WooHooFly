@@ -31,6 +31,7 @@ namespace WooHooFly.NodeSystem
 
         // the current Node belong to
         private GameObject Tile;
+        public TileManager TileInfo { get; private set; }
         public Clickable ClickableTile { get; private set; }
 
         // invoked when Player enters this node
@@ -54,6 +55,7 @@ namespace WooHooFly.NodeSystem
         private void Start()
         {
             Tile = this.transform.parent.gameObject.transform.GetChild(0).gameObject;
+            TileInfo = this.transform.parent.GetComponentInChildren<TileManager>();
             ClickableTile = this.transform.parent.GetComponentInChildren<Clickable>();
             // automatic connect Edges with horizontal Nodes
             //if (graph != null)
