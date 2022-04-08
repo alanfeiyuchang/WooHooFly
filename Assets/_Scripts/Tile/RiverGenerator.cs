@@ -75,7 +75,8 @@ namespace TileSystem
                 TileID += (int)BitmaskData.SW;
 
             GameObject Tile = Resources.Load<GameObject>("TileSet/Tile" + TileID);
-            Instantiate(Tile, node.transform.position, node.transform.rotation, environment);
+            GameObject temp = Instantiate(Tile, node.transform.position, node.transform.rotation, environment);
+            SpawnEnviiorment.instanace.spawnTile(temp);
         }
 
         /// <summary>

@@ -15,20 +15,22 @@ public class DissolveTransition : MonoBehaviour
     [SerializeField] private float dissolveTime = 3f;
     private void Awake()
     {
-        GroundMaterial.color = new Color(1, 1, 1, 0);
-        WaterMaterial.SetFloat("_Alpha", 1);
-        GroundMaterial.SetFloat("_Surface", 1);
+        //GroundMaterial.color = new Color(1, 1, 1, 0);
+        //WaterMaterial.SetFloat("_Alpha", 1);
+        //GroundMaterial.SetFloat("_Surface", 1);
     }
     void Start()
     {  
-        startDissolve(dissolveTime);
+        //startDissolve(dissolveTime);
     }
 
     // Update is called once per frame
     void Update()
     {
-        /*float f = Random.Range(0, 1);
-        WaterMaterial.SetFloat("_Alpha", f);*/
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            //startDissolve(dissolveTime);
+        }
     }
     private void OnApplicationQuit()
     {
@@ -63,6 +65,7 @@ public class DissolveTransition : MonoBehaviour
                 SpawnEnviiorment.instanace.spawnGrass(cube.transform.position);
             }
         }
+        SpawnEnviiorment.instanace.spawnWater(mapCube[0].transform.position);
         SpawnEnviiorment.instanace.waterParent.transform.localScale = new Vector3(1, 0.1f, 1);
         while (timeCount >= 0)
         {
