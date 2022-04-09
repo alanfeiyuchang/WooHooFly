@@ -36,7 +36,7 @@ public class SpawnEnviiorment : MonoBehaviour
         {
             if(piece.name == "Green_Tile(Clone)")
             {
-                //spawnGrass(piece, _tile.transform);
+                spawnGrass(piece, _tile.transform);
             }
             else
             {
@@ -53,7 +53,7 @@ public class SpawnEnviiorment : MonoBehaviour
     }
     public void spawnWater(Transform _trans)
     {
-        if (river == null)
+        /*if (river == null)
         {
             river = Instantiate(waterParent, _trans.position, _trans.rotation, this.transform).transform;
             river.gameObject.name = "River";
@@ -68,8 +68,13 @@ public class SpawnEnviiorment : MonoBehaviour
         _empty2.transform.SetParent(_water.transform);
         _empty2.transform.localPosition = new Vector3(0, 0, 0);
         _empty2.transform.localScale = new Vector3(1, 1, 1);
-        _water.transform.localScale = _trans.localScale;
+        _water.transform.localScale = _trans.localScale;*/
+        //GameObject _water = Instantiate(waterParent, _trans.position, _trans.rotation, transform);
 
+        /*GameObject _empty2 = new GameObject("WaterMark");
+        _empty2.transform.SetParent(waterParent.transform);
+        _empty2.transform.position = _trans.position;
+        _empty2.transform.localScale = _trans.localScale;*/
         //GameObject _water = Instantiate(waterParent, _trans.position, _trans.rotation, transform);
         //GameObject _empty = new GameObject("WaterMark");
         //_empty.transform.SetParent(river.transform);
@@ -80,6 +85,12 @@ public class SpawnEnviiorment : MonoBehaviour
         //_empty2.transform.position = _trans.position;
         //_empty2.transform.localScale = new Vector3(1, 1, 1);
         //river.transform.localScale = new Vector3 (_trans.localScale.x, _trans.localScale.y / 10, _trans.localScale.z );
+
+        GameObject _empty = new GameObject("WaterMark");
+        _empty.transform.SetParent(waterParent.transform);
+        _empty.transform.position = new Vector3(_trans.position.x + _trans.localScale.x / 2,
+            _trans.position.y, _trans.position.z + _trans.localScale.z / 2);
+        _empty.transform.localScale = new Vector3(_trans.localScale.x, 0.4f, _trans.localScale.z);
     }
     public void spawnGround(Transform _trans)
     {

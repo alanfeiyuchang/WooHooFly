@@ -54,8 +54,8 @@ namespace Bitgem.VFX.StylisedWater
         public TileFace IncludeFoam = TileFace.NegX | TileFace.NegZ | TileFace.PosX | TileFace.PosZ;
 
         [Range(0.1f, 100f)]
-        public float TileSize = 1f;
-
+        public float TileSize = 0.5f;
+        public float edgeSize = 1f;
         public bool ShowDebug = true;
         public bool RealtimeUpdates = false;
 
@@ -156,11 +156,11 @@ namespace Bitgem.VFX.StylisedWater
                         }
 
                         // calculate tile position
-                        var x0 = x * TileSize - 0.5f;
+                        var x0 = x * TileSize - edgeSize/2;
                         var x1 = x0 + TileSize;
-                        var y0 = y * TileSize - 0.5f;
+                        var y0 = y * TileSize - edgeSize / 2;
                         var y1 = y0 + TileSize;
-                        var z0 = z * TileSize - 0.5f;
+                        var z0 = z * TileSize - edgeSize / 2;
                         var z1 = z0 + TileSize;
                         var ux0 = x0 + transform.position.x;
                         var ux1 = x1 + transform.position.x;
