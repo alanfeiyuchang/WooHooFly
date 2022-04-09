@@ -14,6 +14,7 @@ public class SpawnEnviiorment : MonoBehaviour
     [SerializeField] public GameObject waterParent;
     [SerializeField] private GameObject sand;
     [SerializeField] private GameObject grassTop;
+    private Transform river;
     void Start()
     {
         
@@ -28,11 +29,14 @@ public class SpawnEnviiorment : MonoBehaviour
     {
         //Debug.Log(_tile.transform.position);
         //spawnGround(_tile.transform);
-        foreach(Transform piece in _tile.transform)
+
+        river = this.transform.Find("River");
+
+        foreach (Transform piece in _tile.transform)
         {
             if(piece.name == "Green_Tile(Clone)")
             {
-                spawnGrass(piece, _tile.transform);
+                //spawnGrass(piece, _tile.transform);
             }
             else
             {
@@ -49,7 +53,13 @@ public class SpawnEnviiorment : MonoBehaviour
     }
     public void spawnWater(Transform _trans)
     {
-        GameObject _water = Instantiate(waterParent, _trans.position, _trans.rotation, transform);
+        if (river == null)
+        {
+            river = Instantiate(waterParent, _trans.position, _trans.rotation, this.transform).transform;
+            river.gameObject.name = "River";
+        }
+
+        GameObject _water = Instantiate(waterParent, _trans.position, _trans.rotation, river);
         GameObject _empty = new GameObject("WaterMark");
         _empty.transform.SetParent(_water.transform);
         _empty.transform.localPosition = new Vector3(0, 0, 0);
@@ -59,6 +69,17 @@ public class SpawnEnviiorment : MonoBehaviour
         _empty2.transform.localPosition = new Vector3(0, 0, 0);
         _empty2.transform.localScale = new Vector3(1, 1, 1);
         _water.transform.localScale = _trans.localScale;
+
+        //GameObject _water = Instantiate(waterParent, _trans.position, _trans.rotation, transform);
+        //GameObject _empty = new GameObject("WaterMark");
+        //_empty.transform.SetParent(river.transform);
+        //_empty.transform.position = _trans.position;
+        //_empty.transform.localScale = new Vector3(1, 1, 1);
+        //GameObject _empty2 = new GameObject("WaterMark");
+        //_empty2.transform.SetParent(river.transform);
+        //_empty2.transform.position = _trans.position;
+        //_empty2.transform.localScale = new Vector3(1, 1, 1);
+        //river.transform.localScale = new Vector3 (_trans.localScale.x, _trans.localScale.y / 10, _trans.localScale.z );
     }
     public void spawnGround(Transform _trans)
     {
