@@ -36,7 +36,7 @@ public class SpawnEnviiorment : MonoBehaviour
         {
             if(piece.name == "Green_Tile(Clone)")
             {
-                spawnGrass(piece, _tile.transform);
+                //  spawnGrass(piece, _tile.transform);
             }
             else
             {

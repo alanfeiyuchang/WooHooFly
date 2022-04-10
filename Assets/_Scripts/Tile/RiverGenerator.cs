@@ -39,9 +39,42 @@ namespace TileSystem
         {
             foreach (Node node in nodes)
             {
-                if(node.TileInfo.MapColor == TileColor.green)
+                if(node.TileInfo.MapColor == TileColor.green && !node.TileInfo.isWaterFall)
                     GenerateRiver(node);
+                else if(node.TileInfo.MapColor == TileColor.green && node.TileInfo.isWaterFall)
+                    GenerateWaterFall(node);
             }
+        }
+
+        private void GenerateWaterFall(Node node)
+        {
+            int TileID = 0;
+            northNode = findColoredTileAtDirection(node, Direction.Forward, TileColor.green);
+            southNode = findColoredTileAtDirection(node, Direction.Backward, TileColor.green);
+            eastNode = findColoredTileAtDirection(node, Direction.Right, TileColor.green);
+            westNode = findColoredTileAtDirection(node, Direction.Left, TileColor.green);
+
+            if (northNode != null)
+                TileID += (int)BitmaskData.N;
+            if (eastNode != null)
+            {
+                TileID += (int)BitmaskData.E;
+                TileID += (int)BitmaskData.SE;
+                if (northNode != null)
+                    TileID += (int)BitmaskData.NE;
+            }
+            if (westNode != null)
+            {
+                TileID += (int)BitmaskData.W;
+                TileID += (int)BitmaskData.SW; 
+                if (northNode != null)
+                    TileID += (int)BitmaskData.NW;
+            }
+            TileID += (int)BitmaskData.S;
+
+            Debug.Log(TileID);
+            GameObject Tile = Resources.Load<GameObject>("TileSet/WaterFallTile" + TileID);
+            GameObject temp = Instantiate(Tile, node.transform.position, node.transform.rotation, environment);
         }
         private void GenerateRiver(Node node)
         {
@@ -76,7 +109,24 @@ namespace TileSystem
 
             GameObject Tile = Resources.Load<GameObject>("TileSet/Tile" + TileID);
             GameObject temp = Instantiate(Tile, node.transform.position, node.transform.rotation, environment);
-            SpawnEnviiorment.instanace.spawnTile(temp);
+
+            if(SpawnEnviiorment.instanace != null)
+                SpawnEnviiorment.instanace.spawnTile(temp);
+        }
+
+        private Node findColoredTileAtDirection(Node currentNode, Direction direction, TileColor color)
+        {
+            Node node;
+            if (currentNode == null)
+                return null;
+            node = findColoredTileAtConnected(currentNode, direction, color);
+            if (node != null)
+                return node;
+
+            node = findColoredTileAtCorner(currentNode, direction, color);
+            if (node != null)
+                return node;
+            return null;
         }
 
         /// <summary>
@@ -86,10 +136,8 @@ namespace TileSystem
         /// <param name="direction"></param>
         /// <param name="color"></param>
         /// <returns></returns>
-        public Node findColoredTileAtDirection(Node currentNode, Direction direction, TileColor color)
+        private Node findColoredTileAtConnected(Node currentNode, Direction direction, TileColor color)
         {
-            if (currentNode == null)
-                return null;
             foreach (TransitEdge e in currentNode.Transits)
             {
                 if (e.isActive && e.direction == direction)
@@ -105,6 +153,49 @@ namespace TileSystem
                     if (e.neighbor.TileInfo.MapColor == color)
                         return e.neighbor;
                 }
+            }
+            return null;
+        }
+
+        private Node findColoredTileAtCorner(Node currentNode, Direction direction, TileColor color)
+        {
+            Node cornerNode;
+            switch (direction)
+            {
+                case Direction.Forward:
+                    cornerNode = graph?.FindNodeAt(currentNode.transform.position + currentNode.transform.forward / 2 + currentNode.transform.up / 2);
+                    if (cornerNode != null && cornerNode.TileInfo.MapColor == color)
+                        return cornerNode;
+                    cornerNode = graph?.FindNodeAt(currentNode.transform.position + currentNode.transform.forward / 2 - currentNode.transform.up / 2);
+                    if (cornerNode != null && cornerNode.TileInfo.MapColor == color)
+                        return cornerNode;
+                    break;
+                case Direction.Backward:
+                    cornerNode = graph?.FindNodeAt(currentNode.transform.position - currentNode.transform.forward / 2 + currentNode.transform.up / 2);
+                    if (cornerNode != null && cornerNode.TileInfo.MapColor == color)
+                        return cornerNode;
+                    cornerNode = graph?.FindNodeAt(currentNode.transform.position - currentNode.transform.forward / 2 - currentNode.transform.up / 2);
+                    if (cornerNode != null && cornerNode.TileInfo.MapColor == color)
+                        return cornerNode;
+                    break;
+                case Direction.Left:
+                    cornerNode = graph?.FindNodeAt(currentNode.transform.position - currentNode.transform.right / 2 + currentNode.transform.up / 2);
+                    if (cornerNode != null && cornerNode.TileInfo.MapColor == color)
+                        return cornerNode;
+                    cornerNode = graph?.FindNodeAt(currentNode.transform.position - currentNode.transform.right / 2 - currentNode.transform.up / 2);
+                    if (cornerNode != null && cornerNode.TileInfo.MapColor == color)
+                        return cornerNode;
+                    break;
+                case Direction.Right:
+                    cornerNode = graph?.FindNodeAt(currentNode.transform.position + currentNode.transform.right / 2 + currentNode.transform.up / 2);
+                    if (cornerNode != null && cornerNode.TileInfo.MapColor == color)
+                        return cornerNode;
+                    cornerNode = graph?.FindNodeAt(currentNode.transform.position + currentNode.transform.right / 2 - currentNode.transform.up / 2);
+                    if (cornerNode != null && cornerNode.TileInfo.MapColor == color)
+                        return cornerNode;
+                    break;
+                default:
+                    break;
             }
             return null;
         }

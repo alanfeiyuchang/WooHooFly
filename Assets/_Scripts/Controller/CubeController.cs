@@ -13,6 +13,7 @@ public class CubeController : MonoBehaviour
     private Node currentNode;
     private CubeCollider cubeCollider;
     private bool isMoving;
+    private bool firstRotate;
     private Clickable[] clickables;
     private NodeMovingInfo movingInfo;
 
@@ -70,7 +71,8 @@ public class CubeController : MonoBehaviour
             return;
 
         movingPath = graph.GetPath(clickable.clickedNode);
-        //movingInfo = currentNode.MovingInfo(clickable.clickedNode);
+
+        firstRotate = true;
         Rolling(movingPath.Dequeue());
     }
 
@@ -125,12 +127,13 @@ public class CubeController : MonoBehaviour
             return;
 
         if (!CorrectColor(movingInfo.endNode))
+        {
+            StopRolling();
             return;
+        }
 
         Vector3 rotateStartPos = movingInfo.startNode.transform.position;
         Vector3 rotateEndPos = movingInfo.endNode.transform.position;
-
-        //endRollNode = movingInfo.endNode;
 
         if (movingInfo.transitState == TransitState.MoveRotate)
         {
@@ -160,6 +163,7 @@ public class CubeController : MonoBehaviour
         RollMusic.Play();
         float remainingAngle = 90;
         isMoving = true;
+        firstRotate = false;
         GameManager.instance.CurrentState = GameManager.GameState.rotating;
 
         while (remainingAngle > 0)
@@ -191,6 +195,12 @@ public class CubeController : MonoBehaviour
             FindAccessibleNode();
     }
 
+    private void StopRolling()
+    {
+        SnapToNearestNode();
+        FindAccessibleNode();
+    }
+
     private void SnapToNearestNode()
     {
         roundPosition();
@@ -209,9 +219,9 @@ public class CubeController : MonoBehaviour
         GameObject mapTile = nextNode.GetTile();
         TileColor mapColor = mapTile.GetComponent<TileManager>().MapColor;
         //Debug.Log("Playcube is " + currentColor.ToString() + "; Mapcube is " + mapColor.ToString() + "; Tile is " + mapTile.tag);
-        if (currentColor.Equals(mapColor) || mapTile.tag != "UnchangeTile")
+        if (currentColor.Equals(mapColor) || mapTile.tag == "ChangeTile" || (mapTile.tag == "ColorTile" && firstRotate))
         {
-                return true;
+            return true;
         }
         return false;
     }

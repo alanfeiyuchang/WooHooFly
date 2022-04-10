@@ -19,7 +19,7 @@ namespace TileSystem
     }
 
     public enum BitmaskData { NW = 1, N = 2, NE = 4, W = 8, E = 16, SW = 32, S = 64, SE = 128 }
-
+    public enum TileType { RiverTile, WaterFallTile}
     public class Tile : MonoBehaviour
     {
         public GameObject grassTile;
@@ -27,6 +27,7 @@ namespace TileSystem
         public TileInfo tileInfo;
         [HideInInspector]
         public int tileBit;
+        public TileType tileType;
 
         private float subtileSize = 0.25f;
         private Vector3 subtilePos;
@@ -77,7 +78,7 @@ namespace TileSystem
 
 
             tileBit = getBitMaskValue();
-        }
+        } 
         private void generateSubTile(bool isWaterTile, int i, int j)
         {
             GameObject newTile;
