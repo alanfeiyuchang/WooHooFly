@@ -15,6 +15,7 @@ public class TileManager : MonoBehaviour
     public Material Red;
     public Material Grey;
     public Material Blank;
+    public bool isWaterFall;
     // Start is called before the first frame update
     void Start()
     {

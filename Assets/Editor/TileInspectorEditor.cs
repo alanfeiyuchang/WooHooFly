@@ -23,7 +23,10 @@ namespace TileSystem
                 Transform[] transforms = Selection.transforms;
                 foreach (Transform t in transforms)
                 {
-                    PrefabUtility.SaveAsPrefabAsset(t.gameObject, "Assets/Resources/TileSet/Tile" + tile.tileBit + ".prefab");
+                    if(tile.tileType == TileType.RiverTile)
+                        PrefabUtility.SaveAsPrefabAsset(t.gameObject, "Assets/Resources/TileSet/Tile" + tile.tileBit + ".prefab");
+                    else if (tile.tileType == TileType.WaterFallTile)
+                        PrefabUtility.SaveAsPrefabAsset(t.gameObject, "Assets/Resources/TileSet/WaterFallTile" + tile.tileBit + ".prefab");
                 }
             }
         }
