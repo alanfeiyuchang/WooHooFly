@@ -50,6 +50,10 @@ public class UIController : MonoBehaviour
     //music
     public AudioSource ArrowMusic;
     public AudioSource WinMusic;
+    public AudioSource PauseMusic;
+    public AudioSource HomeButtonMusic;
+    public AudioSource NextButtonMusic;
+    public AudioSource restartButtonMusic;
     public int StepCount
     {
         get => _stepCount;
@@ -187,6 +191,7 @@ public class UIController : MonoBehaviour
 
     public void HomeButtonPressed()
     {
+        HomeButtonMusic.Play();
         CloseMenu();
         InGamePanel.SetActive(true);
         MapTransition.instance.SelectLevel();
@@ -194,11 +199,13 @@ public class UIController : MonoBehaviour
 
     public void NextButtonPressed()
     {
+        NextButtonMusic.Play();
         CloseMenu();
         MapTransition.instance.LevelTransition();
     }
     public void RestartButtonPressed()
     {
+        restartButtonMusic.Play();
         CloseMenu();
         stepCounterActive = true;
         InGamePanel.SetActive(true);
@@ -219,6 +226,7 @@ public class UIController : MonoBehaviour
 
         if (PauseMene.activeInHierarchy)
         {
+            PauseMusic.Play();
             PauseMene.SetActive(false);
             InGamePanel.SetActive(true);
             GameManager.instance.CurrentState = GameManager.GameState.starting;
@@ -227,6 +235,7 @@ public class UIController : MonoBehaviour
         }
         else
         {
+            PauseMusic.Play();
             homeButton.SetActive(true);
             restartButton.SetActive(true);
             if (MapTransition.instance.CurrentLevel == 0)
