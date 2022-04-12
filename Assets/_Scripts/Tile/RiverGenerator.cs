@@ -61,8 +61,9 @@ namespace TileSystem
                 else if(node.TileInfo.MapColor == TileColor.green && node.TileInfo.isWaterFall)
                     GenerateWaterFall(node);
             }
+            if (SpawnEnviiorment.instance != null)
+                SpawnEnviiorment.instance.spawnWater(nodes[0].transform);
 
-            SpawnEnviiorment.instanace.spawnWater(nodes[0].transform);
         }
 
         private void GenerateWaterFall(Node node)
@@ -129,8 +130,8 @@ namespace TileSystem
             GameObject Tile = Resources.Load<GameObject>("TileSet/Tile" + TileID);
             GameObject temp = Instantiate(Tile, node.transform.position, node.transform.rotation, environment);
 
-            if(SpawnEnviiorment.instanace != null)
-                SpawnEnviiorment.instanace.spawnTile(temp);
+            if(SpawnEnviiorment.instance != null)
+                SpawnEnviiorment.instance.spawnTile(temp);
         }
 
         private Node findColoredTileAtDirection(Node currentNode, Direction direction, TileColor color)

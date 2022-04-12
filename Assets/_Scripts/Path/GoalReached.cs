@@ -11,8 +11,15 @@ public class GoalReached : MonoBehaviour
         if (!touched && other.CompareTag("Player"))
         {
             GameManager.instance.WinGame();
-            RiverGenerator.instance.GenerateRealWorld();
-            DissolveTransition.instance.startDissolve(2f);
+            if (RiverGenerator.instance != null)
+            {
+                RiverGenerator.instance.GenerateRealWorld();
+            }
+            if (DissolveTransition.instance != null)
+            {
+                DissolveTransition.instance.startDissolve(2f);
+            }
+
             touched = true;
         }
         

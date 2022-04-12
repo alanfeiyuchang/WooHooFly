@@ -63,7 +63,7 @@ public class DissolveTransition : MonoBehaviour
         foreach (GameObject cube in mapCube)
         {
             MapCubeManager manager = cube.GetComponent<MapCubeManager>();
-            SpawnEnviiorment.instanace.spawnSand(cube.transform.position);
+            SpawnEnviiorment.instance.spawnSand(cube.transform.position);
             if (manager.sideAColor == TileColor.green || manager.sideBColor == TileColor.green ||
                 manager.sideCColor == TileColor.green || manager.sideDColor == TileColor.green ||
                 manager.sideEColor == TileColor.green || manager.sideFColor == TileColor.green)
