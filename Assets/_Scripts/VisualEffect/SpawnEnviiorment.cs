@@ -36,7 +36,7 @@ public class SpawnEnviiorment : MonoBehaviour
         {
             if(piece.name == "Green_Tile(Clone)")
             {
-                //  spawnGrass(piece, _tile.transform);
+                spawnGrass(piece, _tile.transform);
             }
             else
             {
@@ -115,6 +115,6 @@ public class SpawnEnviiorment : MonoBehaviour
         GameObject _grass = Instantiate(grassTop);
         _grass.transform.SetParent(transform);
         _grass.transform.localScale = _trans.localScale;
-        _grass.transform.position = _trans.position;
+        _grass.transform.position = new Vector3(_trans.position.x, _trans.position.y + 0.01f, _trans.position.z); 
     }
 }

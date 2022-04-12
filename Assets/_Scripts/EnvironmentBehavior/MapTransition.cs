@@ -76,6 +76,11 @@ public class MapTransition : MonoBehaviour
         }
     }
 
+    public LevelManager GetCurrentLevel()
+    {
+        return LevelList[CurrentLevel];
+    }
+
     public CubeController GetCurrentCubeControllerScript()
     {
         return LevelList[CurrentLevel].PlayerCube.GetComponent<CubeController>();
@@ -189,7 +194,7 @@ public class MapTransition : MonoBehaviour
         GameManager.instance.CurrentState = GameManager.GameState.falling;
         //from map drops
         float betweenTime = TotalCrashTime / _fromMapCubes.Count();
-        foreach (GameObject go in _fromMapCubes)
+        /*foreach (GameObject go in _fromMapCubes)
         {
             StartCoroutine(LevelOneCubeCrash(dropTime, dropHeight, go.transform));
             yield return new WaitForSeconds(betweenTime);
@@ -200,10 +205,13 @@ public class MapTransition : MonoBehaviour
         {
             StartCoroutine(LevelOneCubeCrash(dropTime, dropHeight, flag.transform));
         }
-        
-        yield return new WaitForSeconds(dropTime);
-        
+
+        yield return new WaitForSeconds(dropTime);*/
+
+
+
         //switch map
+        DissolveTransition.instance.resetMaterail();
         SetPosition(_fromMapCubes, _fromMapFlags, _fromMapPlayerCube, +dropHeight);
         LevelList[CurrentLevel] = _dummyLevel.GetComponent<LevelManager>();
         _fromLevel.gameObject.SetActive(false);

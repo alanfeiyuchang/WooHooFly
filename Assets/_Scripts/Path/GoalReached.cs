@@ -12,6 +12,7 @@ public class GoalReached : MonoBehaviour
         {
             GameManager.instance.WinGame();
             RiverGenerator.instance.GenerateRealWorld();
+            DissolveTransition.instance.startDissolve(2f);
             touched = true;
         }
         

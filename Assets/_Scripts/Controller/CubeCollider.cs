@@ -43,7 +43,8 @@ public class CubeCollider : MonoBehaviour
         }
         else
         {
-            StartCoroutine(fillContainer(0.5f));
+            fillContainer();
+            //StartCoroutine(fillContainer(0.5f));
         }
         /*Renderer _liquad = liquad.GetComponent<Renderer>();
         if (Color == TileColor.green)
@@ -90,6 +91,21 @@ public class CubeCollider : MonoBehaviour
             playerColor.SetFloat("_Fill", fill);
             cont += Time.deltaTime;
             yield return null;
+        }
+    }
+
+    private void fillContainer()
+    {
+        playerColor.SetFloat("_Fill", 0.5f);
+        if (Color == TileColor.green)
+        {
+            playerColor.SetColor("_SideColor", waterSideColor);
+            playerColor.SetColor("_TopColor", waterTopColor);
+        }
+        else if (Color == TileColor.red)
+        {
+            playerColor.SetColor("_SideColor", lavaSideColor);
+            playerColor.SetColor("_TopColor", lavaTopColor);
         }
     }
     private void OnTriggerEnter(Collider other)

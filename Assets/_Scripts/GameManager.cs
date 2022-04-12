@@ -128,7 +128,14 @@ public class GameManager : MonoBehaviour
 
     public void CheckWin()
     {
-        if (levelComplete || CurrentState == GameState.restart)
+        LevelManager currentLevelManager = MapTransition.instance.GetCurrentLevel();
+        
+        if (!currentLevelManager.FinishAngles.Contains(currentLevelManager.transform.localEulerAngles.y))
+            return;
+
+        WinGame();
+        
+        /*if (levelComplete || CurrentState == GameState.restart)
             return;
 
         bool win = true;
@@ -148,7 +155,7 @@ public class GameManager : MonoBehaviour
         else
         {
             //Debug.Log("Not yet");
-        }
+        }*/
     }
 
     public bool IsLevelCompleted()

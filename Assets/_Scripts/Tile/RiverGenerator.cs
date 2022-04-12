@@ -55,11 +55,14 @@ namespace TileSystem
 
             foreach (Node node in nodes)
             {
+                
                 if(node.TileInfo.MapColor == TileColor.green && !node.TileInfo.isWaterFall)
                     GenerateRiver(node);
                 else if(node.TileInfo.MapColor == TileColor.green && node.TileInfo.isWaterFall)
                     GenerateWaterFall(node);
             }
+
+            SpawnEnviiorment.instanace.spawnWater(nodes[0].transform);
         }
 
         private void GenerateWaterFall(Node node)
