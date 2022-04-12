@@ -8,14 +8,18 @@ namespace TileSystem
 {
     public class RiverGenerator : MonoBehaviour
     {
-        public Graph graph;
+        public static RiverGenerator instance;
+        private Graph graph;
         private List<Node> nodes;
         private Node northNode;
         private Node southNode;
         private Node eastNode;
         private Node westNode;
         private Transform environment;
-
+        private void Awake()
+        {
+            instance = this;
+        }
         private void Start()
         {
             //create a gameobject contains real world item
@@ -25,7 +29,8 @@ namespace TileSystem
                 environment = new GameObject("Environment").transform;
                 environment.transform.parent = this.transform;
             }
-            
+
+            graph = Graph.instance;
             nodes = graph.GetAllNodes();
         }
 
@@ -35,8 +40,19 @@ namespace TileSystem
                 GenerateRealWorld();
         }
 
-        private void GenerateRealWorld()
+        public void GenerateRealWorld()
         {
+
+            //create a gameobject contains real world item
+            environment = this.transform.Find("Environment");
+            if (environment == null)
+            {
+                environment = new GameObject("Environment").transform;
+                environment.transform.parent = this.transform;
+            }
+
+            nodes = graph.GetAllNodes();
+
             foreach (Node node in nodes)
             {
                 if(node.TileInfo.MapColor == TileColor.green && !node.TileInfo.isWaterFall)

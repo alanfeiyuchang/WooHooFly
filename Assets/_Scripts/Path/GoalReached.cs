@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TileSystem;
 
 public class GoalReached : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class GoalReached : MonoBehaviour
         if (!touched && other.CompareTag("Player"))
         {
             GameManager.instance.WinGame();
+            RiverGenerator.instance.GenerateRealWorld();
             touched = true;
         }
         
