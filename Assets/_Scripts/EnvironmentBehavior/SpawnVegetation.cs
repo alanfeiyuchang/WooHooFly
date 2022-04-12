@@ -63,7 +63,7 @@ public class SpawnVegetation : MonoBehaviour
     public Vector3 GetRandomPoint()
     {
         float x = Random.Range(minx, maxx);
-        float y = 0.1f;
+        float y = 0;
         if (showGrass)
             y += 0.1f;
         float z = Random.Range(minz, maxz);
