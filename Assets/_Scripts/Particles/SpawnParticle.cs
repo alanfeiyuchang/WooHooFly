@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpawnParticle : MonoBehaviour
 {
     [SerializeField]
-    private GameObject particles;
+    private ParticleSystem particles;
 
     [SerializeField]
     private Camera mainCamera;
@@ -14,7 +14,7 @@ public class SpawnParticle : MonoBehaviour
 
     void Start()
     {
-        particles.SetActive(false);
+        
     }
 
     // Update is called once per frame
@@ -24,13 +24,8 @@ public class SpawnParticle : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             mousePos = Mouse3D.GetMouseWorldPosition(mainCamera);
-            particles.SetActive(true);
             particles.transform.position = mousePos;
-        }
-
-        if (Input.GetMouseButtonUp(0))
-        {
-            particles.SetActive(false);
+            particles.Play();
         }
     }
 }
