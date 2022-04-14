@@ -6,10 +6,10 @@ using UnityEngine;
 public class SpawnEnviiorment : MonoBehaviour
 {
     // Start is called before the first frame update
-    public static SpawnEnviiorment instanace;
+    public static SpawnEnviiorment instance;
     private void Awake()
     {
-        instanace = this;
+        instance = this;
     }
     [SerializeField] public GameObject waterParent;
     [SerializeField] private GameObject sand;
@@ -36,7 +36,7 @@ public class SpawnEnviiorment : MonoBehaviour
         {
             if(piece.name == "Green_Tile(Clone)")
             {
-                //  spawnGrass(piece, _tile.transform);
+                spawnGrass(piece, _tile.transform);
             }
             else
             {
@@ -92,6 +92,15 @@ public class SpawnEnviiorment : MonoBehaviour
             _trans.position.y, _trans.position.z + _trans.localScale.z / 2);
         _empty.transform.localScale = new Vector3(_trans.localScale.x, 0.4f, _trans.localScale.z);
     }
+
+    public void DestroyWater()
+    {
+        foreach (Transform child in waterParent.transform)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+    }
+
     public void spawnGround(Transform _trans)
     {
         GameObject _sand = Instantiate(sand);
@@ -115,6 +124,6 @@ public class SpawnEnviiorment : MonoBehaviour
         GameObject _grass = Instantiate(grassTop);
         _grass.transform.SetParent(transform);
         _grass.transform.localScale = _trans.localScale;
-        _grass.transform.position = _trans.position;
+        _grass.transform.position = new Vector3(_trans.position.x, _trans.position.y + 0.01f, _trans.position.z); 
     }
 }

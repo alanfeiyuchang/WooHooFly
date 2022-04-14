@@ -8,14 +8,18 @@ namespace TileSystem
 {
     public class RiverGenerator : MonoBehaviour
     {
-        public Graph graph;
+        public static RiverGenerator instance;
+        private Graph graph;
         private List<Node> nodes;
         private Node northNode;
         private Node southNode;
         private Node eastNode;
         private Node westNode;
         private Transform environment;
-
+        private void Awake()
+        {
+            instance = this;
+        }
         private void Start()
         {
             //create a gameobject contains real world item
@@ -25,7 +29,8 @@ namespace TileSystem
                 environment = new GameObject("Environment").transform;
                 environment.transform.parent = this.transform;
             }
-            
+
+            graph = Graph.instance;
             nodes = graph.GetAllNodes();
         }
 
@@ -35,15 +40,30 @@ namespace TileSystem
                 GenerateRealWorld();
         }
 
-        private void GenerateRealWorld()
+        public void GenerateRealWorld()
         {
+
+            //create a gameobject contains real world item
+            environment = this.transform.Find("Environment");
+            if (environment == null)
+            {
+                environment = new GameObject("Environment").transform;
+                environment.transform.parent = this.transform;
+            }
+
+            nodes = graph.GetAllNodes();
+
             foreach (Node node in nodes)
             {
+                
                 if(node.TileInfo.MapColor == TileColor.green && !node.TileInfo.isWaterFall)
                     GenerateRiver(node);
                 else if(node.TileInfo.MapColor == TileColor.green && node.TileInfo.isWaterFall)
                     GenerateWaterFall(node);
             }
+            if (SpawnEnviiorment.instance != null)
+                SpawnEnviiorment.instance.spawnWater(nodes[0].transform);
+
         }
 
         private void GenerateWaterFall(Node node)
@@ -110,8 +130,8 @@ namespace TileSystem
             GameObject Tile = Resources.Load<GameObject>("TileSet/Tile" + TileID);
             GameObject temp = Instantiate(Tile, node.transform.position, node.transform.rotation, environment);
 
-            if(SpawnEnviiorment.instanace != null)
-                SpawnEnviiorment.instanace.spawnTile(temp);
+            if(SpawnEnviiorment.instance != null)
+                SpawnEnviiorment.instance.spawnTile(temp);
         }
 
         private Node findColoredTileAtDirection(Node currentNode, Direction direction, TileColor color)

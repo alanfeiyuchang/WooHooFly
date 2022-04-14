@@ -9,6 +9,10 @@ public class LevelManager : MonoBehaviour
     public GameObject PlayerCube;
     [HideInInspector]
     public GameObject Dummy;
+    [Header("Finish requirements")]
+    public List<GameObject> FinishCubes;
+    public List<float> FinishAngles;
+
 
     private void Start()
     {
