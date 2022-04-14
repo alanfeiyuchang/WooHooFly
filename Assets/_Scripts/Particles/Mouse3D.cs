@@ -24,7 +24,7 @@ public class Mouse3D : MonoBehaviour
         {
             return raycastHit.point;
         }
-        return Vector3.zero;
+        return new Vector3(-999, -999, -999);
     }
 
 }
