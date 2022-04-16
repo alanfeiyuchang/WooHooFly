@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using WooHooFly.Colors;
+using TileSystem;
 
 namespace WooHooFly.NodeSystem
 {
@@ -33,6 +35,7 @@ namespace WooHooFly.NodeSystem
 
         // structure containing all Nodes
         private Graph graph;
+        private static Direction[] directionList = { Direction.Forward, Direction.Backward, Direction.Left, Direction.Right};
 
         // properties
         public Node StartNode { get { return startNode; } set { startNode = value; } }
@@ -80,7 +83,7 @@ namespace WooHooFly.NodeSystem
         // use a simple Breadth-first Search to explore one iteration
         private void ExpandFrontier(Node node)
         {
-            // validate Node
+            Node cornerNode;
             if (node == null)
             {
                 return;
@@ -88,7 +91,8 @@ namespace WooHooFly.NodeSystem
 
             // loop through all Edges
             for (int i = 0; i < node.Edges.Count; i++)
-            {
+            {   
+                Debug.Log(node.Edges.Count);
                 // skip Edge if neighbor already explored or invalid
                 if (node.Edges[i] == null ||
                     node.Edges.Count == 0 ||
@@ -101,12 +105,68 @@ namespace WooHooFly.NodeSystem
                 // create PreviousNode breadcrumb trail if Edge is active
                 if (node.Edges[i].isActive && node.Edges[i].neighbor != null)
                 {
-                    node.Edges[i].neighbor.PreviousNode = node;
+  
+                    if (node.Edges[i].neighbor.TileInfo.MapColor == node.TileInfo.MapColor)
+                    {
+                        // add neighbor Nodes to frontier Nodes
+                        node.Edges[i].neighbor.PreviousNode = node;
+                        frontierNodes.Add(node.Edges[i].neighbor);
+                    }
 
-                    // add neighbor Nodes to frontier Nodes
-                    frontierNodes.Add(node.Edges[i].neighbor);
                 }
+                foreach (Direction direction in directionList){
+                    cornerNode = findColoredTileAtCorner(node, direction, node.TileInfo.MapColor);
+                    if (cornerNode != null){
+                        cornerNode.PreviousNode = node;
+                        frontierNodes.Add(cornerNode);
+
+                    }
+        
+                }
+                
             }
+        }
+        private Node findColoredTileAtCorner(Node currentNode, Direction direction, TileColor color)
+        {
+            Node cornerNode;
+            switch (direction)
+            {
+                case Direction.Forward:
+                    cornerNode = graph?.FindNodeAt(currentNode.transform.position + currentNode.transform.forward / 2 + currentNode.transform.up / 2);
+                    if (cornerNode != null && cornerNode.TileInfo.MapColor == color)
+                        return cornerNode;
+                    cornerNode = graph?.FindNodeAt(currentNode.transform.position + currentNode.transform.forward / 2 - currentNode.transform.up / 2);
+                    if (cornerNode != null && cornerNode.TileInfo.MapColor == color)
+                        return cornerNode;
+                    break;
+                case Direction.Backward:
+                    cornerNode = graph?.FindNodeAt(currentNode.transform.position - currentNode.transform.forward / 2 + currentNode.transform.up / 2);
+                    if (cornerNode != null && cornerNode.TileInfo.MapColor == color)
+                        return cornerNode;
+                    cornerNode = graph?.FindNodeAt(currentNode.transform.position - currentNode.transform.forward / 2 - currentNode.transform.up / 2);
+                    if (cornerNode != null && cornerNode.TileInfo.MapColor == color)
+                        return cornerNode;
+                    break;
+                case Direction.Left:
+                    cornerNode = graph?.FindNodeAt(currentNode.transform.position - currentNode.transform.right / 2 + currentNode.transform.up / 2);
+                    if (cornerNode != null && cornerNode.TileInfo.MapColor == color)
+                        return cornerNode;
+                    cornerNode = graph?.FindNodeAt(currentNode.transform.position - currentNode.transform.right / 2 - currentNode.transform.up / 2);
+                    if (cornerNode != null && cornerNode.TileInfo.MapColor == color)
+                        return cornerNode;
+                    break;
+                case Direction.Right:
+                    cornerNode = graph?.FindNodeAt(currentNode.transform.position + currentNode.transform.right / 2 + currentNode.transform.up / 2);
+                    if (cornerNode != null && cornerNode.TileInfo.MapColor == color)
+                        return cornerNode;
+                    cornerNode = graph?.FindNodeAt(currentNode.transform.position + currentNode.transform.right / 2 - currentNode.transform.up / 2);
+                    if (cornerNode != null && cornerNode.TileInfo.MapColor == color)
+                        return cornerNode;
+                    break;
+                default:
+                    break;
+            }
+            return null;
         }
 
         // set the PathNodes from the startNode to destinationNode
@@ -150,6 +210,7 @@ namespace WooHooFly.NodeSystem
                     // if we have found the destination Node
                     if (frontierNodes.Contains(destinationNode))
                     {
+                        Debug.Log("Found dest");
                         // generate the Path to the goal
                         newPath = GetPathNodes();
                         isSearchComplete = true;
