@@ -16,6 +16,8 @@ public class UIController : MonoBehaviour
     public bool stepCounterActive = false;
     [HideInInspector]
     public bool canShowArrows = true;
+    private AudioSource BGM;
+    private AudioSource playerSoundEffect;
     private void Awake()
     {
         instance = this;
@@ -316,6 +318,44 @@ public class UIController : MonoBehaviour
         cwArrow.SetActive(true);
         ccwArrow.SetActive(true);
         canShowArrows = true;
+    }
+    public void muteBGM()
+    {
+        GameObject GameManager = GameObject.Find("GameManager");
+        BGM = GameManager.GetComponent<AudioSource>();
+        if (BGM.isPlaying)
+        {
+            BGM.Stop();
+        }
+        else
+        {
+            BGM.Play();
+        }
+    }
+    public void muteSoundEffect()
+    {
+        GameObject Player = GameObject.Find("PlayerCube_OneColor");
+        playerSoundEffect = Player.GetComponent<AudioSource>();
+        if (ArrowMusic.enabled)
+        {
+            ArrowMusic.enabled = false;
+            WinMusic.enabled = false;
+            PauseMusic.enabled = false;
+            HomeButtonMusic.enabled = false;
+            NextButtonMusic.enabled = false;
+            restartButtonMusic.enabled = false;
+            playerSoundEffect.enabled = false;
+        }
+        else
+        {
+            ArrowMusic.enabled = true;
+            WinMusic.enabled = true;
+            PauseMusic.enabled = true;
+            HomeButtonMusic.enabled = true;
+            NextButtonMusic.enabled = true;
+            restartButtonMusic.enabled = true;
+            playerSoundEffect.enabled = true;
+        }
     }
     // add more methods to track other stats
 }
