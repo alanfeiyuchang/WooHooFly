@@ -86,7 +86,7 @@ public class DissolveTransition : MonoBehaviour
             greyDissolve.SetFloat("_AlphaThreshold",scale);
             GroundMaterial.color = new Color (1, 1, 1, 1-scale);
             WaterMaterial.SetFloat("_Alpha", scale);
-            Debug.Log(WaterMaterial.GetFloat("_Alpha"));
+            // Debug.Log(WaterMaterial.GetFloat("_Alpha"));
             timeCount -= Time.deltaTime;
             yield return new WaitForFixedUpdate();
         }

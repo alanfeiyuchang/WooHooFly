@@ -30,7 +30,7 @@ public class SpawnEnviiorment : MonoBehaviour
         //Debug.Log(_tile.transform.position);
         //spawnGround(_tile.transform);
 
-        river = this.transform.Find("River");
+        // river = this.transform.Find("River");
 
         foreach (Transform piece in _tile.transform)
         {
@@ -122,8 +122,18 @@ public class SpawnEnviiorment : MonoBehaviour
     public void spawnGrass(Transform _trans, Transform parent)
     {
         GameObject _grass = Instantiate(grassTop);
-        _grass.transform.SetParent(transform);
-        _grass.transform.localScale = _trans.localScale;
+        // _grass.transform.SetParent(transform);
+        _grass.transform.SetParent(_trans);
+        // _grass.transform.localScale = _trans.localScale;
+        _grass.transform.localScale = new Vector3(1,1,1);
         _grass.transform.position = new Vector3(_trans.position.x, _trans.position.y + 0.01f, _trans.position.z); 
+        float chance = Random.Range(0, 100);
+        SpawnVegetation spawnScript = _grass.GetComponent<SpawnVegetation>();
+        if (_trans.tag == "Tree") {
+            spawnScript.Spawn(true);
+        }
+        else {
+            spawnScript.Spawn(false);
+        }
     }
 }
