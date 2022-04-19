@@ -71,7 +71,6 @@ public class CubeController : MonoBehaviour
             return;
 
         movingPath = graph.GetPath(clickable.clickedNode);
-
         firstRotate = true;
         Rolling(movingPath.Dequeue());
     }
@@ -79,7 +78,7 @@ public class CubeController : MonoBehaviour
     public void FindAccessibleNode()
     {
         if (inputType == InputType.MouseInput)
-            graph.FindAccessibleNode(currentNode);
+            graph?.FindAccessibleNode(currentNode);
     }
     #endregion
 

@@ -493,5 +493,9 @@ namespace WooHooFly.NodeSystem
             return Tile;
         } 
 
+        public override string ToString() {
+            return transform.parent.parent.name + " of " + transform.parent.parent.parent.name;
+        }
+
     }
 }

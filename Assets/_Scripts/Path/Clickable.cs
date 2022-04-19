@@ -19,8 +19,10 @@ namespace WooHooFly.NodeSystem {
         public void EnablePointer(bool enable)
         {
             var pointer = this.GetComponent<IPointerDownHandler>() as MonoBehaviour;
-            if (pointer != null)
+            if (pointer != null) {
                 pointer.enabled = enable;
+            }
+                
         }
 
         public void OnPointerDown(PointerEventData eventData)

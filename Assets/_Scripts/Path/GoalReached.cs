@@ -6,11 +6,16 @@ using TileSystem;
 public class GoalReached : MonoBehaviour
 {
     private bool touched = false;
+    public GameObject finalMap;
+
     private void OnTriggerEnter(Collider other)
     {
         if (!touched && other.CompareTag("Player"))
         {
             GameManager.instance.WinGame();
+            if (finalMap != null) {
+                finalMap.GetComponent<FinalTransition>().Begin();
+            }
             if (RiverGenerator.instance != null)
             {
                 RiverGenerator.instance.GenerateRealWorld();
