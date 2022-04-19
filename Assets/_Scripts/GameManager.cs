@@ -123,7 +123,8 @@ public class GameManager : MonoBehaviour
 
     public void UpdateStars()
     {
-        levelData.levelStarData[MapTransition.instance.CurrentLevel - 1].StarCount(UIController.instance.StepCount);
+        if (MapTransition.instance.CurrentLevel != 0)
+            levelData.levelStarData[MapTransition.instance.CurrentLevel - 1].StarCount(UIController.instance.StepCount);
     }
 
     public void CheckWin()

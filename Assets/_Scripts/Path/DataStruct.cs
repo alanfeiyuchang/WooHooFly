@@ -20,6 +20,10 @@ namespace WooHooFly.NodeSystem
         public bool isActive;
         public Direction direction;
         public bool atFront;
+
+        public override string ToString() {
+            return neighbor + "/" + direction.ToString();
+        }
     }
 
     public class NodeMovingInfo

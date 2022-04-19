@@ -157,6 +157,7 @@ namespace WooHooFly.NodeSystem
             {
                 if (e.neighbor.isActiveAndEnabled && e.isActive)
                 {
+                    // Debug.Log("add transit: " + e);
                     FindPathAtDirection(currentNode, e.direction);
                 }
             }

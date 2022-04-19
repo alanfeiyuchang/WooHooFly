@@ -200,6 +200,8 @@ public class MouseRotation : MonoBehaviour
 
         nodeA.EnableTransitEdge(nodeB, state);
         nodeB.EnableTransitEdge(nodeA, state);
+        if (state)
+            MapTransition.instance?.GetCurrentCubeControllerScript().FindAccessibleNode();
     }
 
     private void EnableCornerLink(Node nodeA, Node nodeB, bool state)
