@@ -125,14 +125,14 @@ public class MapCubeManager : MonoBehaviour
                 break;
         }*/
         GameObject tile = side.transform.GetChild(0).gameObject;
-        GameObject unchangeAble = tile.transform.GetChild(0).gameObject;
+        GameObject unchangeable = tile.transform.GetChild(0).gameObject;
         GameObject color = tile.transform.GetChild(1).gameObject;
         tile.SetActive(true);
         switch (type)
         {
             case TileType.Changeable:
                 tile.tag = "ChangeTile";
-                unchangeAble.SetActive(false);
+                unchangeable.SetActive(false);
                 color.SetActive(false);
                 break;
             case TileType.Unchangeable:
@@ -140,20 +140,20 @@ public class MapCubeManager : MonoBehaviour
                 TileManager tileManager = tile.GetComponent<TileManager>();
                 if (tileManager.MapColor == TileColor.grey)
                 {
-                    unchangeAble.SetActive(false);
+                    unchangeable.SetActive(false);
                     color.SetActive(false);
                 }
                 else
                 {
-                    unchangeAble.SetActive(true);
+                    unchangeable.SetActive(true);
                     color.SetActive(false);
                 }
                 
                 break;
             case TileType.Color:
                 tile.tag = "ColorTile";
-                unchangeAble.SetActive(true);
-                color.SetActive(false);
+                unchangeable.SetActive(false);
+                color.SetActive(true);
                 break;
             default:
                 break;
