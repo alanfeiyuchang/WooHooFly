@@ -23,10 +23,22 @@ namespace TileSystem
                 Transform[] transforms = Selection.transforms;
                 foreach (Transform t in transforms)
                 {
-                    if(tile.tileType == TileType.RiverTile)
-                        PrefabUtility.SaveAsPrefabAsset(t.gameObject, "Assets/Resources/TileSet/Tile" + tile.tileBit + ".prefab");
-                    else if (tile.tileType == TileType.WaterFallTile)
-                        PrefabUtility.SaveAsPrefabAsset(t.gameObject, "Assets/Resources/TileSet/WaterFallTile" + tile.tileBit + ".prefab");
+                    switch (tile.tileType)
+                    {
+                        case TileType.RiverTile:
+                            PrefabUtility.SaveAsPrefabAsset(t.gameObject, "Assets/Resources/TileSet/RiverTiles/River_Tile" + tile.tileBit + ".prefab");
+                            break;
+                        case TileType.WaterFallTile:
+                            PrefabUtility.SaveAsPrefabAsset(t.gameObject, "Assets/Resources/TileSet/WaterFallTiles/WaterFall_Tile" + tile.tileBit + ".prefab");
+                            break;
+                        case TileType.LavaTile:
+                            PrefabUtility.SaveAsPrefabAsset(t.gameObject, "Assets/Resources/TileSet/LavaTiles/LavaTile_Tile" + tile.tileBit + ".prefab");
+                            break;
+                        case TileType.LavaFallTile:
+                            PrefabUtility.SaveAsPrefabAsset(t.gameObject, "Assets/Resources/TileSet/LavaFallTiles/LavaFallTile_Tile" + tile.tileBit + ".prefab");
+                            break;
+                    }
+
                 }
             }
         }

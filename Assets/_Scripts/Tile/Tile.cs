@@ -19,21 +19,27 @@ namespace TileSystem
     }
 
     public enum BitmaskData { NW = 1, N = 2, NE = 4, W = 8, E = 16, SW = 32, S = 64, SE = 128 }
-    public enum TileType { RiverTile, WaterFallTile}
+    public enum TileType { RiverTile, WaterFallTile, LavaTile, LavaFallTile}
     public class Tile : MonoBehaviour
     {
         public GameObject grassTile;
         public GameObject waterTile;
         public TileInfo tileInfo;
+        public float waterSizeRatio = 0.5f;
         [HideInInspector]
         public int tileBit;
         public TileType tileType;
 
-        private float subtileSize = 0.25f;
-        private Vector3 subtilePos;
-        private Vector3 subtileScale;
-        private int subtilePos_i;
-        private int subtilePos_j;
+        private List<Vector3> invisibleWaterTilePos = new List<Vector3>() {  new Vector3(-0.25f, 0, 0.5f), new Vector3(0, 0, 0.5f), new Vector3(0.5f, 0, 0.5f),
+                                                                                new Vector3(-0.25f, 0, 0), new Vector3(0, 0, 0), new Vector3(0.5f, 0, 0),
+                                                                                new Vector3(-0.25f, 0, -0.25f), new Vector3(0, 0, -0.25f), new Vector3(0.5f, 0, -0.25f),
+        };
+
+        //private float subtileSize = 0.25f;
+        //private Vector3 subtilePos;
+        //private Vector3 subtileScale;
+        //private int subtilePos_i;
+        //private int subtilePos_j;
 
         private bool isWaterTile(int index)
         {
@@ -51,43 +57,80 @@ namespace TileSystem
             }
             return false;
         }
+
         public void GenerateTile()
         {
-            subtilePos = new Vector3(this.transform.localPosition.x - (subtileSize * 1.5f), this.transform.localPosition.y, this.transform.localPosition.z + (subtileSize * 1.5f));
-            subtileScale = new Vector3(waterTile.transform.localScale.x * subtileSize, waterTile.transform.localScale.y, waterTile.transform.localScale.z * subtileSize);
+            for (int y = 0; y < 3; y++)
+            {
+                for (int x = 0; x < 3; x++)
+                {
+                    Vector3 position = new Vector3(this.transform.localPosition.x + ((float)(x - 1) * (waterSizeRatio + 1) / 4), this.transform.localPosition.y, this.transform.localPosition.z - ((float)(y - 1) * (waterSizeRatio + 1) / 4));
+                    int index = x + y * 3 + 1;
+                    GameObject newTile;
+                    if (isWaterTile(index))
+                        newTile = Instantiate(waterTile, position, Quaternion.identity, this.transform);
+                    else
+                        newTile = Instantiate(grassTile, position, Quaternion.identity, this.transform);
 
+                    if (x == 1)
+                        newTile.transform.localScale = new Vector3(newTile.transform.localScale.x * waterSizeRatio, newTile.transform.localScale.y, newTile.transform.localScale.z);
+                    else
+                        newTile.transform.localScale = new Vector3(newTile.transform.localScale.x * (1 - waterSizeRatio) / 2, newTile.transform.localScale.y, newTile.transform.localScale.z);
 
-            subtilePos_i = 0;
+                    if (y == 1)
+                        newTile.transform.localScale = new Vector3(newTile.transform.localScale.x, newTile.transform.localScale.y, newTile.transform.localScale.z * waterSizeRatio);
+                    else
+                        newTile.transform.localScale = new Vector3(newTile.transform.localScale.x, newTile.transform.localScale.y, newTile.transform.localScale.z * (1 - waterSizeRatio) / 2);
 
-            generateSubTile(isWaterTile(1), 0, 0);
-            generateSubTile(isWaterTile(2), 1, 0);
-            generateSubTile(isWaterTile(2), 2, 0);
-            generateSubTile(isWaterTile(3), 3, 0);
-            generateSubTile(isWaterTile(4), 0, 1);
-            generateSubTile(isWaterTile(5), 1, 1);
-            generateSubTile(isWaterTile(5), 2, 1);
-            generateSubTile(isWaterTile(6), 3, 1);
-            generateSubTile(isWaterTile(4), 0, 2);
-            generateSubTile(isWaterTile(5), 1, 2);
-            generateSubTile(isWaterTile(5), 2, 2);
-            generateSubTile(isWaterTile(6), 3, 2);
-            generateSubTile(isWaterTile(7), 0, 3);
-            generateSubTile(isWaterTile(8), 1, 3);
-            generateSubTile(isWaterTile(8), 2, 3);
-            generateSubTile(isWaterTile(9), 3, 3);
+                    if (isWaterTile(index))
+                    {
+                        GameObject invisible_water_tile = new GameObject("Water_Tile");
+                        invisible_water_tile.transform.position = invisibleWaterTilePos[index - 1];
+                        invisible_water_tile.transform.parent = this.transform;
+                        invisible_water_tile.transform.localScale = new Vector3(newTile.transform.localScale.x, 0.2f , newTile.transform.localScale.z);
+                    }
 
-
+                }
+            }
             tileBit = getBitMaskValue();
-        } 
-        private void generateSubTile(bool isWaterTile, int i, int j)
-        {
-            GameObject newTile;
-            if (isWaterTile)
-                newTile = Instantiate(waterTile, new Vector3(subtilePos.x + i * subtileSize, subtilePos.y, subtilePos.z - j * subtileSize), Quaternion.identity, this.transform);
-            else
-                newTile = Instantiate(grassTile, new Vector3(subtilePos.x + i * subtileSize, subtilePos.y, subtilePos.z - j * subtileSize), Quaternion.identity, this.transform);
-            newTile.transform.localScale = subtileScale;
         }
+        //public void GenerateTile()
+        //{
+        //    subtilePos = new Vector3(this.transform.localPosition.x - (subtileSize * 1.5f), this.transform.localPosition.y, this.transform.localPosition.z + (subtileSize * 1.5f));
+        //    subtileScale = new Vector3(waterTile.transform.localScale.x * subtileSize, waterTile.transform.localScale.y, waterTile.transform.localScale.z * subtileSize);
+
+
+        //    subtilePos_i = 0;
+
+        //    generateSubTile(isWaterTile(1), 0, 0);
+        //    generateSubTile(isWaterTile(2), 1, 0);
+        //    generateSubTile(isWaterTile(2), 2, 0);
+        //    generateSubTile(isWaterTile(3), 3, 0);
+        //    generateSubTile(isWaterTile(4), 0, 1);
+        //    generateSubTile(isWaterTile(5), 1, 1);
+        //    generateSubTile(isWaterTile(5), 2, 1);
+        //    generateSubTile(isWaterTile(6), 3, 1);
+        //    generateSubTile(isWaterTile(4), 0, 2);
+        //    generateSubTile(isWaterTile(5), 1, 2);
+        //    generateSubTile(isWaterTile(5), 2, 2);
+        //    generateSubTile(isWaterTile(6), 3, 2);
+        //    generateSubTile(isWaterTile(7), 0, 3);
+        //    generateSubTile(isWaterTile(8), 1, 3);
+        //    generateSubTile(isWaterTile(8), 2, 3);
+        //    generateSubTile(isWaterTile(9), 3, 3);
+
+
+        //    tileBit = getBitMaskValue();
+        //} 
+        //private void generateSubTile(bool isWaterTile, int i, int j)
+        //{
+        //    GameObject newTile;
+        //    if (isWaterTile)
+        //        newTile = Instantiate(waterTile, new Vector3(subtilePos.x + i * subtileSize, subtilePos.y, subtilePos.z - j * subtileSize), Quaternion.identity, this.transform);
+        //    else
+        //        newTile = Instantiate(grassTile, new Vector3(subtilePos.x + i * subtileSize, subtilePos.y, subtilePos.z - j * subtileSize), Quaternion.identity, this.transform);
+        //    newTile.transform.localScale = subtileScale;
+        //}
 
         private int getBitMaskValue()
         {

@@ -50,7 +50,8 @@ public class SpawnVegetation : MonoBehaviour
                     Vector3 pos = GetRandomPoint();
                     GameObject x = Instantiate(info.obj, Vector3.zero, info.obj.transform.rotation);
                     x.transform.parent = transform;
-                    x.transform.localPosition = pos;              
+                    x.transform.localPosition = pos;
+                    x.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
                     break;               
                 }
                 

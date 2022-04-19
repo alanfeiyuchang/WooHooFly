@@ -61,8 +61,6 @@ namespace TileSystem
                 else if(node.TileInfo.MapColor == TileColor.green && node.TileInfo.isWaterFall)
                     GenerateWaterFall(node);
             }
-            if (SpawnEnviiorment.instance != null)
-                SpawnEnviiorment.instance.spawnWater(nodes[0].transform);
 
         }
 
@@ -92,9 +90,12 @@ namespace TileSystem
             }
             TileID += (int)BitmaskData.S;
 
-            Debug.Log(TileID);
-            GameObject Tile = Resources.Load<GameObject>("TileSet/WaterFallTile" + TileID);
+            GameObject Tile = Resources.Load<GameObject>("TileSet/WaterFallTiles/WaterFall_Tile" + TileID);
             GameObject temp = Instantiate(Tile, node.transform.position, node.transform.rotation, environment);
+
+
+            if (SpawnEnviiorment.instance != null)
+                SpawnEnviiorment.instance.spawnTile(temp, node.transform.parent);
         }
         private void GenerateRiver(Node node)
         {
@@ -127,11 +128,11 @@ namespace TileSystem
                 && findColoredTileAtDirection(westNode, Direction.Backward, TileColor.green) != null)
                 TileID += (int)BitmaskData.SW;
 
-            GameObject Tile = Resources.Load<GameObject>("TileSet/Tile" + TileID);
+            GameObject Tile = Resources.Load<GameObject>("TileSet/RiverTiles/River_Tile" + TileID);
             GameObject temp = Instantiate(Tile, node.transform.position, node.transform.rotation, environment);
 
             if(SpawnEnviiorment.instance != null)
-                SpawnEnviiorment.instance.spawnTile(temp);
+                SpawnEnviiorment.instance.spawnTile(temp, node.transform.parent);
         }
 
         private Node findColoredTileAtDirection(Node currentNode, Direction direction, TileColor color)
