@@ -56,6 +56,14 @@ public class UIController : MonoBehaviour
     public AudioSource HomeButtonMusic;
     public AudioSource NextButtonMusic;
     public AudioSource restartButtonMusic;
+
+    [SerializeField] private Sprite _musicOn;
+    [SerializeField] private Sprite _musicOff;
+    [SerializeField] private Sprite _sfxOn;
+    [SerializeField] private Sprite _sfxOff;
+    [SerializeField] private Image _musicImage;
+    [SerializeField] private Image _sfxImage;
+
     public int StepCount
     {
         get => _stepCount;
@@ -326,10 +334,12 @@ public class UIController : MonoBehaviour
         if (BGM.isPlaying)
         {
             BGM.Stop();
+            _musicImage.sprite = _musicOff;
         }
         else
         {
             BGM.Play();
+            _musicImage.sprite = _musicOn;
         }
     }
     public void muteSoundEffect()
@@ -345,6 +355,8 @@ public class UIController : MonoBehaviour
             NextButtonMusic.enabled = false;
             restartButtonMusic.enabled = false;
             playerSoundEffect.enabled = false;
+
+            _sfxImage.sprite = _sfxOff;
         }
         else
         {
@@ -355,6 +367,7 @@ public class UIController : MonoBehaviour
             NextButtonMusic.enabled = true;
             restartButtonMusic.enabled = true;
             playerSoundEffect.enabled = true;
+            _sfxImage.sprite = _sfxOn;
         }
     }
     // add more methods to track other stats
