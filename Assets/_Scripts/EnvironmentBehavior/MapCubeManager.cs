@@ -125,25 +125,35 @@ public class MapCubeManager : MonoBehaviour
                 break;
         }*/
         GameObject tile = side.transform.GetChild(0).gameObject;
-        GameObject plusSign = tile.transform.GetChild(0).gameObject;
-        GameObject circleSign = tile.transform.GetChild(1).gameObject;
+        GameObject unchangeable = tile.transform.GetChild(0).gameObject;
+        GameObject color = tile.transform.GetChild(1).gameObject;
         tile.SetActive(true);
         switch (type)
         {
             case TileType.Changeable:
                 tile.tag = "ChangeTile";
-                plusSign.SetActive(false);
-                circleSign.SetActive(true);
+                unchangeable.SetActive(false);
+                color.SetActive(false);
                 break;
             case TileType.Unchangeable:
                 tile.tag = "UnchangeTile";
-                plusSign.SetActive(false);
-                circleSign.SetActive(false);
+                TileManager tileManager = tile.GetComponent<TileManager>();
+                if (tileManager.MapColor == TileColor.grey)
+                {
+                    unchangeable.SetActive(false);
+                    color.SetActive(false);
+                }
+                else
+                {
+                    unchangeable.SetActive(true);
+                    color.SetActive(false);
+                }
+                
                 break;
             case TileType.Color:
                 tile.tag = "ColorTile";
-                plusSign.SetActive(true);
-                circleSign.SetActive(false);
+                unchangeable.SetActive(false);
+                color.SetActive(true);
                 break;
             default:
                 break;
