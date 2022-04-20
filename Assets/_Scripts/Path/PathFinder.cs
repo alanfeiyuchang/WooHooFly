@@ -51,9 +51,21 @@ namespace WooHooFly.NodeSystem
 
         private void Start()
         {
+            // if (searchOnStart)
+            // {
+            //     if (Input.GetKey("up")){
+            //         pathNodes = FindPath();
+            //     }
+
+            // }
+        }
+        private void Update()
+        {
             if (searchOnStart)
             {
-                pathNodes = FindPath();
+                if (Input.GetKey("up")){
+                    pathNodes = FindPath();
+                }
             }
         }
 
@@ -84,6 +96,7 @@ namespace WooHooFly.NodeSystem
         private void ExpandFrontier(Node node)
         {
             Node cornerNode;
+            Node impossibleNode;
             if (node == null)
             {
                 return;
@@ -121,10 +134,34 @@ namespace WooHooFly.NodeSystem
                         frontierNodes.Add(cornerNode);
 
                     }
+                    
         
+                }
+                impossibleNode = findImpossilbleNode(node, node.TileInfo.MapColor);
+                if (impossibleNode != null){
+                    impossibleNode.PreviousNode = node;
+                    frontierNodes.Add(impossibleNode);
                 }
                 
             }
+        }
+
+        private Node findImpossilbleNode(Node currentNode, TileColor color){
+            Node impossibleNode;
+
+            foreach (TransitEdge e in currentNode.Transits){
+                Debug.Log(e);
+
+                if (e.isActive){
+                    impossibleNode = e.neighbor;
+                    Debug.Log(impossibleNode);
+                    if (impossibleNode.TileInfo.MapColor == color){
+                        return impossibleNode;
+                    }
+                }
+                Debug.Log(e.isActive);
+            }
+            return null;
         }
         private Node findColoredTileAtCorner(Node currentNode, Direction direction, TileColor color)
         {
@@ -157,8 +194,13 @@ namespace WooHooFly.NodeSystem
                     break;
                 case Direction.Right:
                     cornerNode = graph?.FindNodeAt(currentNode.transform.position + currentNode.transform.right / 2 + currentNode.transform.up / 2);
-                    if (cornerNode != null && cornerNode.TileInfo.MapColor == color)
+                    if (cornerNode != null && cornerNode.TileInfo.MapColor == color){
+
+                        Debug.Log(color);
+                        Debug.Log(cornerNode.TileInfo.MapColor == color);
                         return cornerNode;
+                    }
+
                     cornerNode = graph?.FindNodeAt(currentNode.transform.position + currentNode.transform.right / 2 - currentNode.transform.up / 2);
                     if (cornerNode != null && cornerNode.TileInfo.MapColor == color)
                         return cornerNode;
