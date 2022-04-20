@@ -18,6 +18,9 @@ namespace WooHooFly.NodeSystem
         [SerializeField] private Node destinationNode;
         [SerializeField] private bool searchOnStart;
 
+        // active angle
+        private float activeAngle;
+
         // next Nodes to explore
         private List<Node> frontierNodes;
 
@@ -66,6 +69,16 @@ namespace WooHooFly.NodeSystem
                 if (Input.GetKey("up")){
                     pathNodes = FindPath();
                 }
+            }
+        }
+
+        private List<Node> SendPath(Node start, Node destination, float angle){
+            pathNodes = FindPath(start, destination);
+            if (angle == Mathf.RoundToInt(transform.eulerAngles.y)){
+                return pathNodes;
+            }
+            else{
+                return null;
             }
         }
 
