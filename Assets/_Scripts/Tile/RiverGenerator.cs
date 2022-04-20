@@ -94,8 +94,9 @@ namespace TileSystem
             GameObject temp = Instantiate(Tile, node.transform.position, node.transform.rotation, environment);
 
 
+            Vector3 waterToCenter =  node.transform.position - node.transform.parent.parent.position;
             if (SpawnEnviiorment.instance != null)
-                SpawnEnviiorment.instance.spawnTile(temp, node.transform.parent);
+                SpawnEnviiorment.instance.spawnTile(temp.transform, waterToCenter);
         }
         private void GenerateRiver(Node node)
         {
@@ -131,8 +132,9 @@ namespace TileSystem
             GameObject Tile = Resources.Load<GameObject>("TileSet/RiverTiles/River_Tile" + TileID);
             GameObject temp = Instantiate(Tile, node.transform.position, node.transform.rotation, environment);
 
+            Vector3 waterToCenter = node.transform.position - node.transform.parent.parent.position;
             if(SpawnEnviiorment.instance != null)
-                SpawnEnviiorment.instance.spawnTile(temp, node.transform.parent);
+                SpawnEnviiorment.instance.spawnTile(temp.transform, waterToCenter);
         }
 
         private Node findColoredTileAtDirection(Node currentNode, Direction direction, TileColor color)

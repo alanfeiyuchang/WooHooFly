@@ -41,26 +41,26 @@ public class SpawnEnviiorment : MonoBehaviour
         }
     }
 
-    public void spawnTile(GameObject _tile, Transform side)
+    public void spawnTile(Transform _tile, Vector3 waterCubeTrans)
     {
         //Debug.Log(_tile.transform.position);
         //spawnGround(_tile.transform);
 
         // river = this.transform.Find("River");
 
-        int subtileCount = 0;
+
+        int subtileIndex = 0;
         foreach (Transform piece in _tile.transform)
         {
             //if(piece.name == "Green_Tile(Clone)")
             //{
             //    spawnGrass(piece, _tile.transform);
             //}
-            if(piece.name == "Water_Tile")
+            if (piece.name == "Blue_Tile(Clone)")
             {
-                spawnWater(_tile.transform, subtileCount, side);
+                spawnWater(piece.transform, waterCubeTrans, subtileIndex);
             }
-            if(piece.name != "Blue_Tile(Clone)")
-            subtileCount++;
+            subtileIndex++;
         }
     }
     public void spawnWater(Vector3 _pos)
@@ -70,8 +70,9 @@ public class SpawnEnviiorment : MonoBehaviour
         _empty.transform.position = new Vector3(_pos.x, _pos.y + 0.1f, _pos.z);
         _empty.transform.localScale = new Vector3(1, 1, 1);
     }
-    public void spawnWater(Transform tile, int subtileIndex, Transform side)
+    public void spawnWater(Transform tile, Vector3 posToCenter, int subtileIndex)
     {
+
         /*if (river == null)
         {
             river = Instantiate(waterParent, _trans.position, _trans.rotation, this.transform).transform;
@@ -105,55 +106,91 @@ public class SpawnEnviiorment : MonoBehaviour
         //_empty2.transform.localScale = new Vector3(1, 1, 1);
         //river.transform.localScale = new Vector3 (_trans.localScale.x, _trans.localScale.y / 10, _trans.localScale.z );
 
-        GameObject _empty = new GameObject("WaterMark");
-
         //_empty.transform.position = new Vector3(_trans.position.x + _trans.localScale.x / 2,
         //    _trans.position.y, _trans.position.z + _trans.localScale.z / 2); 
-
-
+        GameObject _empty = new GameObject("WaterMark");
+        _empty.transform.position = tile.position;
         _empty.transform.SetParent(waterParent.transform);
+        _empty.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
 
-        switch (side.gameObject.name)
-        {
-            case "Side A":
-                _empty.transform.position = tile.position + water_pos_list[0][subtileIndex].localPosition;
-                _empty.transform.localScale = water_pos_list[0][subtileIndex].localScale;
-                //_empty.transform.position = _trans.position;
-                //_empty.transform.localScale = _trans.localScale;
-                break;
-            case "Side B":
-                _empty.transform.position = tile.position + water_pos_list[1][subtileIndex].localPosition;
-                _empty.transform.localScale = water_pos_list[1][subtileIndex].localScale;
-                //_empty.transform.position = _trans.position;
-                //_empty.transform.localScale = _trans.localScale;
-                break;
-            case "Side C":
-                _empty.transform.position = tile.position + water_pos_list[2][subtileIndex].localPosition;
-                _empty.transform.localScale = water_pos_list[2][subtileIndex].localScale;
-                //_empty.transform.position = _trans.position;
-                //_empty.transform.position += _trans.transform.up * -0.2f;
-                //_empty.transform.localScale = new Vector3(_trans.localScale.x, _trans.localScale.z, _trans.localScale.y);
-                break;
-            case "Side D":
-                _empty.transform.position = tile.position + water_pos_list[3][subtileIndex].localPosition;
-                _empty.transform.localScale = water_pos_list[3][subtileIndex].localScale; 
-                //_empty.transform.position = _trans.position;
-                //_empty.transform.localScale = new Vector3(_trans.localScale.x, _trans.localScale.z, _trans.localScale.y);
-                break;
-            case "Side E":
-                _empty.transform.position = tile.position + water_pos_list[4][subtileIndex].localPosition;
-                _empty.transform.localScale = water_pos_list[4][subtileIndex].localScale;
-                //_empty.transform.position = _trans.position;
-                //_empty.transform.localScale = new Vector3(_trans.localScale.y, _trans.localScale.z, _trans.localScale.x);
-                break;
-            case "Side F":
-                _empty.transform.position = tile.position + water_pos_list[5][subtileIndex].localPosition;
-                _empty.transform.localScale = water_pos_list[5][subtileIndex].localScale;
-                //_empty.transform.position = _trans.position;
-                //_empty.transform.position += _trans.transform.up * -0.2f;
-                //_empty.transform.localScale = new Vector3(_trans.localScale.y, _trans.localScale.z, _trans.localScale.x);
-                break;
-        }
+        //Debug.Log(posToCenter);
+        //if(posToCenter.y > 0)
+        //{
+        //    // indicator A
+        //    Debug.Log("A");
+        //    _empty.transform.position = tile.position + water_pos_list[0][subtileIndex].localPosition;
+        //    _empty.transform.localScale = water_pos_list[0][subtileIndex].localScale;
+        //}
+        //else if (posToCenter.y < 0)
+        //{
+        //    // indicator B
+        //    Debug.Log("B");
+        //    _empty.transform.position = tile.position + water_pos_list[1][subtileIndex].localPosition;
+        //    _empty.transform.localScale = water_pos_list[1][subtileIndex].localScale;
+        //}
+        //else if (posToCenter.z < 0)
+        //{
+        //    // indicator C
+        //    Debug.Log("C");
+        //    _empty.transform.position = tile.position + water_pos_list[2][subtileIndex].localPosition;
+        //    _empty.transform.localScale = water_pos_list[2][subtileIndex].localScale;
+        //}
+        //else if (posToCenter.z > 0){
+        //    // indicator D
+        //    Debug.Log("D");
+        //    _empty.transform.position = tile.position + water_pos_list[3][subtileIndex].localPosition;
+        //    _empty.transform.localScale = water_pos_list[3][subtileIndex].localScale;
+        //}
+        //else if (posToCenter.x > 0)
+        //{
+        //    // indicator E
+        //    Debug.Log("E");
+        //    _empty.transform.position = tile.position + water_pos_list[4][subtileIndex].localPosition;
+        //    _empty.transform.localScale = water_pos_list[4][subtileIndex].localScale;
+        //}
+        //else if (posToCenter.x < 0)
+        //{
+        //    // indicator F
+        //    Debug.Log("F");
+        //    _empty.transform.position = tile.position + water_pos_list[5][subtileIndex].localPosition;
+        //    _empty.transform.localScale = water_pos_list[5][subtileIndex].localScale;
+        //}
+        //switch (posToCenter)
+        //{
+        //    case Vector3 v when v.Equals(Vector3.up / 2):
+        //        // indicator A
+        //        _empty.transform.position = tile.position + water_pos_list[0][subtileIndex].localPosition;
+        //        _empty.transform.localScale = water_pos_list[0][subtileIndex].localScale;
+        //        break;
+        //    case Vector3 v when v.Equals(Vector3.down / 2):
+        //        _empty.transform.position = tile.position + water_pos_list[1][subtileIndex].localPosition;
+        //        _empty.transform.localScale = water_pos_list[1][subtileIndex].localScale;
+        //        break;
+        //    case Vector3 v when v.Equals(Vector3.back / 2):
+        //        // indicator C
+        //        _empty.transform.position = tile.position + water_pos_list[2][subtileIndex].localPosition;
+        //        _empty.transform.localScale = water_pos_list[2][subtileIndex].localScale;
+        //        break;
+        //    case Vector3 v when v.Equals(Vector3.forward / 2):
+        //        // indicator D
+        //        _empty.transform.position = tile.position + water_pos_list[3][subtileIndex].localPosition;
+        //        _empty.transform.localScale = water_pos_list[3][subtileIndex].localScale;
+        //        break;
+        //    case Vector3 v when v.Equals(Vector3.right / 2):
+        //        // indicator E
+        //        _empty.transform.position = tile.position + water_pos_list[4][subtileIndex].localPosition;
+        //        _empty.transform.localScale = water_pos_list[4][subtileIndex].localScale;
+        //        break;
+        //    case Vector3 v when v.Equals(Vector3.left / 2):
+        //        // indicator F
+        //        Debug.Log("correct");
+        //        _empty.transform.position = tile.position + water_pos_list[5][subtileIndex].localPosition;
+        //        _empty.transform.localScale = water_pos_list[5][subtileIndex].localScale;
+        //        break;
+        //    default:
+        //        Debug.Log("Wrong Pos" + posToCenter + Vector3.left / 2);
+        //        break;
+        //}
 
         //Debug.Log(_trans.localScale + " ==== " + _trans.lossyScale);
 

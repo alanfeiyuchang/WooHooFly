@@ -15,7 +15,7 @@ public class MouseRotation : MonoBehaviour
     private float TurnDuration = 1f;
     [SerializeField] private Transform Axis;
 
-    public bool enableMouseRotation;
+    //public bool enableMouseRotation;
     public RotationLink[] rotationLinks;
     public RotationLinker[] rotationLinksTransit;
     public RotationLinker[] rotationLinksCorner;
@@ -41,8 +41,8 @@ public class MouseRotation : MonoBehaviour
 
     void Update()
     {
-        if (!enableMouseRotation)
-            return;
+        //if (!enableMouseRotation)
+        //    return;
         if (!Application.isPlaying)
         {
             UpdateLinkerParents();
