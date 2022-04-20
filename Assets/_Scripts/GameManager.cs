@@ -131,8 +131,8 @@ public class GameManager : MonoBehaviour
     {
         LevelManager currentLevelManager = MapTransition.instance.GetCurrentLevel();
         
-        if (!currentLevelManager.FinishAngles.Contains(currentLevelManager.transform.localEulerAngles.y))
-            return false;
+        /*if (!currentLevelManager.FinishAngles.Contains(currentLevelManager.transform.localEulerAngles.y))
+            return false;*/
 
         WinGame();
 
