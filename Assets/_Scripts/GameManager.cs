@@ -127,14 +127,16 @@ public class GameManager : MonoBehaviour
             levelData.levelStarData[MapTransition.instance.CurrentLevel - 1].StarCount(UIController.instance.StepCount);
     }
 
-    public void CheckWin()
+    public bool CheckWin()
     {
         LevelManager currentLevelManager = MapTransition.instance.GetCurrentLevel();
         
         if (!currentLevelManager.FinishAngles.Contains(currentLevelManager.transform.localEulerAngles.y))
-            return;
+            return false;
 
         WinGame();
+
+        return true;
         
         /*if (levelComplete || CurrentState == GameState.restart)
             return;
