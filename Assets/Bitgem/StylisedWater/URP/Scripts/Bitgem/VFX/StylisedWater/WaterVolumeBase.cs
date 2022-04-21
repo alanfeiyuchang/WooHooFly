@@ -162,6 +162,7 @@ namespace Bitgem.VFX.StylisedWater
                         var y1 = y0 + TileSize;
                         var z0 = z * TileSize - edgeSize / 2;
                         var z1 = z0 + TileSize;
+                        Debug.Log("x0:" + x0 + "x1:" + x1 + "y0:" + y0 + "y1:" + y1 + "z0:" + z0 + "z1:" + z1);
                         var ux0 = x0 + transform.position.x;
                         var ux1 = x1 + transform.position.x;
                         var uy0 = y0 + transform.position.y;
@@ -192,7 +193,7 @@ namespace Bitgem.VFX.StylisedWater
                         var foamNegXposZ = negXposZ && ((IncludeFoam & TileFace.PosX) == TileFace.PosX || (IncludeFoam & TileFace.PosZ) == TileFace.PosZ);
                         var foamPosXposZ = posXposZ && ((IncludeFoam & TileFace.NegZ) == TileFace.NegZ || (IncludeFoam & TileFace.PosZ) == TileFace.PosZ);
                         var foamPosXnegZ = posXnegZ && ((IncludeFoam & TileFace.PosZ) == TileFace.PosZ || (IncludeFoam & TileFace.NegZ) == TileFace.NegZ);
-
+                        var yMid = (y1 - y0) / 2;
                         // create the top face
                         if (y == MAX_TILES_Y - 1 || !tiles[x, y + 1, z])
                         {
