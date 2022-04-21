@@ -27,7 +27,6 @@ namespace WooHooFly.NodeSystem {
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            //Debug.Log("Click on object");
             if (clickAction != null)
             {
                 // invoke the clickAction with world space raycast hit position

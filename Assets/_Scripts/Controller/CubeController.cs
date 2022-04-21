@@ -11,7 +11,7 @@ public class CubeController : MonoBehaviour
 {
     private Graph graph;
     private Node currentNode;
-    private CubeCollider cubeCollider;
+    private CubeCollider cubeColorControl;
     private bool isMoving;
     private bool firstRotate;
     private Clickable[] clickables;
@@ -26,7 +26,7 @@ public class CubeController : MonoBehaviour
     private void Awake()
     {
         graph = FindObjectOfType<Graph>();
-        cubeCollider = this.GetComponent<CubeCollider>();
+        cubeColorControl = this.GetComponent<CubeCollider>();
         clickables = FindObjectsOfType<Clickable>();
     }
     private void Start()
@@ -204,6 +204,7 @@ public class CubeController : MonoBehaviour
     {
         roundPosition();
         SnapPoint.transform.position = currentNode.transform.position;
+        cubeColorControl.NewTileEnter(currentNode.TileInfo);
     }
 
     private void roundPosition()
@@ -214,10 +215,9 @@ public class CubeController : MonoBehaviour
 
     private bool CorrectColor(Node nextNode)
     {
-        TileColor currentColor = gameObject.GetComponent<CubeCollider>().Color;
+        TileColor currentColor = cubeColorControl.Color;
         GameObject mapTile = nextNode.GetTile();
         TileColor mapColor = mapTile.GetComponent<TileManager>().MapColor;
-        //Debug.Log("Playcube is " + currentColor.ToString() + "; Mapcube is " + mapColor.ToString() + "; Tile is " + mapTile.tag);
         if (currentColor.Equals(mapColor) || mapTile.tag == "ChangeTile" || (mapTile.tag == "ColorTile" && firstRotate))
         {
             return true;

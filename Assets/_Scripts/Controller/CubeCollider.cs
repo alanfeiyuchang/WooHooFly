@@ -9,7 +9,6 @@ public class CubeCollider : MonoBehaviour
     public static CubeCollider instance;
     //Will become this color once game starts
     public TileColor Color;
-    private TileManager map;
     public bool newPlayer = false;
     [SerializeField] private Material playerColor;
     [SerializeField] private Color waterSideColor;
@@ -108,38 +107,35 @@ public class CubeCollider : MonoBehaviour
             playerColor.SetColor("_TopColor", lavaTopColor);
         }
     }
-    private void OnTriggerEnter(Collider other)
+    public void NewTileEnter(TileManager tile)
     {
-        
+
         //change mapCube's color
-        if (other.gameObject.tag == "ChangeTile")
+        if (tile.gameObject.tag == "ChangeTile")
         {
-            map = other.gameObject.GetComponent<TileManager>();
-            map.ColorChange(Color);
-   
+            tile.ColorChange(Color);
+
         }
         //change playerCube's color
-        else if(other.gameObject.tag == "ColorTile")
+        else if (tile.gameObject.tag == "ColorTile")
         {
             if (newPlayer)
             {
-                map = other.gameObject.GetComponent<TileManager>();
-                if(Color != map.MapColor)
+                if (Color != tile.MapColor)
                 {
-                    Color = map.MapColor;
+                    Color = tile.MapColor;
                     updatePlayerColor();
                     //Debug.Log("I am changing to" + Color);
-                }      
+                }
             }
             else
             {
-                map = other.gameObject.GetComponent<TileManager>();
-                TileColor c = map.MapColor;
+                TileColor c = tile.MapColor;
                 Debug.Log(c);
                 Color = c;
                 TileManager.instance.changeColor(gameObject, c);
             }
-            
+
         }
 
     }
@@ -147,5 +143,5 @@ public class CubeCollider : MonoBehaviour
 
 
 
-    
+
 }
