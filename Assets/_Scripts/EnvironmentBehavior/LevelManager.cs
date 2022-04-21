@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using WooHooFly.NodeSystem;
 
 public class LevelManager : MonoBehaviour
 {
@@ -12,7 +13,8 @@ public class LevelManager : MonoBehaviour
     [Header("Finish requirements")]
     public List<GameObject> FinishCubes;
     public List<float> FinishAngles;
-
+    public Node StartNode;
+    public Node FinishNode;
 
     private void Start()
     {

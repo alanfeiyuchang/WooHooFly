@@ -118,7 +118,7 @@ namespace WooHooFly.NodeSystem
             // loop through all Edges
             for (int i = 0; i < node.Edges.Count; i++)
             {   
-                Debug.Log(node.Edges.Count);
+                //Debug.Log(node.Edges.Count);
                 // skip Edge if neighbor already explored or invalid
                 if (node.Edges[i] == null ||
                     node.Edges.Count == 0 ||
@@ -265,11 +265,11 @@ namespace WooHooFly.NodeSystem
                     // if we have found the destination Node
                     if (frontierNodes.Contains(destinationNode))
                     {
-                        Debug.Log("Found dest");
                         // generate the Path to the goal
                         newPath = GetPathNodes();
                         isSearchComplete = true;
                         isPathComplete = true;
+                        Debug.Log("Found dest: " + newPath.Count.ToString());
                     }
                 }
                 // if whole graph explored but no path found

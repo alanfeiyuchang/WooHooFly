@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using WooHooFly.NodeSystem;
 using WooHooFly.Colors;
+using WooHooFly.NodeSystem;
 
 #if ENABLE_CLOUD_SERVICES_ANALYTICS
 using UnityEngine.Analytics;
@@ -20,6 +21,8 @@ public class GameManager : MonoBehaviour
     //variables
     private List<GameObject> ChangableTiles = new List<GameObject>();
     private GameState _CurrentState = GameState.starting;
+    
+
     //----- publish state change -----
     public GameState CurrentState {
         get {
@@ -36,6 +39,7 @@ public class GameManager : MonoBehaviour
             onGameStateChanged(state);
         }
     }
+    public PathFinder _pathFinder;
     //----- end ----
 
     // Analytics variables
