@@ -27,11 +27,11 @@ namespace WooHooFly.NodeSystem {
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            Debug.Log("Click on object");
+            //Debug.Log("Click on object");
             if (clickAction != null)
             {
                 // invoke the clickAction with world space raycast hit position
-                Debug.Log("invoke");
+                //Debug.Log("invoke");
                 clickAction.Invoke(this, eventData.pointerPressRaycast.worldPosition);
             }
         }

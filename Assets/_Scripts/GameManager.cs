@@ -134,13 +134,18 @@ public class GameManager : MonoBehaviour
     public bool CheckWin()
     {
         LevelManager currentLevelManager = MapTransition.instance.GetCurrentLevel();
+
+        if (_pathFinder.FindPath(currentLevelManager.StartNode, currentLevelManager.FinishNode) == null)
+        {
+            Debug.Log("Not win");
+            return false;
+        }
+        else
+        {
+            Debug.Log("Win!! " + _pathFinder.FindPath(currentLevelManager.StartNode, currentLevelManager.FinishNode).Count.ToString());
+            return true;
+        }
         
-        /*if (!currentLevelManager.FinishAngles.Contains(currentLevelManager.transform.localEulerAngles.y))
-            return false;*/
-
-        WinGame();
-
-        return true;
         
         /*if (levelComplete || CurrentState == GameState.restart)
             return;
