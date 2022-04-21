@@ -19,6 +19,7 @@ namespace WooHooFly.NodeSystem
         [SerializeField] private List<Edge> edges = new List<Edge>();
         [SerializeField] private List<Edge> corners = new List<Edge>();
         [SerializeField] private List<TransitEdge> transits = new List<TransitEdge>();
+        private List<Edge> siblings = new List<Edge>(); //nodes at same cube
 
         // Nodes specifically excluded from Edges
         [SerializeField] private List<Node> excludedNodes;
@@ -44,6 +45,8 @@ namespace WooHooFly.NodeSystem
         public List<Edge> Corners => corners;
 
         public List<TransitEdge> Transits => transits;
+
+        public List<Edge> Siblings => siblings;
 
         private static Direction[] directionList = { Direction.Forward, Direction.Right, Direction.Backward, Direction.Left };
 
@@ -242,12 +245,6 @@ namespace WooHooFly.NodeSystem
                 if (newNode == null)
                     continue;
 
-                if (this.transform.parent.parent == newNode.transform.parent.parent)
-                {
-                    // two node at same cube which is not traversable
-                    continue;
-                }
-
                 Vector3 movingDirection = Vector3.zero;
                 if (direction.x > 0)
                     movingDirection = transform.right;
@@ -258,10 +255,18 @@ namespace WooHooFly.NodeSystem
                 else if (direction.z < 0)
                     movingDirection = -transform.forward;
 
+                // two node at same cube which is not traversable
+                if (this.transform.parent.parent == newNode.transform.parent.parent)
+                {
+                    Edge newEdge = new Edge { neighbor = newNode, isActive = true, direction = GetDirection(movingDirection) };
+                    siblings.Add(newEdge);
+                    continue;
+                }
+
                 // add to edges list if not already included and not excluded specifically
                 if (!HasCorner(newNode) && !excludedNodes.Contains(newNode))
                 {
-                    Edge newEdge = new Edge { neighbor = newNode, isActive = true, direction = Direction.None };//GetDirection(movingDirection) };
+                    Edge newEdge = new Edge { neighbor = newNode, isActive = true, direction = GetDirection(movingDirection) };
                     corners.Add(newEdge);
                 }
             }

@@ -177,6 +177,22 @@ namespace TileSystem
                         return e.neighbor;
                 }
             }
+            foreach (Edge e in currentNode.Corners)
+            {
+                if(e.isActive && e.direction == direction)
+                {
+                    if (e.neighbor.TileInfo.MapColor == color)
+                        return e.neighbor;
+                }
+            }
+            foreach (Edge e in currentNode.Siblings)
+            {
+                if (e.isActive && e.direction == direction)
+                {
+                    if (e.neighbor.TileInfo.MapColor == color)
+                        return e.neighbor;
+                }
+            }
             return null;
         }
 
