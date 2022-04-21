@@ -18,6 +18,7 @@ public class CubeCollider : MonoBehaviour
     [SerializeField] private Material water;
     [SerializeField] private Material lava;
     [SerializeField] private GameObject liquad;
+    [SerializeField] private float fillAmount = 0.6f;
     private void Awake()
     {
         instance = this;
@@ -86,7 +87,7 @@ public class CubeCollider : MonoBehaviour
         cont = 0;
         while (cont <= time)
         {
-            fill = Mathf.Lerp(0, 0.5f, cont / time);
+            fill = Mathf.Lerp(0, fillAmount, cont / time);
             playerColor.SetFloat("_Fill", fill);
             cont += Time.deltaTime;
             yield return null;
@@ -95,7 +96,7 @@ public class CubeCollider : MonoBehaviour
 
     private void fillContainer()
     {
-        playerColor.SetFloat("_Fill", 0.5f);
+        playerColor.SetFloat("_Fill", fillAmount);
         if (Color == TileColor.green)
         {
             playerColor.SetColor("_SideColor", waterSideColor);
