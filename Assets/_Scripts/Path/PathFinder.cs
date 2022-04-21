@@ -116,7 +116,7 @@ namespace WooHooFly.NodeSystem
             }
 
             // loop through all Edges
-            for (int i = 0; i < node.Edges.Count; i++)
+            /*for (int i = 0; i < node.Edges.Count; i++)
             {   
                 //Debug.Log(node.Edges.Count);
                 // skip Edge if neighbor already explored or invalid
@@ -156,6 +156,49 @@ namespace WooHooFly.NodeSystem
                     frontierNodes.Add(impossibleNode);
                 }
                 
+            }*/
+
+            foreach (TransitEdge e in node.Transits)
+            {
+                if (e.isActive && e.neighbor != null)
+                {
+                    AddToFrontier(node, e.neighbor);
+                }
+            }
+            foreach (Edge e in node.Edges)
+            {
+                if (e.isActive && e.neighbor != null)
+                {
+                    AddToFrontier(node, e.neighbor);
+                }
+            }
+            foreach(Edge e in node.Corners)
+            {
+                if (e.isActive && e.neighbor != null)
+                {
+                    AddToFrontier(node, e.neighbor);
+                }
+            }
+            foreach (Edge e in node.Siblings)
+            {
+                if (e.isActive && e.neighbor != null)
+                {
+                    AddToFrontier(node, e.neighbor);
+                }
+            }
+        }
+
+        private void AddToFrontier(Node currentNode, Node nextNode)
+        {
+            if (exploredNodes.Contains(nextNode) ||frontierNodes.Contains(nextNode))
+            {
+                return;
+            }
+            if (nextNode.TileInfo.MapColor == currentNode.TileInfo.MapColor)
+            {
+                // add neighbor Nodes to frontier Nodes
+                nextNode.PreviousNode = currentNode;
+                frontierNodes.Add(nextNode);
             }
         }
 
