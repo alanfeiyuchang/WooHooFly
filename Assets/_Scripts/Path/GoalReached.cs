@@ -10,7 +10,7 @@ public class GoalReached : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!touched && other.CompareTag("Player"))
+        if (!touched && other.CompareTag("Player") && GameManager.instance.CheckWin())
         {
             GameManager.instance.WinGame();
             if (finalMap != null) {

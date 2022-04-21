@@ -179,7 +179,7 @@ public class TutorialManager : MonoBehaviour
 
     // Show Arrow on Mapcube
     private void NextArrowPosition(GameObject mapCube){
-        Debug.Log("change to next postion");
+        //Debug.Log("change to next postion");
         if (_arrow != null)
             Destroy(_arrow);
 
