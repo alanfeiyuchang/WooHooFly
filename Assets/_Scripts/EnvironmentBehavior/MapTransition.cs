@@ -247,7 +247,6 @@ public class MapTransition : MonoBehaviour
         _fromLevel.gameObject.SetActive(false);
         Destroy(_fromLevel.gameObject);
 
-        SetCameraSize(LevelList[CurrentLevel].CameraProjectionSize);
         SetPosition(_toMapCubes, _toMapFlags, _toMapPlayerCube, +dropHeight);
         
         _toLevel.gameObject.SetActive(true);
@@ -259,6 +258,7 @@ public class MapTransition : MonoBehaviour
             LevelList[0].GetComponent<LevelSelectionManager>().UpdateLevelSelection();
         }
         CurrentLevel = levelIndex;
+        SetCameraSize(LevelList[CurrentLevel].CameraProjectionSize);
         UIController.instance.StepCount = 0;
 
         //to map appears
