@@ -40,6 +40,7 @@ public class CubeController : MonoBehaviour
         currentNode = graph?.FindClosestNode(SnapPoint.transform.position);
         // [Analytics] increment current node visit count
         currentNode.VisitNode();
+        SnapToNearestNode();
 
         FindAccessibleNode();
     }
