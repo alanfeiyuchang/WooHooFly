@@ -135,7 +135,7 @@ public class GameManager : MonoBehaviour
     {
         LevelManager currentLevelManager = MapTransition.instance.GetCurrentLevel();
 
-        if (_pathFinder.FindPath(currentLevelManager.StartNode, currentLevelManager.FinishNode) == null)
+        if (_pathFinder.FindPath(currentLevelManager.StartNode, currentLevelManager.FinishNode).Count == 0)
         {
             Debug.Log("Not win");
             return false;

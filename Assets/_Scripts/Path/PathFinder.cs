@@ -66,7 +66,7 @@ namespace WooHooFly.NodeSystem
         {
             if (searchOnStart)
             {
-                if (Input.GetKey("up")){
+                if (Input.GetKeyDown("up")){
                     pathNodes = FindPath();
                 }
             }
@@ -270,6 +270,10 @@ namespace WooHooFly.NodeSystem
                         isSearchComplete = true;
                         isPathComplete = true;
                         Debug.Log("Found dest: " + newPath.Count.ToString());
+                    }
+                    else
+                    {
+                        Debug.Log("path not found");
                     }
                 }
                 // if whole graph explored but no path found
