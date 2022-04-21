@@ -10,6 +10,7 @@ public class GoalReached : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("touched: " + touched + " collider: " + other.tag + " win: "+ GameManager.instance.CheckWin());
         if (!touched && other.CompareTag("Player") && GameManager.instance.CheckWin())
         {
             GameManager.instance.WinGame();

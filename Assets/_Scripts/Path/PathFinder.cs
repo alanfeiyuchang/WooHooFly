@@ -271,10 +271,6 @@ namespace WooHooFly.NodeSystem
                         isPathComplete = true;
                         Debug.Log("Found dest: " + newPath.Count.ToString());
                     }
-                    else
-                    {
-                        Debug.Log("path not found");
-                    }
                 }
                 // if whole graph explored but no path found
                 else

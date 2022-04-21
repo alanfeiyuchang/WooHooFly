@@ -34,6 +34,7 @@ public class TutorialManager : MonoBehaviour
 
     private void Awake()
     {
+        //Debug.Log("TutorialManager Awake");
         current = this;
         // Initiate TutorialManager event listeners
         GameManager.instance.onGameStateChanged += GameStateChanged;
@@ -42,15 +43,25 @@ public class TutorialManager : MonoBehaviour
         // TutorialManager.current.onTextHit += NextTextShow;
         _text = transform.GetChild(0).gameObject;
 
-        if (tutorialHints != null) {
+        if (tutorialHints != null)
+        {
+            Debug.Log("tutorial hints: " + this.transform.parent.name + " " + tutorialHints.Length);
             foreach (TutorialHint tutorialHint in tutorialHints)
             {
+                BoxCollider bc = tutorialHint.HintPlace.transform.GetChild(0).GetChild(0).gameObject.AddComponent<BoxCollider>();
+                bc.isTrigger = true;
+                bc.size = new Vector3(0.2f, 0.2f, 0.05f);
+                bc.center = new Vector3(0, 0, 0);
                 // Debug.Log(tutorialHint.HintPlace.name);
                 HintTrigger hintTrigger = tutorialHint.HintPlace.transform
                                             .GetChild(0).GetChild(0).gameObject
                                             .AddComponent<HintTrigger>();
                 hintTrigger.HintEvent = tutorialHint.HintEvent;
             }
+        }
+        else
+        {
+            //Debug.Log("No tutorial hints");
         }
     }
 
@@ -179,7 +190,7 @@ public class TutorialManager : MonoBehaviour
 
     // Show Arrow on Mapcube
     private void NextArrowPosition(GameObject mapCube){
-        //Debug.Log("change to next postion");
+        Debug.Log("change to next postion");
         if (_arrow != null)
             Destroy(_arrow);
 

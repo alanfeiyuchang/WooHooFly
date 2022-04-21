@@ -9,7 +9,7 @@ public class HintTrigger : MonoBehaviour
     public UnityEvent HintEvent;
 
     private void OnTriggerEnter(Collider other) {
-        //Debug.Log("hit occur" + other.name);
+        Debug.Log("hit occur" + other.name);
         if (other.CompareTag("Player")) {
             // if (TutorialManager.current != null) {
             //     TutorialManager.current.TextHit();
