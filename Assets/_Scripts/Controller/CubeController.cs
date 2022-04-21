@@ -204,7 +204,17 @@ public class CubeController : MonoBehaviour
     {
         roundPosition();
         SnapPoint.transform.position = currentNode.transform.position;
+
+        // change tile color 
         cubeColorControl.NewTileEnter(currentNode.TileInfo);
+        foreach (Edge edge in currentNode.Corners)
+        {
+            if (edge.isActive)
+            {
+                cubeColorControl.NewTileEnter(edge.neighbor.TileInfo);
+            }
+        }
+
     }
 
     private void roundPosition()

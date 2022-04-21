@@ -71,9 +71,12 @@ namespace TileSystem
             southNode = findColoredTileAtDirection(node, Direction.Backward, TileColor.green);
             eastNode = findColoredTileAtDirection(node, Direction.Right, TileColor.green);
             westNode = findColoredTileAtDirection(node, Direction.Left, TileColor.green);
+            
 
             if (northNode != null)
+            {
                 TileID += (int)BitmaskData.N;
+            }
             if (eastNode != null)
             {
                 TileID += (int)BitmaskData.E;
@@ -94,7 +97,7 @@ namespace TileSystem
             GameObject temp = Instantiate(Tile, node.transform.position, node.transform.rotation, environment);
 
 
-            Vector3 waterToCenter =  node.transform.position - node.transform.parent.parent.position;
+            //Vector3 waterToCenter =  node.transform.position - node.transform.parent.parent.position;
             //if (SpawnEnviiorment.instance != null)
             //    SpawnEnviiorment.instance.spawnTile(temp.transform, waterToCenter);
         }
@@ -170,22 +173,6 @@ namespace TileSystem
                 }
             }
             foreach (Edge e in currentNode.Edges)
-            {
-                if (e.isActive && e.direction == direction)
-                {
-                    if (e.neighbor.TileInfo.MapColor == color)
-                        return e.neighbor;
-                }
-            }
-            foreach (Edge e in currentNode.Corners)
-            {
-                if(e.isActive && e.direction == direction)
-                {
-                    if (e.neighbor.TileInfo.MapColor == color)
-                        return e.neighbor;
-                }
-            }
-            foreach (Edge e in currentNode.Siblings)
             {
                 if (e.isActive && e.direction == direction)
                 {
