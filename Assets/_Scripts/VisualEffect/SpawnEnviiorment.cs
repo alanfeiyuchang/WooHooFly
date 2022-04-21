@@ -12,14 +12,14 @@ public class SpawnEnviiorment : MonoBehaviour
         instance = this;
     }
     [SerializeField] public GameObject waterParent;
-    public GameObject waterPosIndicator;
+    //public GameObject waterPosIndicator;
     [SerializeField] private GameObject sand;
     [SerializeField] private GameObject grassTop;
-    public List<List<Transform>> water_pos_list = new List<List<Transform>>();
+    //public List<List<Transform>> water_pos_list = new List<List<Transform>>();
     private Transform river;
     void Start()
     {
-        DecomposeWaterPos();
+        //DecomposeWaterPos();
     }
 
     // Update is called once per frame
@@ -28,18 +28,18 @@ public class SpawnEnviiorment : MonoBehaviour
         
     }
 
-    private void DecomposeWaterPos()
-    {
-        water_pos_list.Clear();
-        foreach (Transform side in waterPosIndicator.transform){
-            List<Transform> sideCollection = new List<Transform>();
-            foreach (Transform waterTrans in side)
-            {
-                sideCollection.Add(waterTrans);
-            }
-            water_pos_list.Add(sideCollection);
-        }
-    }
+    //private void DecomposeWaterPos()
+    //{
+    //    water_pos_list.Clear();
+    //    foreach (Transform side in waterPosIndicator.transform){
+    //        List<Transform> sideCollection = new List<Transform>();
+    //        foreach (Transform waterTrans in side)
+    //        {
+    //            sideCollection.Add(waterTrans);
+    //        }
+    //        water_pos_list.Add(sideCollection);
+    //    }
+    //}
 
     public void spawnTile(Transform _tile, Vector3 waterCubeTrans)
     {
