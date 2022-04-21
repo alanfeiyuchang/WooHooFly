@@ -258,7 +258,7 @@ namespace WooHooFly.NodeSystem
                 // two node at same cube which is not traversable
                 if (this.transform.parent.parent == newNode.transform.parent.parent)
                 {
-                    Edge newEdge = new Edge { neighbor = newNode, isActive = true, direction = GetDirection(movingDirection) };
+                    Edge newEdge = new Edge { neighbor = newNode, isActive = true, direction = Direction.None };
                     siblings.Add(newEdge);
                     continue;
                 }
@@ -266,7 +266,7 @@ namespace WooHooFly.NodeSystem
                 // add to edges list if not already included and not excluded specifically
                 if (!HasCorner(newNode) && !excludedNodes.Contains(newNode))
                 {
-                    Edge newEdge = new Edge { neighbor = newNode, isActive = true, direction = GetDirection(movingDirection) };
+                    Edge newEdge = new Edge { neighbor = newNode, isActive = true, direction = Direction.None };
                     corners.Add(newEdge);
                 }
             }
