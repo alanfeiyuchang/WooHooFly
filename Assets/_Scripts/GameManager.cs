@@ -5,6 +5,7 @@ using UnityEngine;
 using WooHooFly.NodeSystem;
 using WooHooFly.Colors;
 using WooHooFly.NodeSystem;
+using TileSystem;
 
 #if ENABLE_CLOUD_SERVICES_ANALYTICS
 using UnityEngine.Analytics;
@@ -131,7 +132,7 @@ public class GameManager : MonoBehaviour
             levelData.levelStarData[MapTransition.instance.CurrentLevel - 1].StarCount(UIController.instance.StepCount);
     }
 
-    public bool CheckWin()
+    public bool CheckWin(GameObject finalMap)
     {
         LevelManager currentLevelManager = MapTransition.instance.GetCurrentLevel();
 
@@ -143,6 +144,19 @@ public class GameManager : MonoBehaviour
         else
         {
             Debug.Log("Win!! " + _pathFinder.FindPath(currentLevelManager.StartNode, currentLevelManager.FinishNode).Count.ToString());
+            WinGame();
+            if (finalMap != null)
+            {
+                finalMap.GetComponent<FinalTransition>().Begin();
+            }
+            if (RiverGenerator.instance != null)
+            {
+                RiverGenerator.instance.GenerateRealWorld();
+            }
+            if (DissolveTransition.instance != null)
+            {
+                DissolveTransition.instance.startDissolve(2f);
+            }
             return true;
         }
         

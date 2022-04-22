@@ -190,17 +190,38 @@ public class TutorialManager : MonoBehaviour
 
     // Show Arrow on Mapcube
     private void NextArrowPosition(GameObject mapCube){
-        Debug.Log("change to next postion");
+        // Debug.Log("change to next postion");
         if (_arrow != null)
             Destroy(_arrow);
 
-        GameObject arrow = Instantiate(Arrow, 
-                    new Vector3(0, 0, 0),
-                    Quaternion.Euler(new Vector3(0, 150, 90)));
-        
-        arrow.transform.parent = mapCube.transform;
-        _arrow = arrow; 
+        // GameObject arrow = Instantiate(Arrow, 
+        //             new Vector3(0, 0, 0),
+        //             Quaternion.Euler(new Vector3(0, 150, 90)));
+        GameObject arrow = Instantiate(Arrow);
+        arrow.transform.localRotation = Arrow.transform.localRotation;
+        GameObject arrow_container = new GameObject("arrow");
+       
+        arrow_container.transform.parent = mapCube.transform;
+        // Vector3 original = mapCube.transform.position;
+        arrow_container.transform.localPosition = new Vector3(0, 1.5f, 0);
+        arrow.transform.parent = arrow_container.transform;
 
+        _arrow = arrow_container; 
+    }
+
+    public void DeactiveArrow() {
+        if (_arrow != null)
+            _arrow.SetActive(false);
+            
+    }
+
+    public void RotateArrowOnRotation(float angle) {
+         if (_arrow != null) {
+            Vector3 original = _arrow.transform.localEulerAngles;
+            _arrow.transform.localEulerAngles = new Vector3(original.x, original.y-angle, original.z); 
+            _arrow.SetActive(true);
+         }
+        
     }
 
     private void StopArrow() {

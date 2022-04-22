@@ -216,6 +216,11 @@ public class CubeController : MonoBehaviour
             }
         }
 
+        // check win if current node is end node
+        if (currentNode.TileInfo.isFinishTile)
+        {
+            GameManager.instance.CheckWin(currentNode.TileInfo.finalMap);
+        }
     }
 
     private void roundPosition()

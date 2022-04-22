@@ -38,6 +38,8 @@ public class MapTransition : MonoBehaviour
     [SerializeField] private float DropTime = 1.5f;
     [Tooltip("How far each cube will drop")]
     [SerializeField] private float DropHeight = 5f;
+    [Tooltip("All the cameras")]
+    [SerializeField] private List<Camera> Cameras;
     public int LevelUnlocked = 1;
     [HideInInspector]
     public MouseRotation mouseRotation;
@@ -61,6 +63,7 @@ public class MapTransition : MonoBehaviour
             levelIndex++;
         }
         LevelList[CurrentLevel].gameObject.SetActive(true);
+        SetCameraSize(LevelList[CurrentLevel].CameraProjectionSize);
         if (LevelList[CurrentLevel].GetComponent<MouseRotation>() != null)
             mouseRotation = LevelList[CurrentLevel].GetComponent<MouseRotation>();
         if (LevelList[0].GetComponent<LevelSelectionManager>() != null)
@@ -73,6 +76,17 @@ public class MapTransition : MonoBehaviour
         {
             LevelTransition();
             
+        }
+    }
+
+    private void SetCameraSize(float size)
+    {
+        if (Cameras.Count == 0)
+            return;
+        foreach (Camera camera in Cameras)
+        {
+            if (camera != null)
+                camera.orthographicSize = size;
         }
     }
 
@@ -247,6 +261,7 @@ public class MapTransition : MonoBehaviour
             LevelList[0].GetComponent<LevelSelectionManager>().UpdateLevelSelection();
         }
         CurrentLevel = levelIndex;
+        SetCameraSize(LevelList[CurrentLevel].CameraProjectionSize);
         UIController.instance.StepCount = 0;
 
         //to map appears

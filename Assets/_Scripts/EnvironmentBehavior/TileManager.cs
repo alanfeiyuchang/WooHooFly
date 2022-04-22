@@ -16,6 +16,9 @@ public class TileManager : MonoBehaviour
     public Material Grey;
     public Material Blank;
     public bool isWaterFall;
+    public bool isFinishTile = false;
+    public GameObject finalMap;
+    
     // Start is called before the first frame update
     void Start()
     {

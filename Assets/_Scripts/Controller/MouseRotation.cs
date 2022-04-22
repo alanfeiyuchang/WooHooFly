@@ -19,7 +19,7 @@ public class MouseRotation : MonoBehaviour
     public RotationLink[] rotationLinks;
     public RotationLinker[] rotationLinksTransit;
     public RotationLinker[] rotationLinksCorner;
-    public UnityEvent rotationEvent;
+    public UnityEvent<float> rotationEvent;
 
     public static MouseRotation instance;
     private void Awake()
@@ -200,8 +200,8 @@ public class MouseRotation : MonoBehaviour
 
         nodeA.EnableTransitEdge(nodeB, state);
         nodeB.EnableTransitEdge(nodeA, state);
-        if (state)
-            MapTransition.instance?.GetCurrentCubeControllerScript().FindAccessibleNode();
+        // if (state)
+        //     MapTransition.instance?.GetCurrentCubeControllerScript().FindAccessibleNode();
     }
 
     private void EnableCornerLink(Node nodeA, Node nodeB, bool state)
@@ -288,6 +288,7 @@ public class MouseRotation : MonoBehaviour
     {
         Debug.Log(angle);
         GameManager.instance.CurrentState = GameManager.GameState.rotating;
+        TutorialManager.current?.DeactiveArrow();
         float t = 0;
         Vector3 startAngleY = transform.eulerAngles;
         Vector3 endAngle = transform.eulerAngles;
@@ -309,6 +310,6 @@ public class MouseRotation : MonoBehaviour
         UpdateLinkers(Mathf.RoundToInt(transform.eulerAngles.y));
 
         if (rotationEvent != null)
-            rotationEvent.Invoke();
+            rotationEvent.Invoke(angle); // need to tell rotation direction
     }
 }

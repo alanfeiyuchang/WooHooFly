@@ -8,7 +8,7 @@ public class GoalReached : MonoBehaviour
     private bool touched = false;
     public GameObject finalMap;
 
-    private void OnTriggerEnter(Collider other)
+    /*private void OnTriggerEnter(Collider other)
     {
         Debug.Log("touched: " + touched + " collider: " + other.tag + " win: "+ GameManager.instance.CheckWin());
         if (!touched && other.CompareTag("Player") && GameManager.instance.CheckWin())
@@ -29,5 +29,5 @@ public class GoalReached : MonoBehaviour
             touched = true;
         }
         
-    }
+    }*/
 }

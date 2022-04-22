@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using WooHooFly.Colors;
 using Bitgem.VFX.StylisedWater;
+using TileSystem;
 public class DissolveTransition : MonoBehaviour
 {
     public static DissolveTransition instance;
@@ -32,7 +33,7 @@ public class DissolveTransition : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            //startDissolve(dissolveTime);
+            startDissolve(dissolveTime);
         }
     }
     private void OnApplicationQuit()
@@ -53,6 +54,15 @@ public class DissolveTransition : MonoBehaviour
         brownDissolve.SetFloat("_AlphaThreshold", 1);
         greyDissolve.SetFloat("_AlphaThreshold", 1);
     }
+    public void spawnGround()
+    {
+        mapCube = MapTransition.instance.GetCurrentLevel().MapCubes;
+        foreach (GameObject cube in mapCube)
+        {
+            MapCubeManager manager = cube.GetComponent<MapCubeManager>();
+            SpawnEnviiorment.instance.spawnSand(cube.transform.position);
+        }
+    }
     public void startDissolve(float time)
     {
         StartCoroutine(dissolve(time));
@@ -60,22 +70,7 @@ public class DissolveTransition : MonoBehaviour
     private IEnumerator dissolve(float time)
     {
         float timeCount = time;
-        foreach (GameObject cube in mapCube)
-        {
-            MapCubeManager manager = cube.GetComponent<MapCubeManager>();
-            SpawnEnviiorment.instance.spawnSand(cube.transform.position);
-            if (manager.sideAColor == TileColor.green || manager.sideBColor == TileColor.green ||
-                manager.sideCColor == TileColor.green || manager.sideDColor == TileColor.green ||
-                manager.sideEColor == TileColor.green || manager.sideFColor == TileColor.green)
-            {
-                //SpawnEnviiorment.instanace.spawnWater(cube.transform.position);
-                //SpawnEnviiorment.instanace.spawnWater(cube.transform.position);
-            }
-            else
-            {
-                //SpawnEnviiorment.instanace.spawnGrass(cube.transform.position);
-            }
-        }
+        
         //SpawnEnviiorment.instanace.spawnWater(mapCube[0].transform.position);
         //SpawnEnviiorment.instanace.waterParent.transform.localScale = new Vector3(1, 0.1f, 1);
         while (timeCount >= 0)
