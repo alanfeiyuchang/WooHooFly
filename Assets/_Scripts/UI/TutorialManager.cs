@@ -207,12 +207,12 @@ public class TutorialManager : MonoBehaviour
         arrow.transform.parent = arrow_container.transform;
 
         _arrow = arrow_container; 
-
     }
 
     public void DeactiveArrow() {
         if (_arrow != null)
             _arrow.SetActive(false);
+            
     }
 
     public void RotateArrowOnRotation(float angle) {
