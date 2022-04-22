@@ -4637,17 +4637,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7201661bff449e74db9fdff6c1c56d67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &995891006 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2804032476819892680, guid: d23704dd385b6854db61283c5f3af831, type: 3}
-  m_PrefabInstance: {fileID: 1010753487}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7201661bff449e74db9fdff6c1c56d67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1010753487
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5429,6 +5418,14 @@ PrefabInstance:
     - target: {fileID: 8020617390797124219, guid: 5868a720dbfa1764484f1e1c35334f70, type: 3}
       propertyPath: m_Name
       value: Node_start
+      objectReference: {fileID: 0}
+    - target: {fileID: 8020617391387419914, guid: 5868a720dbfa1764484f1e1c35334f70, type: 3}
+      propertyPath: transits.Array.data[0].isActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8020617391908984538, guid: 5868a720dbfa1764484f1e1c35334f70, type: 3}
+      propertyPath: transits.Array.data[0].isActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5868a720dbfa1764484f1e1c35334f70, type: 3}
@@ -8446,8 +8443,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 267e45855182d49a1a0854b5ecf6d31d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startNode: {fileID: 2011806648}
-  destinationNode: {fileID: 995891006}
+  startNode: {fileID: 1942319527}
+  destinationNode: {fileID: 1821802739}
   searchOnStart: 1
 --- !u!114 &1557166533
 MonoBehaviour:
@@ -10202,6 +10199,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
+--- !u!114 &1821802739 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8020617391908984538, guid: 5868a720dbfa1764484f1e1c35334f70, type: 3}
+  m_PrefabInstance: {fileID: 1030442263}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7201661bff449e74db9fdff6c1c56d67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1822190126 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6561368207878385966, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
@@ -10830,6 +10838,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1261258185344848933, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
   m_PrefabInstance: {fileID: 1317008914}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1942319527 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8020617391838998294, guid: 5868a720dbfa1764484f1e1c35334f70, type: 3}
+  m_PrefabInstance: {fileID: 1030442263}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7201661bff449e74db9fdff6c1c56d67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1944315215 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1261258185344848921, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
@@ -11064,17 +11083,6 @@ PrefabInstance:
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8396584670387778564, guid: 18e0edaac020d4c4abf48ec29c17e625, type: 3}
   m_PrefabInstance: {fileID: 942473773}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7201661bff449e74db9fdff6c1c56d67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2011806648 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 25258485466377330, guid: d23704dd385b6854db61283c5f3af831, type: 3}
-  m_PrefabInstance: {fileID: 1010753487}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -11729,7 +11737,7 @@ PrefabInstance:
       objectReference: {fileID: 1557166530}
     - target: {fileID: 186178671, guid: 6a4d9fab7a7ba43479e94e429f5f4944, type: 3}
       propertyPath: CurrentLevel
-      value: 8
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 186178671, guid: 6a4d9fab7a7ba43479e94e429f5f4944, type: 3}
       propertyPath: LevelList.Array.size
