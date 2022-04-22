@@ -110,6 +110,7 @@ namespace WooHooFly.NodeSystem
         {
             Node cornerNode;
             Node impossibleNode;
+            Node neighborNode;
             if (node == null)
             {
                 return;
@@ -131,31 +132,48 @@ namespace WooHooFly.NodeSystem
                 // create PreviousNode breadcrumb trail if Edge is active
                 if (node.Edges[i].isActive && node.Edges[i].neighbor != null)
                 {
-  
-                    if (node.Edges[i].neighbor.TileInfo.MapColor == node.TileInfo.MapColor)
+                    // start and destination node ignore color
+                    if (node == startNode || node == destinationNode)
                     {
                         // add neighbor Nodes to frontier Nodes
                         node.Edges[i].neighbor.PreviousNode = node;
                         frontierNodes.Add(node.Edges[i].neighbor);
                     }
+                    // not start or destination node
+                    else 
+                    {
+                        neighborNode = node.Edges[i].neighbor;
 
-                }
-                foreach (Direction direction in directionList){
-                    cornerNode = findColoredTileAtCorner(node, direction, node.TileInfo.MapColor);
-                    if (cornerNode != null){
-                        cornerNode.PreviousNode = node;
-                        frontierNodes.Add(cornerNode);
-
+                        // neighbor is dest then ignore color
+                        if (neighborNode == destinationNode){
+                            node.Edges[i].neighbor.PreviousNode = node;
+                            frontierNodes.Add(node.Edges[i].neighbor);
+                        }
+                        // normal node consider color
+                        else if (neighborNode.TileInfo.MapColor == node.TileInfo.MapColor)
+                        {
+                            node.Edges[i].neighbor.PreviousNode = node;
+                            frontierNodes.Add(node.Edges[i].neighbor);
+                        }
                     }
                     
-        
-                }
-                impossibleNode = findImpossilbleNode(node, node.TileInfo.MapColor);
-                if (impossibleNode != null){
-                    impossibleNode.PreviousNode = node;
-                    frontierNodes.Add(impossibleNode);
+
                 }
                 
+            }
+            foreach (Direction direction in directionList){
+                cornerNode = findColoredTileAtCorner(node, direction, node.TileInfo.MapColor);
+                if (cornerNode != null){
+                    cornerNode.PreviousNode = node;
+                    frontierNodes.Add(cornerNode);
+                }
+                    
+        
+            }
+            impossibleNode = findImpossilbleNode(node, node.TileInfo.MapColor);
+            if (impossibleNode != null){
+                impossibleNode.PreviousNode = node;
+                frontierNodes.Add(impossibleNode);
             }
         }
 
@@ -167,10 +185,18 @@ namespace WooHooFly.NodeSystem
 
                 if (e.isActive){
                     impossibleNode = e.neighbor;
-                    Debug.Log(impossibleNode);
-                    if (impossibleNode.TileInfo.MapColor == color){
+                    if (currentNode == startNode || currentNode == destinationNode){
                         return impossibleNode;
                     }
+                    else{
+                        if (impossibleNode == destinationNode){
+                            return impossibleNode;
+                        }
+                        else if (impossibleNode.TileInfo.MapColor == color){
+                            return impossibleNode;
+                        }
+                    }
+
                 }
                 Debug.Log(e.isActive);
             }
@@ -183,40 +209,124 @@ namespace WooHooFly.NodeSystem
             {
                 case Direction.Forward:
                     cornerNode = graph?.FindNodeAt(currentNode.transform.position + currentNode.transform.forward / 2 + currentNode.transform.up / 2);
-                    if (cornerNode != null && cornerNode.TileInfo.MapColor == color)
-                        return cornerNode;
+                    if (cornerNode != null){
+                        if (currentNode == startNode || currentNode == destinationNode){   
+                            return cornerNode;
+                        }
+                        else{
+                            if(cornerNode == destinationNode){
+                               return cornerNode;
+                            }
+                            else if (cornerNode.TileInfo.MapColor == color){
+                                return cornerNode;
+                            }      
+                        }
+                    }
                     cornerNode = graph?.FindNodeAt(currentNode.transform.position + currentNode.transform.forward / 2 - currentNode.transform.up / 2);
-                    if (cornerNode != null && cornerNode.TileInfo.MapColor == color)
-                        return cornerNode;
+                    if (cornerNode != null){
+                        if (currentNode == startNode || currentNode == destinationNode){   
+                            return cornerNode;
+                        }
+                        else{
+                            if(cornerNode == destinationNode){
+                               return cornerNode;
+                            }
+                            else if (cornerNode.TileInfo.MapColor == color){
+                                return cornerNode;
+                            }      
+                        }
+                    }
                     break;
                 case Direction.Backward:
                     cornerNode = graph?.FindNodeAt(currentNode.transform.position - currentNode.transform.forward / 2 + currentNode.transform.up / 2);
-                    if (cornerNode != null && cornerNode.TileInfo.MapColor == color)
-                        return cornerNode;
+                    if (cornerNode != null){
+                        if (currentNode == startNode || currentNode == destinationNode){   
+                            return cornerNode;
+                        }
+                        else{
+                            if(cornerNode == destinationNode){
+                               return cornerNode;
+                            }
+                            else if (cornerNode.TileInfo.MapColor == color){
+                                return cornerNode;
+                            }      
+                        }
+                    }
                     cornerNode = graph?.FindNodeAt(currentNode.transform.position - currentNode.transform.forward / 2 - currentNode.transform.up / 2);
-                    if (cornerNode != null && cornerNode.TileInfo.MapColor == color)
-                        return cornerNode;
+                    if (cornerNode != null){
+                        if (currentNode == startNode || currentNode == destinationNode){   
+                            return cornerNode;
+                        }
+                        else{
+                            if(cornerNode == destinationNode){
+                               return cornerNode;
+                            }
+                            else if (cornerNode.TileInfo.MapColor == color){
+                                return cornerNode;
+                            }      
+                        }
+                    }
                     break;
                 case Direction.Left:
                     cornerNode = graph?.FindNodeAt(currentNode.transform.position - currentNode.transform.right / 2 + currentNode.transform.up / 2);
-                    if (cornerNode != null && cornerNode.TileInfo.MapColor == color)
-                        return cornerNode;
+                    if (cornerNode != null){
+                        if (currentNode == startNode || currentNode == destinationNode){   
+                            return cornerNode;
+                        }
+                        else{
+                            if(cornerNode == destinationNode){
+                               return cornerNode;
+                            }
+                            else if (cornerNode.TileInfo.MapColor == color){
+                                return cornerNode;
+                            }      
+                        }
+                    }
                     cornerNode = graph?.FindNodeAt(currentNode.transform.position - currentNode.transform.right / 2 - currentNode.transform.up / 2);
-                    if (cornerNode != null && cornerNode.TileInfo.MapColor == color)
-                        return cornerNode;
+                    if (cornerNode != null){
+                        if (currentNode == startNode || currentNode == destinationNode){   
+                            return cornerNode;
+                        }
+                        else{
+                            if(cornerNode == destinationNode){
+                               return cornerNode;
+                            }
+                            else if (cornerNode.TileInfo.MapColor == color){
+                                return cornerNode;
+                            }      
+                        }
+                    }
                     break;
                 case Direction.Right:
                     cornerNode = graph?.FindNodeAt(currentNode.transform.position + currentNode.transform.right / 2 + currentNode.transform.up / 2);
-                    if (cornerNode != null && cornerNode.TileInfo.MapColor == color){
-
-                        Debug.Log(color);
-                        Debug.Log(cornerNode.TileInfo.MapColor == color);
-                        return cornerNode;
+                    if (cornerNode != null){
+                        if (currentNode == startNode || currentNode == destinationNode){   
+                            return cornerNode;
+                        }
+                        else{
+                            if(cornerNode == destinationNode){
+                               return cornerNode;
+                            }
+                            else if (cornerNode.TileInfo.MapColor == color){
+                                return cornerNode;
+                            }      
+                        }
                     }
 
                     cornerNode = graph?.FindNodeAt(currentNode.transform.position + currentNode.transform.right / 2 - currentNode.transform.up / 2);
-                    if (cornerNode != null && cornerNode.TileInfo.MapColor == color)
-                        return cornerNode;
+                    if (cornerNode != null){
+                        if (currentNode == startNode || currentNode == destinationNode){   
+                            return cornerNode;
+                        }
+                        else{
+                            if(cornerNode == destinationNode){
+                               return cornerNode;
+                            }
+                            else if (cornerNode.TileInfo.MapColor == color){
+                                return cornerNode;
+                            }      
+                        }
+                    }
                     break;
                 default:
                     break;
