@@ -56,21 +56,21 @@ namespace TileSystem
             foreach (Node node in nodes)
             {
                 
-                if(node.TileInfo.MapColor == TileColor.green && !node.TileInfo.isWaterFall)
-                    GenerateRiver(node);
-                else if(node.TileInfo.MapColor == TileColor.green && node.TileInfo.isWaterFall)
-                    GenerateWaterFall(node);
+                if(!node.TileInfo.isWaterFall)
+                    GenerateRiver(node, node.TileInfo.MapColor);
+                else if(node.TileInfo.isWaterFall)
+                    GenerateWaterFall(node, node.TileInfo.MapColor);
             }
 
         }
 
-        private void GenerateWaterFall(Node node)
+        private void GenerateWaterFall(Node node, TileColor color)
         {
             int TileID = 0;
-            northNode = findColoredTileAtDirection(node, Direction.Forward, TileColor.green);
-            southNode = findColoredTileAtDirection(node, Direction.Backward, TileColor.green);
-            eastNode = findColoredTileAtDirection(node, Direction.Right, TileColor.green);
-            westNode = findColoredTileAtDirection(node, Direction.Left, TileColor.green);
+            northNode = findColoredTileAtDirection(node, Direction.Forward, color);
+            southNode = findColoredTileAtDirection(node, Direction.Backward, color);
+            eastNode = findColoredTileAtDirection(node, Direction.Right, color);
+            westNode = findColoredTileAtDirection(node, Direction.Left, color);
             
 
             if (northNode != null)
@@ -93,21 +93,33 @@ namespace TileSystem
             }
             TileID += (int)BitmaskData.S;
 
-            GameObject Tile = Resources.Load<GameObject>("TileSet/WaterFallTiles/WaterFall_Tile" + TileID);
-            GameObject temp = Instantiate(Tile, node.transform.position, node.transform.rotation, environment);
+            if(color == TileColor.green)
+            {
+                GameObject Tile = Resources.Load<GameObject>("TileSet/WaterFallTiles/WaterFall_Tile" + TileID);
+                GameObject temp = Instantiate(Tile, node.transform.position, node.transform.rotation, environment);
+            }
+            else if(color == TileColor.red)
+            {
+                GameObject Tile = Resources.Load<GameObject>("TileSet/LavaFallTiles/LavaFallTile_Tile" + TileID);
+                GameObject temp = Instantiate(Tile, node.transform.position, node.transform.rotation, environment);
+            }
+            else
+            {
+                //SpawnEnviiorment.instance.spawnGround(node.transform);
+            }
 
 
             //Vector3 waterToCenter =  node.transform.position - node.transform.parent.parent.position;
             //if (SpawnEnviiorment.instance != null)
             //    SpawnEnviiorment.instance.spawnTile(temp.transform, waterToCenter);
         }
-        private void GenerateRiver(Node node)
+        private void GenerateRiver(Node node, TileColor color)
         {
             int TileID = 0;
-            northNode = findColoredTileAtDirection(node, Direction.Forward, TileColor.green);
-            southNode = findColoredTileAtDirection(node, Direction.Backward, TileColor.green);
-            eastNode = findColoredTileAtDirection(node, Direction.Right, TileColor.green);
-            westNode = findColoredTileAtDirection(node, Direction.Left, TileColor.green);
+            northNode = findColoredTileAtDirection(node, Direction.Forward, color);
+            southNode = findColoredTileAtDirection(node, Direction.Backward, color);
+            eastNode = findColoredTileAtDirection(node, Direction.Right, color);
+            westNode = findColoredTileAtDirection(node, Direction.Left, color);
 
             if (northNode != null)
                 TileID += (int)BitmaskData.N;
@@ -119,23 +131,36 @@ namespace TileSystem
                 TileID += (int)BitmaskData.W;
 
 
-            if (findColoredTileAtDirection(northNode, Direction.Right, TileColor.green) != null
-                && findColoredTileAtDirection(eastNode, Direction.Forward, TileColor.green) != null)
+            if (findColoredTileAtDirection(northNode, Direction.Right, color) != null
+                && findColoredTileAtDirection(eastNode, Direction.Forward, color) != null)
                 TileID += (int)BitmaskData.NE;
-            if (findColoredTileAtDirection(northNode, Direction.Left, TileColor.green) != null
-                && findColoredTileAtDirection(westNode, Direction.Forward, TileColor.green) != null)
+            if (findColoredTileAtDirection(northNode, Direction.Left, color) != null
+                && findColoredTileAtDirection(westNode, Direction.Forward, color) != null)
                 TileID += (int)BitmaskData.NW;
-            if (findColoredTileAtDirection(southNode, Direction.Right, TileColor.green) != null
-                && findColoredTileAtDirection(eastNode, Direction.Backward, TileColor.green) != null)
+            if (findColoredTileAtDirection(southNode, Direction.Right, color) != null
+                && findColoredTileAtDirection(eastNode, Direction.Backward, color) != null)
                 TileID += (int)BitmaskData.SE;
-            if (findColoredTileAtDirection(southNode, Direction.Left, TileColor.green) != null
-                && findColoredTileAtDirection(westNode, Direction.Backward, TileColor.green) != null)
+            if (findColoredTileAtDirection(southNode, Direction.Left, color) != null
+                && findColoredTileAtDirection(westNode, Direction.Backward, color) != null)
                 TileID += (int)BitmaskData.SW;
-
-            GameObject Tile = Resources.Load<GameObject>("TileSet/RiverTiles/River_Tile" + TileID);
-            GameObject temp = Instantiate(Tile, node.transform.position, node.transform.rotation, environment);
-
-            Vector3 waterToCenter = node.transform.position - node.transform.parent.parent.position;
+            GameObject Tile;
+            if(color == TileColor.green)
+            {
+                Tile = Resources.Load<GameObject>("TileSet/RiverTiles/River_Tile" + TileID);
+                GameObject temp = Instantiate(Tile, node.transform.position, node.transform.rotation, environment);
+                Vector3 waterToCenter = node.transform.position - node.transform.parent.parent.position;
+            }
+            else if(color == TileColor.red)
+            {
+                Tile = Resources.Load<GameObject>("TileSet/LavaTiles/LavaTile_Tile" + TileID);
+                GameObject temp = Instantiate(Tile, node.transform.position, node.transform.rotation, environment);
+                Vector3 waterToCenter = node.transform.position - node.transform.parent.parent.position;
+            }
+            else
+            {
+                //white tiles become ground?
+                //SpawnEnviiorment.instance.spawnGround(node.transform);
+            }
             //if(SpawnEnviiorment.instance != null)
             //    SpawnEnviiorment.instance.spawnTile(temp.transform, waterToCenter);
         }
