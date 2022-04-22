@@ -11,9 +11,9 @@ public class LevelManager : MonoBehaviour
     public float CameraProjectionSize = 6f;
     [HideInInspector]
     public GameObject Dummy;
-    [Header("Finish requirements")]
+    /*[Header("Finish requirements")]
     public List<GameObject> FinishCubes;
-    public List<float> FinishAngles;
+    public List<float> FinishAngles;*/
     public Node StartNode;
     public Node FinishNode;
 
