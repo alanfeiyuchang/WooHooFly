@@ -81,9 +81,12 @@ public class MapTransition : MonoBehaviour
 
     private void SetCameraSize(float size)
     {
+        if (Cameras.Count == 0)
+            return;
         foreach (Camera camera in Cameras)
         {
-            camera.orthographicSize = size;
+            if (camera != null)
+                camera.orthographicSize = size;
         }
     }
 
