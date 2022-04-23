@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
     private bool levelComplete = false;
     
     [HideInInspector]
-    public Direction levelDirection = Direction.None;
+    //public Direction levelDirection = Direction.None;
     public enum GameState
     {
         starting,

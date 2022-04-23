@@ -21,8 +21,12 @@ public class CubeController : MonoBehaviour
     public GameObject SnapPoint;
     public float speed = 500;
     public UnityEvent RotationEvent;
+    public UnityEvent BeforeRotateEvent;
+    public UnityEvent AfterRotateEvent;
     protected AudioSource RollMusic;
     public Queue<Node> movingPath;
+    [HideInInspector]
+    public Node CurrentNode { get { return currentNode;}  set{ CurrentNode = currentNode; } }
     private void Awake()
     {
         graph = FindObjectOfType<Graph>();
@@ -111,7 +115,7 @@ public class CubeController : MonoBehaviour
 
     private void RollAtDirection(Direction direction)
     {
-        movingInfo = currentNode.FindNodesAtDirection(direction, GameManager.instance.levelDirection);
+        //movingInfo = currentNode.FindNodesAtDirection(direction, GameManager.instance.levelDirection);
         //Rolling();
     }
     #endregion
@@ -165,6 +169,9 @@ public class CubeController : MonoBehaviour
         isMoving = true;
         firstRotate = false;
         GameManager.instance.CurrentState = GameManager.GameState.rotating;
+        currentNode = movingInfo.endNode;
+
+        BeforeRotateEvent.Invoke();
 
         while (remainingAngle > 0)
         {
@@ -182,9 +189,9 @@ public class CubeController : MonoBehaviour
         }
 
         GameManager.instance.CurrentState = GameManager.GameState.playing;
+        AfterRotateEvent.Invoke();
         isMoving = false;
 
-        currentNode = movingInfo.endNode;
         // [Analytics] increment current node visit count
         currentNode.VisitNode();
 

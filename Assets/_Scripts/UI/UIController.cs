@@ -286,7 +286,6 @@ public class UIController : MonoBehaviour
     {
         if (MapTransition.instance.mouseRotation != null)
         {
-            Debug.Log(MapTransition.instance.mouseRotation.name);
             MapTransition.instance.mouseRotation.RotateMapCW();
             ArrowMusic.Play();
         }
@@ -296,7 +295,6 @@ public class UIController : MonoBehaviour
     {
         if (MapTransition.instance.mouseRotation != null)
         {
-            Debug.Log(MapTransition.instance.mouseRotation.name);
             MapTransition.instance.mouseRotation.RotateMapCCW();
             ArrowMusic.Play();
         }

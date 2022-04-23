@@ -16,7 +16,7 @@ public class MouseRotation : MonoBehaviour
     [SerializeField] private Transform Axis;
 
     //public bool enableMouseRotation;
-    public RotationLink[] rotationLinks;
+    //public RotationLink[] rotationLinks;
     public RotationLinker[] rotationLinksTransit;
     public RotationLinker[] rotationLinksCorner;
     public UnityEvent<float> rotationEvent;
@@ -29,13 +29,13 @@ public class MouseRotation : MonoBehaviour
     private void Start()
     {
         targetAngle = transform.eulerAngles;
-        UpdateOrientation(targetAngle.y);
+        //UpdateOrientation(targetAngle.y);
         UpdateLinkers(Mathf.RoundToInt(transform.eulerAngles.y));
     }
 
     private void OnEnable()
     {
-        UpdateOrientation(targetAngle.y);
+        //UpdateOrientation(targetAngle.y);
         UpdateLinkers(Mathf.RoundToInt(transform.eulerAngles.y));
     }
 
@@ -51,105 +51,85 @@ public class MouseRotation : MonoBehaviour
 
         if (GameManager.instance.CurrentState != GameManager.GameState.playing)
             return;
-        //rotationAngle = Compass.transform.up * angle;
         rotationAngle = this.transform.up * rotateAngle;
-        /*if (Input.GetAxis("Mouse ScrollWheel") != 0)
-        {
-            targetAngle = Input.GetAxis("Mouse ScrollWheel") * rotationAngle * 10;
-            //transform.eulerAngles = clampAngle(targetAngle);
-            transform.RotateAround(Axis.position, Vector3.up, targetAngle.y);
-            //StartCoroutine(RotateMap(Compass.transform.up, angle));
-
-            //float angle = Vector3.Angle(this.transform.forward, Vector3.forward);
-            //float angle2 = Vector3.Angle(this.transform.forward, Vector3.right);
-            //currentAngle = (angle2 > 90) ? 360 - angle : angle;
-
-            UpdateOrientation(Mathf.RoundToInt(transform.eulerAngles.y));
-            UpdateLinkersOld(Mathf.RoundToInt(transform.eulerAngles.y));
-            UpdateLinkers(Mathf.RoundToInt(transform.eulerAngles.y));
-
-
-            if (rotationEvent != null)
-                rotationEvent.Invoke();
-        }*/
 
     }
 
     // How the whole level is rotated related to world axis
-    private void UpdateOrientation(float angle)
-    {
-        if (GameManager.instance == null)
-            return;
-        if (angle > 0 && angle <= 90)
-        {
-            GameManager.instance.levelDirection = Direction.Right;
-        }
-        else if (angle > 90 && angle <= 180)
-        {
-            GameManager.instance.levelDirection = Direction.Backward;
-        }
-        else if (angle > 180 && angle <= 270)
-        {
-            GameManager.instance.levelDirection = Direction.Left;
-        }
-        else if (angle > 270 && angle < 360 || angle == 0)
-        {
-            GameManager.instance.levelDirection = Direction.Forward;
-        }
-    }
+    //private void UpdateOrientation(float angle)
+    //{
+    //    if (GameManager.instance == null)
+    //        return;
+    //    if (angle > 0 && angle <= 90)
+    //    {
+    //        GameManager.instance.levelDirection = Direction.Right;
+    //    }
+    //    else if (angle > 90 && angle <= 180)
+    //    {
+    //        GameManager.instance.levelDirection = Direction.Backward;
+    //    }
+    //    else if (angle > 180 && angle <= 270)
+    //    {
+    //        GameManager.instance.levelDirection = Direction.Left;
+    //    }
+    //    else if (angle > 270 && angle < 360 || angle == 0)
+    //    {
+    //        GameManager.instance.levelDirection = Direction.Forward;
+    //    }
+    //}
 
     /// <summary>
     /// Enable/Disable linker when rotate to certain angle
     /// </summary>
     /// <param name="angle"></param>
-    private void UpdateLinkersOld (float angle)
-    {
-        foreach(RotationLink link in rotationLinks)
-        {
-            if(link.checkNodeATransform == null && link.checkNodeBTransform == null)
-            {
-                if (angle == link.activeAngle)
-                {
-                    EnableLink(link.nodeA, link.nodeB, true);
-                }
-                else
-                {
-                    EnableLink(link.nodeA, link.nodeB, false);
-                }
-            }
-            else
-            {
-                if (link.checkNodeATransform != null)
-                {
-                    if(link.checkNodeATransform.transform.localPosition == link.transform)
-                    {
-                        if (angle == link.activeAngle)
-                        {
-                            EnableLink(link.nodeA, link.nodeB, true);
-                        }
-                        else
-                        {
-                            EnableLink(link.nodeA, link.nodeB, false);
-                        }
-                    }   
-                }
-                else if (link.checkNodeBTransform != null)
-                {
-                    if (link.checkNodeBTransform.transform.localPosition == link.transform)
-                    {
-                        if (angle == link.activeAngle)
-                        {
-                            EnableLink(link.nodeA, link.nodeB, true);
-                        }
-                        else
-                        {
-                            EnableLink(link.nodeA, link.nodeB, false);
-                        }
-                    }
-                }
-            }
-        }
-    }
+    //private void UpdateLinkersOld (float angle)
+    //{
+    //    foreach(RotationLink link in rotationLinks)
+    //    {
+    //        if(link.checkNodeATransform == null && link.checkNodeBTransform == null)
+    //        {
+    //            if (angle == link.activeAngle)
+    //            {
+    //                EnableLink(link.nodeA, link.nodeB, true);
+    //            }
+    //            else
+    //            {
+    //                EnableLink(link.nodeA, link.nodeB, false);
+    //            }
+    //        }
+    //        else
+    //        {
+    //            if (link.checkNodeATransform != null)
+    //            {
+    //                if(link.checkNodeATransform.transform.localPosition == link.transform)
+    //                {
+    //                    if (angle == link.activeAngle)
+    //                    {
+    //                        EnableLink(link.nodeA, link.nodeB, true);
+    //                    }
+    //                    else
+    //                    {
+    //                        EnableLink(link.nodeA, link.nodeB, false);
+    //                    }
+    //                }   
+    //            }
+    //            else if (link.checkNodeBTransform != null)
+    //            {
+    //                if (link.checkNodeBTransform.transform.localPosition == link.transform)
+    //                {
+    //                    if (angle == link.activeAngle)
+    //                    {
+    //                        EnableLink(link.nodeA, link.nodeB, true);
+    //                    }
+    //                    else
+    //                    {
+    //                        EnableLink(link.nodeA, link.nodeB, false);
+    //                    }
+    //                }
+    //            }
+    //        }
+    //    }
+    //}
 
     private void EnableLink(Node nodeA, Node nodeB, bool state)
     {
@@ -305,11 +285,12 @@ public class MouseRotation : MonoBehaviour
         transform.eulerAngles = endAngle;
         GameManager.instance.CurrentState = GameManager.GameState.playing;
 
-        UpdateOrientation(Mathf.RoundToInt(transform.eulerAngles.y));
-        UpdateLinkersOld(Mathf.RoundToInt(transform.eulerAngles.y));
+        //UpdateOrientation(Mathf.RoundToInt(transform.eulerAngles.y));
+        //UpdateLinkersOld(Mathf.RoundToInt(transform.eulerAngles.y));
         UpdateLinkers(Mathf.RoundToInt(transform.eulerAngles.y));
 
         if (rotationEvent != null)
             rotationEvent.Invoke(angle); // need to tell rotation direction
     }
+
 }

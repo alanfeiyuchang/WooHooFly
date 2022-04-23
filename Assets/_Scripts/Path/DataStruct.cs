@@ -83,4 +83,14 @@ namespace WooHooFly.NodeSystem
 
     }
 
+    [System.Serializable]
+    public class Cover
+    {
+        public float angle;
+        [Tooltip("Change Stack before enter Node")]
+        public List<Node> ActiveCoverNodesBefore;
+        [Tooltip("Change Stack after enter Node")]
+        public List<Node> ActiveCoverNodesAfter;
+    }
+
 }
