@@ -56,7 +56,7 @@ public class UIController : MonoBehaviour
     public AudioSource HomeButtonMusic;
     public AudioSource NextButtonMusic;
     public AudioSource restartButtonMusic;
-
+    public AudioClip[] music;
     [SerializeField] private Sprite _musicOn;
     [SerializeField] private Sprite _musicOff;
     [SerializeField] private Sprite _sfxOn;
@@ -142,6 +142,8 @@ public class UIController : MonoBehaviour
 
     private void Start()
     {
+        GameObject GameManager = GameObject.Find("GameManager");
+        BGM = GameManager.GetComponent<AudioSource>();
         // Disable user control
         //MapTransition.instance.DisableController();
 
@@ -203,6 +205,8 @@ public class UIController : MonoBehaviour
     {
         HomeButtonMusic.Play();
         CloseMenu();
+        BGM.clip = music[0];
+        BGM.Play();
         InGamePanel.SetActive(true);
         MapTransition.instance.SelectLevel();
     }
@@ -211,12 +215,16 @@ public class UIController : MonoBehaviour
     {
         NextButtonMusic.Play();
         CloseMenu();
+        BGM.clip = music[0];
+        BGM.Play();
         MapTransition.instance.LevelTransition();
     }
     public void RestartButtonPressed()
     {
         restartButtonMusic.Play();
         CloseMenu();
+        BGM.clip = music[0];
+        BGM.Play();
         stepCounterActive = true;
         InGamePanel.SetActive(true);
         // if player did not complete the level, record analytics data
@@ -329,8 +337,7 @@ public class UIController : MonoBehaviour
     }
     public void muteBGM()
     {
-        GameObject GameManager = GameObject.Find("GameManager");
-        BGM = GameManager.GetComponent<AudioSource>();
+        
         if (BGM.isPlaying)
         {
             BGM.Stop();

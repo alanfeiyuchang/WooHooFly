@@ -14,6 +14,9 @@ using UnityEngine.Analytics;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    public AudioClip[] music;
+    private AudioSource BGM;
+
     private void Awake()
     {
         instance = this;
@@ -78,6 +81,9 @@ public class GameManager : MonoBehaviour
 
     public void WinGame()
     {
+        BGM = this.GetComponent<AudioSource>();
+        BGM.clip = music[1];
+        BGM.Play();
         CurrentState = GameState.win;
         Debug.Log("***************WON***************");
         UIController.instance.WinUI();
