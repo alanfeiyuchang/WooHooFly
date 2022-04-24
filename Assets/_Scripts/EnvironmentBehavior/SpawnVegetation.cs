@@ -81,7 +81,7 @@ public class SpawnVegetation : MonoBehaviour
             }         
             // this position does not spawn a tree
             else {
-                Debug.Log("no tree");
+                // Debug.Log("no tree");
                 GameObject flower = flowers[0];
                 Vector3 pos = new Vector3(0,-0.15f,0);
                 GameObject x = Instantiate(flower, Vector3.zero, flower.transform.rotation);
