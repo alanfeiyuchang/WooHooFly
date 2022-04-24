@@ -260,6 +260,14 @@ public class MapTransition : MonoBehaviour
         _toLevel.gameObject.SetActive(true);
         mouseRotation = _toLevel.GetComponent<MouseRotation>();
 
+        // turn on all the sealed material
+        if (GameManager.instance.SealedMaterial != null)
+        {
+            Color temp = GameManager.instance.SealedMaterial.color;
+            temp.a = 0.6f;
+            GameManager.instance.SealedMaterial.color = temp;
+        }
+
         //if it is selection level (level 0) update
         if (levelIndex == 0)
         {

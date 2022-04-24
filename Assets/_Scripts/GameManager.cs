@@ -49,9 +49,10 @@ public class GameManager : MonoBehaviour
     // Analytics variables
     public float startTime;
     public float totalPauseDuration;
-    public int currentLevel = 1;
+    private int currentLevel = 1;
     public LevelData levelData;
     private bool levelComplete = false;
+    public Material SealedMaterial;
     
     [HideInInspector]
     //public Direction levelDirection = Direction.None;
@@ -163,6 +164,12 @@ public class GameManager : MonoBehaviour
             {
                 DissolveTransition.instance.spawnGround();
                 DissolveTransition.instance.startDissolve(2f);
+            }
+            if (SealedMaterial != null)
+            {
+                Color temp = SealedMaterial.color;
+                temp.a = 0f;
+                SealedMaterial.color = temp;
             }
             return true;
         }
