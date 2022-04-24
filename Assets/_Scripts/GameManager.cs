@@ -52,9 +52,18 @@ public class GameManager : MonoBehaviour
     private int currentLevel = 1;
     public LevelData levelData;
     private bool levelComplete = false;
+
+    [HideInInspector]
     public Material SealedMaterial;
     
-    [HideInInspector]
+    [Header("Fire material")]
+    [SerializeField] private Material _fireMaterial;
+    [SerializeField] private Color _blue;
+    [SerializeField] private Color _red;
+    [SerializeField] private float _changeFrequency = 2f;
+    [SerializeField] private float _colorChangeGap = 1f;
+    private bool _changingColor = false;
+
     //public Direction levelDirection = Direction.None;
     public enum GameState
     {
@@ -78,6 +87,62 @@ public class GameManager : MonoBehaviour
                 ChangableTiles.Add(Obj);
             }
         }
+    }
+
+    private void Update()
+    {
+        if (!_changingColor)
+        {
+            StartCoroutine(ColorChange());
+        }
+    }
+
+    IEnumerator ColorChange()
+    {
+        _changingColor = true;
+        float timeElapsed = 0f;
+        while (timeElapsed <= _changeFrequency)
+        {
+            timeElapsed += Time.deltaTime;
+            Color col = Color.Lerp(_blue, Color.white, timeElapsed / _changeFrequency);
+            col *= 16f;
+            _fireMaterial.SetColor("_Color", col);
+            yield return null;
+        }
+        timeElapsed = 0f;
+        while (timeElapsed <= _changeFrequency)
+        {
+            timeElapsed += Time.deltaTime;
+            Color col = Color.Lerp(Color.white, _red, timeElapsed / _changeFrequency);
+            col *= 16f;
+            _fireMaterial.SetColor("_Color", col);
+            yield return null;
+        }
+        timeElapsed = 0f;
+
+        yield return new WaitForSeconds(_colorChangeGap);
+
+        while (timeElapsed <= _changeFrequency)
+        {
+            timeElapsed += Time.deltaTime;
+            Color col = Color.Lerp(_red, Color.white, timeElapsed / _changeFrequency);
+            col *= 16f;
+            _fireMaterial.SetColor("_Color", col);
+            yield return null;
+        }
+        timeElapsed = 0f;
+        while (timeElapsed <= _changeFrequency)
+        {
+            timeElapsed += Time.deltaTime;
+            Color col = Color.Lerp(Color.white, _blue, timeElapsed / _changeFrequency);
+            col *= 16f;
+            _fireMaterial.SetColor("_Color", col);
+            yield return null;
+        }
+        timeElapsed = 0f;
+
+        yield return new WaitForSeconds(_colorChangeGap);
+        _changingColor = false;
     }
 
     public void WinGame()
