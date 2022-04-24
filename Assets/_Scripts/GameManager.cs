@@ -156,7 +156,7 @@ public class GameManager : MonoBehaviour
             {
                 finalMap.GetComponent<FinalTransition>().Begin();
             }
-            if (RiverGenerator.instance != null)
+            else if (RiverGenerator.instance != null)
             {
                 RiverGenerator.instance.GenerateRealWorld();
             }
