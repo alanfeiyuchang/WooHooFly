@@ -155,7 +155,7 @@ namespace TileSystem
             {
                 if (playerColor == color)
                 {
-                    Tile = Resources.Load<GameObject>("TileSet/WaterFallTiles/River_Tile" + TileID);
+                    Tile = Resources.Load<GameObject>("TileSet/RiverTiles/River_Tile" + TileID);
                     GameObject temp = Instantiate(Tile, node.transform.position, node.transform.rotation, environment);
                 }
             }
@@ -163,7 +163,7 @@ namespace TileSystem
             {
                 if (playerColor == color)
                 {
-                    Tile = Resources.Load<GameObject>("TileSet/LavaFallTiles/LavaTile_Tile" + TileID);
+                    Tile = Resources.Load<GameObject>("TileSet/LavaTiles/LavaTile_Tile" + TileID);
                     GameObject temp = Instantiate(Tile, node.transform.position, node.transform.rotation, environment);
                 }
             }
