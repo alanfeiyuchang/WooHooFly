@@ -67,8 +67,6 @@ public class SpawnVegetation : MonoBehaviour
                                 x.transform.parent = transform;
                                 x.transform.localPosition = pos;
                                 Vector3 original = tree.transform.localScale;
-                                Debug.Log("original: " + original);
-                                Debug.Log("transform: " + scale);
                                 x.transform.localScale = new Vector3(original.x * scale.z, original.y * scale.y, original.z * scale.x); // invert transform
                                 // x.transform.localScale = original * scale;
                         break;
