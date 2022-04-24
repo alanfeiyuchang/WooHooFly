@@ -137,7 +137,7 @@ namespace WooHooFly.NodeSystem
             {
                     if (e.neighbor != null)
                     {
-                        Vector3 virtualNeigborPos = this.transform.position + GetTranslate(e.direction);
+                        Vector3 virtualNeigborPos = this.transform.position + GetTranslate(this.transform, e.direction);
                         Gizmos.color = transitCubeGizmoColor;
                         Gizmos.DrawLine(transform.position, virtualNeigborPos);
                         Gizmos.DrawSphere(virtualNeigborPos, gizmoRadius);
@@ -177,23 +177,23 @@ namespace WooHooFly.NodeSystem
         }
 
         // based on the direction to get the translate Vector
-        private Vector3 GetTranslate(Direction direction)
+        private Vector3 GetTranslate(Transform baseTrans, Direction direction)
         {
             Vector3 translateVector = Vector3.zero;
 
             switch (direction)
             {
                 case Direction.Forward:
-                    translateVector = this.transform.forward;
+                    translateVector = baseTrans.forward;
                     break;
                 case Direction.Left:
-                    translateVector = -this.transform.right;
+                    translateVector = -baseTrans.right;
                     break;
                 case Direction.Backward:
-                    translateVector = -this.transform.forward;
+                    translateVector = -baseTrans.forward;
                     break;
                 case Direction.Right:
-                    translateVector = this.transform.right;
+                    translateVector = baseTrans.right;
                     break;
                 case Direction.None:
                     break;
@@ -354,16 +354,16 @@ namespace WooHooFly.NodeSystem
                     {
                         movingInfo.startNode = this;
                         movingInfo.endNode = e.neighbor;
-                        movingInfo.transitVector = movingInfo.endNode.transform.position - this.transform.position - GetTranslate(e.direction);
+                        movingInfo.transitVector = movingInfo.endNode.transform.position - this.transform.position - GetTranslate(this.transform, e.direction);
                         if (e.atFront)
                         {
                             movingInfo.transitState = TransitState.RotateMove;
-                            movingInfo.transitNodePos = this.transform.position + GetTranslate(e.direction);
+                            movingInfo.transitNodePos = this.transform.position + GetTranslate(this.transform, e.direction);
                         }
                         else
                         {
                             movingInfo.transitState = TransitState.MoveRotate;
-                            movingInfo.transitNodePos = e.neighbor.transform.position - GetTranslate(e.direction);
+                            movingInfo.transitNodePos = e.neighbor.transform.position - GetTranslate(this.transform, e.direction);
                         }
 
                         return movingInfo;
@@ -423,16 +423,16 @@ namespace WooHooFly.NodeSystem
                 {
                     movingInfo.startNode = this;
                     movingInfo.endNode = e.neighbor;
-                    movingInfo.transitVector = endNode.transform.position - this.transform.position - GetTranslate(e.direction);
+                    movingInfo.transitVector = endNode.transform.position - this.transform.position - GetTranslate(this.transform, e.direction);
                     if (e.atFront)
                     {
                         movingInfo.transitState = TransitState.RotateMove;
-                        movingInfo.transitNodePos = this.transform.position + GetTranslate(e.direction);
+                        movingInfo.transitNodePos = this.transform.position + GetTranslate(this.transform, e.direction);
                     }
                     else
                     {
                         movingInfo.transitState = TransitState.MoveRotate;
-                        movingInfo.transitNodePos = e.neighbor.transform.position - GetTranslate(e.direction);
+                        movingInfo.transitNodePos = e.neighbor.transform.position - GetTranslate(this.transform, e.direction);
                     }
                     
                     return movingInfo;
@@ -456,6 +456,27 @@ namespace WooHooFly.NodeSystem
             {
                 if (c.isActive)
                 {
+                    foreach(TransitEdge e in c.neighbor.Transits)
+                    {
+                        if(e.neighbor.isActiveAndEnabled && e.isActive && e.neighbor == endNode)
+                        {
+                            movingInfo.startNode = c.neighbor;
+                            movingInfo.endNode = e.neighbor; 
+                            if (e.atFront)
+                            {
+                                movingInfo.transitState = TransitState.RotateMove;
+                                movingInfo.transitNodePos = c.neighbor.transform.position + GetTranslate(c.neighbor.transform, e.direction);
+                            }
+                            else
+                            {
+                                movingInfo.transitState = TransitState.MoveRotate;
+                                movingInfo.transitNodePos = e.neighbor.transform.position - GetTranslate(c.neighbor.transform, e.direction);
+                            }
+                            movingInfo.transitVector = e.neighbor.transform.position - c.neighbor.transform.position - GetTranslate(c.neighbor.transform, e.direction);
+                            return movingInfo;
+                        }
+                    }
+
                     foreach(Edge e in c.neighbor.Edges)
                     {
                         if(e.neighbor.isActiveAndEnabled && e.isActive && e.neighbor == endNode)

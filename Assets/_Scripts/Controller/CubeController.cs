@@ -76,7 +76,8 @@ public class CubeController : MonoBehaviour
 
         movingPath = graph.GetPath(clickable.clickedNode);
         firstRotate = true;
-        Rolling(movingPath.Dequeue());
+        if(movingPath.Count!= 0)
+            Rolling(movingPath.Dequeue());
     }
 
     public void FindAccessibleNode()

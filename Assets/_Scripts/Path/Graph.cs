@@ -172,6 +172,13 @@ namespace WooHooFly.NodeSystem
             {
                 if (c.isActive)
                 {
+                    foreach (TransitEdge e in c.neighbor.Transits)
+                    {
+                        if (e.neighbor.isActiveAndEnabled && e.isActive)
+                        {
+                            FindPathAtDirection(c.neighbor, e.direction);
+                        }
+                    }
                     foreach (Edge e in c.neighbor.Edges)
                     {
                         if (e.isActive)
@@ -179,6 +186,7 @@ namespace WooHooFly.NodeSystem
                             FindPathAtDirection(c.neighbor, e.direction);
                         }
                     }
+                    
                 }
             }
             EnableClikable(true);
