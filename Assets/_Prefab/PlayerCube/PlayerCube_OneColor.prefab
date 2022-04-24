@@ -422,6 +422,12 @@ MonoBehaviour:
   RotationEvent:
     m_PersistentCalls:
       m_Calls: []
+  BeforeRotateEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AfterRotateEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &5201491358786116024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -437,13 +443,14 @@ MonoBehaviour:
   Color: 2
   newPlayer: 1
   playerColor: {fileID: 2100000, guid: 7ef513f1d80bef243b71a9fcdf01339d, type: 2}
-  waterSideColor: {r: 0.1147739, g: 0.7763563, b: 0.9811321, a: 0}
-  waterTopColor: {r: 0.42947665, g: 0.8497855, b: 0.9811321, a: 1}
-  lavaSideColor: {r: 0.98039216, g: 0.24746765, b: 0.13333331, a: 0}
-  lavaTopColor: {r: 0.9811321, g: 0.3646849, b: 0.3646849, a: 0}
+  waterSideColor: {r: 0, g: 0.62042177, b: 0.8113208, a: 0}
+  waterTopColor: {r: 0, g: 0.7666669, b: 1, a: 1}
+  lavaSideColor: {r: 0.8396226, g: 0.112727106, b: 0, a: 0}
+  lavaTopColor: {r: 0.9056604, g: 0.2341046, b: 0.2341046, a: 0}
   water: {fileID: 2100000, guid: 7ef513f1d80bef243b71a9fcdf01339d, type: 2}
   lava: {fileID: 2100000, guid: a4bf4dbaf5bf8944a9253794d2b4bdc4, type: 2}
   liquad: {fileID: 281315141}
+  fillAmount: 0.6
 --- !u!54 &5201491358786116034
 Rigidbody:
   m_ObjectHideFlags: 0
