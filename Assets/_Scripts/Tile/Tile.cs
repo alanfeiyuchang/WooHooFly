@@ -25,7 +25,10 @@ namespace TileSystem
         public GameObject grassTile;
         public GameObject waterTile;
         public TileInfo tileInfo;
+       
+
         public float waterSizeRatio = 0.5f;
+         public TileInfo treeInfo; //for spawn trees
         [HideInInspector]
         public int tileBit;
         public TileType tileType;
@@ -53,6 +56,23 @@ namespace TileSystem
             return false;
         }
 
+        private bool isTreeTile(int index)
+        {
+            switch (index)
+            {
+                case 1: return treeInfo.subtile1;
+                case 2: return treeInfo.subtile2;
+                case 3: return treeInfo.subtile3;
+                case 4: return treeInfo.subtile4;
+                case 5: return treeInfo.subtile5;
+                case 6: return treeInfo.subtile6;
+                case 7: return treeInfo.subtile7;
+                case 8: return treeInfo.subtile8;
+                case 9: return treeInfo.subtile9;
+            }
+            return false;
+        }
+
         public void GenerateTile()
         {
             for (int y = 0; y < 3; y++)
@@ -62,10 +82,20 @@ namespace TileSystem
                     Vector3 position = new Vector3(this.transform.localPosition.x + ((float)(x - 1) * (waterSizeRatio + 1) / 4), this.transform.localPosition.y, this.transform.localPosition.z - ((float)(y - 1) * (waterSizeRatio + 1) / 4));
                     int index = x + y * 3 + 1;
                     GameObject newTile;
+
                     if (isWaterTile(index))
                         newTile = Instantiate(waterTile, position, Quaternion.identity, this.transform);
-                    else
+                    else 
                         newTile = Instantiate(grassTile, position, Quaternion.identity, this.transform);
+                    
+                    if (isTreeTile(index)) {
+                            SpawnVegetation spawnVegetation =  newTile.GetComponent<SpawnVegetation>();
+                            spawnVegetation.isTreeTile = true;
+                            if (x == 1)
+                                spawnVegetation.scale = (new Vector3( ((1 - waterSizeRatio) / 2) / waterSizeRatio, 1, 1));
+                            if (y == 1)
+                                spawnVegetation.scale = (new Vector3(1, 1, ((1 - waterSizeRatio) / 2) / waterSizeRatio));
+                    }
 
                     if (x == 1)
                         newTile.transform.localScale = new Vector3(newTile.transform.localScale.x * waterSizeRatio, newTile.transform.localScale.y, newTile.transform.localScale.z);
@@ -76,10 +106,10 @@ namespace TileSystem
                         newTile.transform.localScale = new Vector3(newTile.transform.localScale.x, newTile.transform.localScale.y, newTile.transform.localScale.z * waterSizeRatio);
                     else
                         newTile.transform.localScale = new Vector3(newTile.transform.localScale.x, newTile.transform.localScale.y, newTile.transform.localScale.z * (1 - waterSizeRatio) / 2);
-
                 }
             }
             tileBit = getBitMaskValue();
+            Debug.Log(tileBit);
             }
 
 

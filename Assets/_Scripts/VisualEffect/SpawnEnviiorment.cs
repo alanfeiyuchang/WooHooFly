@@ -235,10 +235,10 @@ public class SpawnEnviiorment : MonoBehaviour
         float chance = Random.Range(0, 100);
         SpawnVegetation spawnScript = _grass.GetComponent<SpawnVegetation>();
         if (_trans.tag == "Tree") {
-            spawnScript.Spawn(true);
+            spawnScript.Spawn();
         }
         else {
-            spawnScript.Spawn(false);
+            spawnScript.Spawn();
         }
     }
 }
