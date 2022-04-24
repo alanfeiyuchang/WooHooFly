@@ -56,12 +56,8 @@ public class DissolveTransition : MonoBehaviour
     }
     public void spawnGround()
     {
-        mapCube = MapTransition.instance.GetCurrentLevel().MapCubes;
-        foreach (GameObject cube in mapCube)
-        {
-            MapCubeManager manager = cube.GetComponent<MapCubeManager>();
-            SpawnEnviiorment.instance.spawnSand(cube.transform.position);
-        }
+
+        
     }
     public void startDissolve(float time)
     {
@@ -70,7 +66,13 @@ public class DissolveTransition : MonoBehaviour
     private IEnumerator dissolve(float time)
     {
         float timeCount = time;
-        
+        mapCube = MapTransition.instance.GetCurrentLevel().MapCubes;
+        foreach (GameObject cube in mapCube)
+        {
+            Debug.Log("spawn ground at: " + cube.transform.position);
+            MapCubeManager manager = cube.GetComponent<MapCubeManager>();
+            SpawnEnviiorment.instance.spawnGround(cube.transform);
+        }
         //SpawnEnviiorment.instanace.spawnWater(mapCube[0].transform.position);
         //SpawnEnviiorment.instanace.waterParent.transform.localScale = new Vector3(1, 0.1f, 1);
         while (timeCount >= 0)

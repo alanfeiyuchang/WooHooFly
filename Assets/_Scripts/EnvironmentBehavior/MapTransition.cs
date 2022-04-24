@@ -223,22 +223,22 @@ public class MapTransition : MonoBehaviour
         yield return new WaitForSeconds(dropTime);*/
 
         // move water parent to level gameobject
-        if (SpawnEnviiorment.instance != null)
+/*        if (SpawnEnviiorment.instance != null)
         {
             SpawnEnviiorment.instance.waterParent.transform.SetParent(LevelList[CurrentLevel].gameObject.transform);
-        }
+        }*/
         
         StartCoroutine(LevelOneCubeCrash(dropTime, dropHeight, _fromLevel.gameObject.transform));
         yield return new WaitForSeconds(dropTime);
         //move water parent back to original
-        if (SpawnEnviiorment.instance != null)
+/*        if (SpawnEnviiorment.instance != null)
         {
             SpawnEnviiorment.instance.waterParent.transform.SetParent(SpawnEnviiorment.instance.waterParent.transform.parent.parent);
             Vector3 temp = SpawnEnviiorment.instance.waterParent.transform.position;
             temp[1] += dropHeight;
             SpawnEnviiorment.instance.waterParent.transform.position = temp;
             SpawnEnviiorment.instance.DestroyWater();
-        }
+        }*/
 
         //switch map
         if (DissolveTransition.instance != null)

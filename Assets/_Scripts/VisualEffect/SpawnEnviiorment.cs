@@ -11,10 +11,10 @@ public class SpawnEnviiorment : MonoBehaviour
     {
         instance = this;
     }
-    [SerializeField] public GameObject waterParent;
     //public GameObject waterPosIndicator;
     [SerializeField] private GameObject sand;
     [SerializeField] private GameObject grassTop;
+    [SerializeField] private GameObject lavaGround;
     //public List<List<Transform>> water_pos_list = new List<List<Transform>>();
     private Transform river;
     void Start()
@@ -41,7 +41,7 @@ public class SpawnEnviiorment : MonoBehaviour
     //    }
     //}
 
-    public void spawnTile(Transform _tile, Vector3 waterCubeTrans)
+/*    public void spawnTile(Transform _tile, Vector3 waterCubeTrans)
     {
         //Debug.Log(_tile.transform.position);
         //spawnGround(_tile.transform);
@@ -62,18 +62,18 @@ public class SpawnEnviiorment : MonoBehaviour
             }
             subtileIndex++;
         }
-    }
-    public void spawnWater(Vector3 _pos)
+    }*/
+/*    public void spawnWater(Vector3 _pos)
     {
         GameObject _empty = new GameObject("WaterMark");
         _empty.transform.SetParent(waterParent.transform);
         _empty.transform.position = new Vector3(_pos.x, _pos.y + 0.1f, _pos.z);
         _empty.transform.localScale = new Vector3(1, 1, 1);
-    }
-    public void spawnWater(Transform tile, Vector3 posToCenter, int subtileIndex)
+    }*/
+   /* public void spawnWater(Transform tile, Vector3 posToCenter, int subtileIndex)
     {
 
-        /*if (river == null)
+        *//*if (river == null)
         {
             river = Instantiate(waterParent, _trans.position, _trans.rotation, this.transform).transform;
             river.gameObject.name = "River";
@@ -88,13 +88,13 @@ public class SpawnEnviiorment : MonoBehaviour
         _empty2.transform.SetParent(_water.transform);
         _empty2.transform.localPosition = new Vector3(0, 0, 0);
         _empty2.transform.localScale = new Vector3(1, 1, 1);
-        _water.transform.localScale = _trans.localScale;*/
+        _water.transform.localScale = _trans.localScale;*//*
         //GameObject _water = Instantiate(waterParent, _trans.position, _trans.rotation, transform);
 
-        /*GameObject _empty2 = new GameObject("WaterMark");
+        *//*GameObject _empty2 = new GameObject("WaterMark");
         _empty2.transform.SetParent(waterParent.transform);
         _empty2.transform.position = _trans.position;
-        _empty2.transform.localScale = _trans.localScale;*/
+        _empty2.transform.localScale = _trans.localScale;*//*
         //GameObject _water = Instantiate(waterParent, _trans.position, _trans.rotation, transform);
         //GameObject _empty = new GameObject("WaterMark");
         //_empty.transform.SetParent(river.transform);
@@ -195,16 +195,16 @@ public class SpawnEnviiorment : MonoBehaviour
         //Debug.Log(_trans.localScale + " ==== " + _trans.lossyScale);
 
         //_empty.transform.localScale = new Vector3(_trans.localScale.x, 0.4f, _trans.localScale.z);
-    }
+    }*/
 
 
-    public void DestroyWater()
+   /* public void DestroyWater()
     {
         foreach (Transform child in waterParent.transform)
         {
             GameObject.Destroy(child.gameObject);
         }
-    }
+    }*/
 
     public void spawnGround(Transform _trans)
     {
