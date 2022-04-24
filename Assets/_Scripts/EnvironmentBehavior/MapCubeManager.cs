@@ -40,8 +40,9 @@ public class MapCubeManager : MonoBehaviour
     {
         Unchangeable,
         Changeable,
-        Color   
-    };
+        Color,
+        Lock
+    }
     private void OnValidate()
     {
         changeTileColor(sideA, sideAColor);
@@ -154,6 +155,11 @@ public class MapCubeManager : MonoBehaviour
                 tile.tag = "ColorTile";
                 unchangeable.SetActive(false);
                 color.SetActive(true);
+                break;
+            case TileType.Lock:
+                tile.tag = "UnchangeTile";
+                unchangeable.SetActive(true);
+                color.SetActive(false);
                 break;
             default:
                 break;

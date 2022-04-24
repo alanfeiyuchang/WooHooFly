@@ -221,14 +221,16 @@ public class GameManager : MonoBehaviour
             {
                 finalMap.GetComponent<FinalTransition>().Begin();
             }
-            else if (RiverGenerator.instance != null)
-            {
-                RiverGenerator.instance.GenerateRealWorld();
-            }
-            if (DissolveTransition.instance != null)
-            {
-                DissolveTransition.instance.spawnGround();
-                DissolveTransition.instance.startDissolve(2f);
+            else {
+                if (RiverGenerator.instance != null)
+                {
+                    RiverGenerator.instance.GenerateRealWorld();
+                }
+                if (DissolveTransition.instance != null)
+                {
+                    DissolveTransition.instance.spawnGround();
+                    DissolveTransition.instance.startDissolve(2f);
+                }
             }
             if (SealedMaterial != null)
             {
