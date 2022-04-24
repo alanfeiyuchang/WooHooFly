@@ -229,6 +229,7 @@ public class MapTransition : MonoBehaviour
         }*/
         
         StartCoroutine(LevelOneCubeCrash(dropTime, dropHeight, _fromLevel.gameObject.transform));
+        StartCoroutine(LevelOneCubeCrash(dropTime, dropHeight, graph.transform));
         yield return new WaitForSeconds(dropTime);
         //move water parent back to original
 /*        if (SpawnEnviiorment.instance != null)
@@ -248,6 +249,10 @@ public class MapTransition : MonoBehaviour
         SetPosition(_fromMapCubes, _fromMapFlags, _fromMapPlayerCube, +dropHeight);
         LevelList[CurrentLevel] = _dummyLevel.GetComponent<LevelManager>();
         _fromLevel.gameObject.SetActive(false);
+        foreach (Transform go in graph.transform)      
+        {
+            Destroy(go.gameObject);
+        }
         Destroy(_fromLevel.gameObject);
 
         SetPosition(_toMapCubes, _toMapFlags, _toMapPlayerCube, +dropHeight);
