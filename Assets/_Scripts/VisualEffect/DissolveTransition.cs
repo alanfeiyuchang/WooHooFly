@@ -68,6 +68,7 @@ public class DissolveTransition : MonoBehaviour
         float timeCount = time;
         mapCube = MapTransition.instance.GetCurrentLevel().MapCubes;
         TileColor playerColor = MapTransition.instance.GetCurrentLevel().PlayerCube.GetComponent<CubeCollider>().Color;
+        List<GameObject> fires = new List<GameObject>();
         foreach (GameObject cube in mapCube)
         {
             //Debug.Log("spawn ground at: " + cube.transform.position);
@@ -76,9 +77,19 @@ public class DissolveTransition : MonoBehaviour
                 SpawnEnviiorment.instance.spawnGround(cube.transform);
             else if(playerColor == TileColor.red)
                 SpawnEnviiorment.instance.spawnLava(cube.transform);
+
+            if (cube.transform.GetChild(0).childCount >= 3)
+                fires.Add(cube.transform.GetChild(0).GetChild(2).gameObject);
         }
         //SpawnEnviiorment.instanace.spawnWater(mapCube[0].transform.position);
         //SpawnEnviiorment.instanace.waterParent.transform.localScale = new Vector3(1, 0.1f, 1);
+
+        foreach (GameObject fire in fires)
+        {
+            fire.SetActive(false);
+        }
+        MapTransition.instance.GetCurrentLevel().PlayerCube.SetActive(false);
+
         while (timeCount >= 0)
         {
             float scale = timeCount / time;
@@ -87,6 +98,7 @@ public class DissolveTransition : MonoBehaviour
             greyDissolve.SetFloat("_AlphaThreshold",scale);
             GroundMaterial.color = new Color (1, 1, 1, 1-scale);
             WaterMaterial.SetFloat("_Alpha", scale);
+
             // Debug.Log(WaterMaterial.GetFloat("_Alpha"));
             timeCount -= Time.deltaTime;
             yield return new WaitForFixedUpdate();

@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using WooHooFly.NodeSystem;
+using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour
 {
@@ -16,6 +18,9 @@ public class LevelManager : MonoBehaviour
     public List<float> FinishAngles;*/
     public Node StartNode;
     public Node FinishNode;
+
+    public bool NeedAutomaticRotation = false;
+    public float FinalRotationAngle;
 
     private void Start()
     {
