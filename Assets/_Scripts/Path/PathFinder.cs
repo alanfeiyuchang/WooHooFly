@@ -236,12 +236,18 @@ namespace WooHooFly.NodeSystem
 
         private Node findImpossilbleNode(Node currentNode, TileColor color){
             Node impossibleNode;
+ 
 
             foreach (TransitEdge e in currentNode.Transits){
                 Debug.Log(e);
-
+                
                 if (e.isActive){
                     impossibleNode = e.neighbor;
+                    if (exploredNodes.Contains(impossibleNode) ||
+                    frontierNodes.Contains(impossibleNode))
+                    {
+                        continue;
+                    }
                     if (currentNode == startNode || currentNode == destinationNode){
                         return impossibleNode;
                     }
@@ -267,6 +273,11 @@ namespace WooHooFly.NodeSystem
                 case Direction.Forward:
                     cornerNode = graph?.FindNodeAt(currentNode.transform.position + currentNode.transform.forward / 2 + currentNode.transform.up / 2);
                     if (cornerNode != null){
+                        if (exploredNodes.Contains(cornerNode) ||
+                        frontierNodes.Contains(cornerNode))
+                        {
+                            break;
+                        }                        
                         if (currentNode == startNode || currentNode == destinationNode){   
                             return cornerNode;
                         }
@@ -281,6 +292,11 @@ namespace WooHooFly.NodeSystem
                     }
                     cornerNode = graph?.FindNodeAt(currentNode.transform.position + currentNode.transform.forward / 2 - currentNode.transform.up / 2);
                     if (cornerNode != null){
+                        if (exploredNodes.Contains(cornerNode) ||
+                        frontierNodes.Contains(cornerNode))
+                        {
+                            break;
+                        }
                         if (currentNode == startNode || currentNode == destinationNode){   
                             return cornerNode;
                         }
@@ -297,6 +313,11 @@ namespace WooHooFly.NodeSystem
                 case Direction.Backward:
                     cornerNode = graph?.FindNodeAt(currentNode.transform.position - currentNode.transform.forward / 2 + currentNode.transform.up / 2);
                     if (cornerNode != null){
+                        if (exploredNodes.Contains(cornerNode) ||
+                        frontierNodes.Contains(cornerNode))
+                        {
+                            break;
+                        }                        
                         if (currentNode == startNode || currentNode == destinationNode){   
                             return cornerNode;
                         }
@@ -311,6 +332,11 @@ namespace WooHooFly.NodeSystem
                     }
                     cornerNode = graph?.FindNodeAt(currentNode.transform.position - currentNode.transform.forward / 2 - currentNode.transform.up / 2);
                     if (cornerNode != null){
+                        if (exploredNodes.Contains(cornerNode) ||
+                        frontierNodes.Contains(cornerNode))
+                        {
+                            break;
+                        }                            
                         if (currentNode == startNode || currentNode == destinationNode){   
                             return cornerNode;
                         }
@@ -327,6 +353,11 @@ namespace WooHooFly.NodeSystem
                 case Direction.Left:
                     cornerNode = graph?.FindNodeAt(currentNode.transform.position - currentNode.transform.right / 2 + currentNode.transform.up / 2);
                     if (cornerNode != null){
+                        if (exploredNodes.Contains(cornerNode) ||
+                        frontierNodes.Contains(cornerNode))
+                        {
+                            break;
+                        }                            
                         if (currentNode == startNode || currentNode == destinationNode){   
                             return cornerNode;
                         }
@@ -341,6 +372,11 @@ namespace WooHooFly.NodeSystem
                     }
                     cornerNode = graph?.FindNodeAt(currentNode.transform.position - currentNode.transform.right / 2 - currentNode.transform.up / 2);
                     if (cornerNode != null){
+                        if (exploredNodes.Contains(cornerNode) ||
+                        frontierNodes.Contains(cornerNode))
+                        {
+                            break;
+                        }                            
                         if (currentNode == startNode || currentNode == destinationNode){   
                             return cornerNode;
                         }
@@ -357,6 +393,11 @@ namespace WooHooFly.NodeSystem
                 case Direction.Right:
                     cornerNode = graph?.FindNodeAt(currentNode.transform.position + currentNode.transform.right / 2 + currentNode.transform.up / 2);
                     if (cornerNode != null){
+                        if (exploredNodes.Contains(cornerNode) ||
+                        frontierNodes.Contains(cornerNode))
+                        {
+                            break;
+                        }                            
                         if (currentNode == startNode || currentNode == destinationNode){   
                             return cornerNode;
                         }
@@ -372,6 +413,11 @@ namespace WooHooFly.NodeSystem
 
                     cornerNode = graph?.FindNodeAt(currentNode.transform.position + currentNode.transform.right / 2 - currentNode.transform.up / 2);
                     if (cornerNode != null){
+                        if (exploredNodes.Contains(cornerNode) ||
+                        frontierNodes.Contains(cornerNode))
+                        {
+                            break;
+                        }                            
                         if (currentNode == startNode || currentNode == destinationNode){   
                             return cornerNode;
                         }
