@@ -212,6 +212,12 @@ public class SpawnEnviiorment : MonoBehaviour
         _sand.transform.SetParent(transform);
         _sand.transform.position = _trans.position;
     }
+    public void spawnLava(Transform _trans)
+    {
+        GameObject _sand = Instantiate(lavaGround);
+        _sand.transform.SetParent(transform);
+        _sand.transform.position = _trans.position;
+    }
     public void spawnSand(Vector3 _pos)
     {
         GameObject _sand = Instantiate(sand);

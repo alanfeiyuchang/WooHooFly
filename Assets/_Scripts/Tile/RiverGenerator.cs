@@ -92,16 +92,22 @@ namespace TileSystem
                     TileID += (int)BitmaskData.NW;
             }
             TileID += (int)BitmaskData.S;
-
-            if(color == TileColor.green)
+            TileColor playerColor = MapTransition.instance.GetCurrentLevel().PlayerCube.GetComponent<CubeCollider>().Color;
+            if(playerColor == TileColor.green)
             {
-                GameObject Tile = Resources.Load<GameObject>("TileSet/WaterFallTiles/WaterFall_Tile" + TileID);
-                GameObject temp = Instantiate(Tile, node.transform.position, node.transform.rotation, environment);
+                if(playerColor == color)
+                {
+                    GameObject Tile = Resources.Load<GameObject>("TileSet/WaterFallTiles/WaterFall_Tile" + TileID);
+                    GameObject temp = Instantiate(Tile, node.transform.position, node.transform.rotation, environment);
+                }
             }
-            else if(color == TileColor.red)
+            else if(playerColor == TileColor.red)
             {
-                GameObject Tile = Resources.Load<GameObject>("TileSet/LavaFallTiles/LavaFallTile_Tile" + TileID);
-                GameObject temp = Instantiate(Tile, node.transform.position, node.transform.rotation, environment);
+                if(playerColor == color)
+                {
+                    GameObject Tile = Resources.Load<GameObject>("TileSet/LavaFallTiles/LavaFallTile_Tile" + TileID);
+                    GameObject temp = Instantiate(Tile, node.transform.position, node.transform.rotation, environment);
+                }
             }
             else
             {
@@ -144,17 +150,22 @@ namespace TileSystem
                 && findColoredTileAtDirection(westNode, Direction.Backward, color) != null)
                 TileID += (int)BitmaskData.SW;
             GameObject Tile;
-            if(color == TileColor.green)
+            TileColor playerColor = MapTransition.instance.GetCurrentLevel().PlayerCube.GetComponent<CubeCollider>().Color;
+            if (playerColor == TileColor.green)
             {
-                Tile = Resources.Load<GameObject>("TileSet/RiverTiles/River_Tile" + TileID);
-                GameObject temp = Instantiate(Tile, node.transform.position, node.transform.rotation, environment);
-                Vector3 waterToCenter = node.transform.position - node.transform.parent.parent.position;
+                if (playerColor == color)
+                {
+                    Tile = Resources.Load<GameObject>("TileSet/WaterFallTiles/River_Tile" + TileID);
+                    GameObject temp = Instantiate(Tile, node.transform.position, node.transform.rotation, environment);
+                }
             }
-            else if(color == TileColor.red)
+            else if (playerColor == TileColor.red)
             {
-                Tile = Resources.Load<GameObject>("TileSet/LavaTiles/LavaTile_Tile" + TileID);
-                GameObject temp = Instantiate(Tile, node.transform.position, node.transform.rotation, environment);
-                Vector3 waterToCenter = node.transform.position - node.transform.parent.parent.position;
+                if (playerColor == color)
+                {
+                    Tile = Resources.Load<GameObject>("TileSet/LavaFallTiles/LavaTile_Tile" + TileID);
+                    GameObject temp = Instantiate(Tile, node.transform.position, node.transform.rotation, environment);
+                }
             }
             else
             {

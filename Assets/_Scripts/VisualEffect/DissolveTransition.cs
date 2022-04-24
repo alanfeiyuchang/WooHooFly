@@ -67,11 +67,15 @@ public class DissolveTransition : MonoBehaviour
     {
         float timeCount = time;
         mapCube = MapTransition.instance.GetCurrentLevel().MapCubes;
+        TileColor playerColor = MapTransition.instance.GetCurrentLevel().PlayerCube.GetComponent<CubeCollider>().Color;
         foreach (GameObject cube in mapCube)
         {
-            Debug.Log("spawn ground at: " + cube.transform.position);
+            //Debug.Log("spawn ground at: " + cube.transform.position);
             MapCubeManager manager = cube.GetComponent<MapCubeManager>();
-            SpawnEnviiorment.instance.spawnGround(cube.transform);
+            if(playerColor == TileColor.green)
+                SpawnEnviiorment.instance.spawnGround(cube.transform);
+            else if(playerColor == TileColor.red)
+                SpawnEnviiorment.instance.spawnLava(cube.transform);
         }
         //SpawnEnviiorment.instanace.spawnWater(mapCube[0].transform.position);
         //SpawnEnviiorment.instanace.waterParent.transform.localScale = new Vector3(1, 0.1f, 1);
