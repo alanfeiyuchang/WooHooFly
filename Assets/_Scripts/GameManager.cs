@@ -331,7 +331,13 @@ public class GameManager : MonoBehaviour
         {
             ls.StarEarned = 0;
         }
-        
+
+        if (SealedMaterial != null)
+        {
+            Color temp = SealedMaterial.color;
+            temp.a = 0.6f;
+            SealedMaterial.color = temp;
+        }
     }
 
 }
