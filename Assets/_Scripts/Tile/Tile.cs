@@ -19,7 +19,7 @@ namespace TileSystem
     }
 
     public enum BitmaskData { NW = 1, N = 2, NE = 4, W = 8, E = 16, SW = 32, S = 64, SE = 128 }
-    public enum TileType { RiverTile, WaterFallTile, LavaTile, LavaFallTile}
+    public enum TileType { RiverTile, WaterFallTile, LavaTile, LavaFallTile, GrassTile, LavaRockTile }
     public class Tile : MonoBehaviour
     {
         public GameObject grassTile;

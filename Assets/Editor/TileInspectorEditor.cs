@@ -37,6 +37,12 @@ namespace TileSystem
                         case TileType.LavaFallTile:
                             PrefabUtility.SaveAsPrefabAsset(t.gameObject, "Assets/Resources/TileSet/LavaFallTiles/LavaFallTile_Tile" + tile.tileBit + ".prefab");
                             break;
+                        case TileType.GrassTile:
+                            PrefabUtility.SaveAsPrefabAsset(t.gameObject, "Assets/Resources/TileSet/EmptyTiles/GrassTile.prefab");
+                            break;
+                        case TileType.LavaRockTile:
+                            PrefabUtility.SaveAsPrefabAsset(t.gameObject, "Assets/Resources/TileSet/EmptyTiles/RockTile.prefab");
+                            break;
                     }
 
                 }
