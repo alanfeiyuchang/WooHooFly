@@ -5,8 +5,8 @@ using WooHooFly.NodeSystem;
 using WooHooFly.Colors;
 using UnityEngine.Events;
 
-public enum InputType { MouseInput, KeyboardInput}
-
+public enum InputType { MouseInput, KeyboardInput }
+[System.Serializable]
 public class CubeController : MonoBehaviour
 {
     private Graph graph;
@@ -21,8 +21,7 @@ public class CubeController : MonoBehaviour
     public GameObject SnapPoint;
     public float speed = 500;
     public UnityEvent RotationEvent;
-    public UnityEvent BeforeRotateEvent;
-    public UnityEvent AfterRotateEvent;
+    public UnityEvent<Node, Node> rotationLayerEvent;
     protected AudioSource RollMusic;
     public Queue<Node> movingPath;
     [HideInInspector]
@@ -169,9 +168,7 @@ public class CubeController : MonoBehaviour
         isMoving = true;
         firstRotate = false;
         GameManager.instance.CurrentState = GameManager.GameState.rotating;
-        currentNode = movingInfo.endNode;
-
-        BeforeRotateEvent.Invoke();
+        rotationLayerEvent.Invoke(movingInfo.startNode, movingInfo.endNode);
 
         while (remainingAngle > 0)
         {
@@ -188,8 +185,8 @@ public class CubeController : MonoBehaviour
             this.transform.position = this.transform.position + movingInfo.transitVector;
         }
 
+        currentNode = movingInfo.endNode;
         GameManager.instance.CurrentState = GameManager.GameState.playing;
-        AfterRotateEvent.Invoke();
         isMoving = false;
 
         // [Analytics] increment current node visit count

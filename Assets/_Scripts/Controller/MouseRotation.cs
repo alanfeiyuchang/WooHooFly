@@ -20,6 +20,7 @@ public class MouseRotation : MonoBehaviour
     public RotationLinker[] rotationLinksTransit;
     public RotationLinker[] rotationLinksCorner;
     public UnityEvent<float> rotationEvent;
+    public UnityEvent<Vector3> rotationCoverEvent;
 
     public static MouseRotation instance;
     private void Awake()
@@ -274,6 +275,7 @@ public class MouseRotation : MonoBehaviour
         Vector3 endAngle = transform.eulerAngles;
         endAngle[1] += angle;
         endAngle = clampAngle(endAngle);
+        rotationCoverEvent.Invoke(endAngle);
         while (t < TurnDuration)
         {
             float turnAngle = (Time.deltaTime / TurnDuration) * angle;

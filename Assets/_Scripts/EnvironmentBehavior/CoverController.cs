@@ -17,38 +17,73 @@ public class CoverController : MonoBehaviour
         playerCamera = GameObject.Find("PlayerCamera").GetComponent<Camera>();
         cameraData = mainCamera.GetUniversalAdditionalCameraData();
     }
-    public void UpdateCoverWhenLevelRotate()
+    public void UpdateCoverWhenLevelRotate(Vector3 predictNextAngle)
     {
-        
+        foreach (Cover covers in coverCollection)
+        {
+            if(covers.angle == predictNextAngle.y)
+            {
+                if (covers.PlayerLayerNode.Contains(playerCube.CurrentNode))
+                {
+                    ChangeToPlayerLayer();
+                    return;
+                }
+            }
+        }
+        ChangeToLevelLayer();
     }
-    public void UpdateCoverWhenCubeMove(bool activeBefore)
+    public void UpdateCoverWhenCubeMove(Node startNode, Node endNode)
     {
         float angle = this.transform.eulerAngles.y;
         foreach (Cover covers in coverCollection)
         {
             if(covers.angle == angle)
             {
-                if (activeBefore)
-                    PlayerCubeAtCoverNode(covers.ActiveCoverNodesBefore);
+                if (covers.BothLayerNode.Contains(startNode))
+                {
+                    // playerCube layer depends on endNode layer
+                    if (covers.PlayerLayerNode.Contains(endNode))
+                    {
+                        ChangeToPlayerLayer();
+                    }
+                    else
+                    {
+                        ChangeToLevelLayer();
+                    }
+                }
                 else
-                    PlayerCubeAtCoverNode(covers.ActiveCoverNodesAfter);
+                {
+                    // playerCube layer depends on startNode layer
+                    if (covers.PlayerLayerNode.Contains(endNode) || covers.PlayerLayerNode.Contains(startNode))
+                    {
+                        ChangeToPlayerLayer();
+                    }
+                    else
+                    {
+                        ChangeToLevelLayer();
+                    }
+                }
             }
         }
     }
 
-    private void PlayerCubeAtCoverNode(List<Node> coverNodes)
+    private void ChangeToPlayerLayer()
     {
-        if (coverNodes.Contains(playerCube.CurrentNode))
-        {
-            playerCube.gameObject.layer = LayerMask.NameToLayer("Player");
-            if (!cameraData.cameraStack.Contains(playerCamera))
-                cameraData.cameraStack.Add(playerCamera);
-        }
-        else
-        {
-            playerCube.gameObject.layer = LayerMask.NameToLayer("Level");
-            if (cameraData.cameraStack.Contains(playerCamera))
-                cameraData.cameraStack.Remove(playerCamera);
-        }
+        if (playerCube.gameObject.layer == LayerMask.NameToLayer("Player"))
+            return;
+        playerCube.gameObject.layer = LayerMask.NameToLayer("Player");
+
+        if (!cameraData.cameraStack.Contains(playerCamera))
+            cameraData.cameraStack.Add(playerCamera);
+    }
+
+    private void ChangeToLevelLayer()
+    {
+        if (playerCube.gameObject.layer == LayerMask.NameToLayer("Level"))
+            return;
+        playerCube.gameObject.layer = LayerMask.NameToLayer("Level");
+
+        if (cameraData.cameraStack.Contains(playerCamera))
+            cameraData.cameraStack.Remove(playerCamera);
     }
 }
