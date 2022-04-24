@@ -17,6 +17,7 @@ public class CoverController : MonoBehaviour
         playerCamera = GameObject.Find("PlayerCamera").GetComponent<Camera>();
         cameraData = mainCamera.GetUniversalAdditionalCameraData();
     }
+
     public void UpdateCoverWhenLevelRotate(Vector3 predictNextAngle)
     {
         foreach (Cover covers in coverCollection)
@@ -69,20 +70,12 @@ public class CoverController : MonoBehaviour
 
     private void ChangeToPlayerLayer()
     {
-        if (playerCube.gameObject.layer == LayerMask.NameToLayer("Player"))
-            return;
-        playerCube.gameObject.layer = LayerMask.NameToLayer("Player");
-
         if (!cameraData.cameraStack.Contains(playerCamera))
             cameraData.cameraStack.Add(playerCamera);
     }
 
     private void ChangeToLevelLayer()
     {
-        if (playerCube.gameObject.layer == LayerMask.NameToLayer("Level"))
-            return;
-        playerCube.gameObject.layer = LayerMask.NameToLayer("Level");
-
         if (cameraData.cameraStack.Contains(playerCamera))
             cameraData.cameraStack.Remove(playerCamera);
     }
