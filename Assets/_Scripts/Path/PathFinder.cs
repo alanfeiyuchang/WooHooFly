@@ -46,6 +46,7 @@ namespace WooHooFly.NodeSystem
         public List<Node> PathNodes => pathNodes;
         public bool IsPathComplete => isPathComplete;
         public bool SearchOnStart => searchOnStart;
+        public CubeController playerCube;
 
         private void Awake()
         {
@@ -54,6 +55,7 @@ namespace WooHooFly.NodeSystem
 
         private void Start()
         {
+
             // if (searchOnStart)
             // {
             //     if (Input.GetKey("up")){
@@ -64,9 +66,11 @@ namespace WooHooFly.NodeSystem
         }
         private void Update()
         {
+
             if (searchOnStart)
             {
                 if (Input.GetKeyDown("up")){
+                    playerCube = GameObject.Find("PlayerCube_OneColor").GetComponent<CubeController>();
                     pathNodes = FindPath();
                 }
             }
@@ -150,7 +154,8 @@ namespace WooHooFly.NodeSystem
                             frontierNodes.Add(node.Edges[i].neighbor);
                         }
                         // normal node consider color
-                        else if (neighborNode.TileInfo.MapColor == node.TileInfo.MapColor)
+                        else if (neighborNode.TileInfo.MapColor == node.TileInfo.MapColor 
+                        && node.TileInfo.MapColor == playerCube.cubeColorControl.Color)
                         {
                             node.Edges[i].neighbor.PreviousNode = node;
                             frontierNodes.Add(node.Edges[i].neighbor);
@@ -255,7 +260,7 @@ namespace WooHooFly.NodeSystem
                         if (impossibleNode == destinationNode){
                             return impossibleNode;
                         }
-                        else if (impossibleNode.TileInfo.MapColor == color){
+                        else if (impossibleNode.TileInfo.MapColor == color  && color == playerCube.cubeColorControl.Color){
                             return impossibleNode;
                         }
                     }
@@ -285,7 +290,7 @@ namespace WooHooFly.NodeSystem
                             if(cornerNode == destinationNode){
                                return cornerNode;
                             }
-                            else if (cornerNode.TileInfo.MapColor == color){
+                            else if (cornerNode.TileInfo.MapColor == color && color == playerCube.cubeColorControl.Color){
                                 return cornerNode;
                             }      
                         }
@@ -304,7 +309,7 @@ namespace WooHooFly.NodeSystem
                             if(cornerNode == destinationNode){
                                return cornerNode;
                             }
-                            else if (cornerNode.TileInfo.MapColor == color){
+                            else if (cornerNode.TileInfo.MapColor == color && color == playerCube.cubeColorControl.Color){
                                 return cornerNode;
                             }      
                         }
@@ -325,7 +330,7 @@ namespace WooHooFly.NodeSystem
                             if(cornerNode == destinationNode){
                                return cornerNode;
                             }
-                            else if (cornerNode.TileInfo.MapColor == color){
+                            else if (cornerNode.TileInfo.MapColor == color && color == playerCube.cubeColorControl.Color){
                                 return cornerNode;
                             }      
                         }
@@ -344,7 +349,7 @@ namespace WooHooFly.NodeSystem
                             if(cornerNode == destinationNode){
                                return cornerNode;
                             }
-                            else if (cornerNode.TileInfo.MapColor == color){
+                            else if (cornerNode.TileInfo.MapColor == color && color == playerCube.cubeColorControl.Color){
                                 return cornerNode;
                             }      
                         }
@@ -365,7 +370,7 @@ namespace WooHooFly.NodeSystem
                             if(cornerNode == destinationNode){
                                return cornerNode;
                             }
-                            else if (cornerNode.TileInfo.MapColor == color){
+                            else if (cornerNode.TileInfo.MapColor == color && color == playerCube.cubeColorControl.Color){
                                 return cornerNode;
                             }      
                         }
@@ -384,7 +389,7 @@ namespace WooHooFly.NodeSystem
                             if(cornerNode == destinationNode){
                                return cornerNode;
                             }
-                            else if (cornerNode.TileInfo.MapColor == color){
+                            else if (cornerNode.TileInfo.MapColor == color && color == playerCube.cubeColorControl.Color){
                                 return cornerNode;
                             }      
                         }
@@ -405,7 +410,7 @@ namespace WooHooFly.NodeSystem
                             if(cornerNode == destinationNode){
                                return cornerNode;
                             }
-                            else if (cornerNode.TileInfo.MapColor == color){
+                            else if (cornerNode.TileInfo.MapColor == color && color == playerCube.cubeColorControl.Color){
                                 return cornerNode;
                             }      
                         }
@@ -425,7 +430,7 @@ namespace WooHooFly.NodeSystem
                             if(cornerNode == destinationNode){
                                return cornerNode;
                             }
-                            else if (cornerNode.TileInfo.MapColor == color){
+                            else if (cornerNode.TileInfo.MapColor == color && color == playerCube.cubeColorControl.Color){
                                 return cornerNode;
                             }      
                         }
@@ -440,6 +445,7 @@ namespace WooHooFly.NodeSystem
         // set the PathNodes from the startNode to destinationNode
         public List<Node> FindPath()
         {
+            playerCube = GameObject.Find("PlayerCube_OneColor").GetComponent<CubeController>();
             List<Node> newPath = new List<Node>();
 
             if (startNode == null || destinationNode == null || startNode == destinationNode)

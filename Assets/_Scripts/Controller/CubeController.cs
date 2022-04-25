@@ -11,7 +11,7 @@ public class CubeController : MonoBehaviour
 {
     private Graph graph;
     private Node currentNode;
-    private CubeCollider cubeColorControl;
+    public CubeCollider cubeColorControl;
     private bool isMoving;
     private bool firstRotate;
     private Clickable[] clickables;
