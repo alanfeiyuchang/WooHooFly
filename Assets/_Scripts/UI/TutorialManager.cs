@@ -282,11 +282,12 @@ public class TutorialManager : MonoBehaviour
     }
 
     public void ShowArrowOnMissedCube(GameObject checkCube) {
-
+        
         TileManager tileManager = checkCube.GetComponentInChildren<TileManager>();
         TileColor color = tileManager.MapColor;
         if (color != TileColor.green) {
             NextArrowPosition(checkCube);
+            ShowTextHint("You missed a tile!");
         }
 
     }

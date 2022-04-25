@@ -91,9 +91,9 @@ namespace TileSystem
                     if (isTreeTile(index)) {
                             SpawnVegetation spawnVegetation =  newTile.GetComponent<SpawnVegetation>();
                             spawnVegetation.isTreeTile = true;
-                            if (x == 1)
-                                spawnVegetation.scale = (new Vector3( ((1 - waterSizeRatio) / 2) / waterSizeRatio, 1, 1));
                             if (y == 1)
+                                spawnVegetation.scale = (new Vector3( ((1 - waterSizeRatio) / 2) / waterSizeRatio, 1, 1));
+                            if (x == 1)
                                 spawnVegetation.scale = (new Vector3(1, 1, ((1 - waterSizeRatio) / 2) / waterSizeRatio));
                     }
 

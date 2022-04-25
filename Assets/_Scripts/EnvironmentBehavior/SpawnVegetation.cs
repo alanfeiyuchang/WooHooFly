@@ -64,11 +64,11 @@ public class SpawnVegetation : MonoBehaviour
                         GameObject tree = trees[index];
                         Vector3 pos = new Vector3(0,0,-0.2f);
                         GameObject x = Instantiate(tree, Vector3.zero, tree.transform.rotation);
-                                x.transform.parent = transform;
-                                x.transform.localPosition = pos;
+                                x.transform.parent = transform.parent;
+                                x.transform.position = transform.position;
                                 Vector3 original = tree.transform.localScale;
-                                x.transform.localScale = new Vector3(original.x * scale.z, original.y * scale.y, original.z * scale.x); // invert transform
-                                // x.transform.localScale = original * scale;
+                                // x.transform.localScale = new Vector3(original.x * scale.z, original.y * scale.y, original.z * scale.x); // invert transform
+                                x.transform.localScale = original;
                         break;
                     }
                     else {
