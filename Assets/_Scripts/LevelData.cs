@@ -13,11 +13,11 @@ public class levelStar
     public int StarEarned;
     public void StarCount(int step)
     {
-        if (step >= OneStarStep && StarEarned <= 0)
+        if (step > OneStarStep && StarEarned <= 0)
             StarEarned = 1;
-        else if (step >= TwoStarStep && StarEarned <= 1)
+        else if (step > TwoStarStep && StarEarned <= 1)
             StarEarned = 1;
-        else if (step >= ThreeStarStep && StarEarned <= 2)
+        else if (step > ThreeStarStep && StarEarned <= 2)
             StarEarned = 2;
         else
             StarEarned = 3;
