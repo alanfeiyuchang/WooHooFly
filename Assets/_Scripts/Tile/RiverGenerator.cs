@@ -100,12 +100,23 @@ namespace TileSystem
                     GameObject Tile = Resources.Load<GameObject>("TileSet/WaterFallTiles/WaterFall_Tile" + TileID);
                     GameObject temp = Instantiate(Tile, node.transform.position, node.transform.rotation, environment);
                 }
+                else
+                {
+                    GameObject Tile = Resources.Load<GameObject>("TileSet/EmptyTiles/GrassTile");
+                    GameObject temp = Instantiate(Tile, node.transform.position, node.transform.rotation, environment);
+                }
+
             }
             else if(playerColor == TileColor.red)
             {
                 if(playerColor == color)
                 {
                     GameObject Tile = Resources.Load<GameObject>("TileSet/LavaFallTiles/LavaFallTile_Tile" + TileID);
+                    GameObject temp = Instantiate(Tile, node.transform.position, node.transform.rotation, environment);
+                }
+                else
+                {
+                    GameObject Tile = Resources.Load<GameObject>("TileSet/EmptyTiles/RockTile");
                     GameObject temp = Instantiate(Tile, node.transform.position, node.transform.rotation, environment);
                 }
             }
@@ -158,12 +169,22 @@ namespace TileSystem
                     Tile = Resources.Load<GameObject>("TileSet/RiverTiles/River_Tile" + TileID);
                     GameObject temp = Instantiate(Tile, node.transform.position, node.transform.rotation, environment);
                 }
+                else
+                {
+                    Tile = Resources.Load<GameObject>("TileSet/EmptyTiles/GrassTile");
+                    GameObject temp = Instantiate(Tile, node.transform.position, node.transform.rotation, environment);
+                }
             }
             else if (playerColor == TileColor.red)
             {
                 if (playerColor == color)
                 {
                     Tile = Resources.Load<GameObject>("TileSet/LavaTiles/LavaTile_Tile" + TileID);
+                    GameObject temp = Instantiate(Tile, node.transform.position, node.transform.rotation, environment);
+                }
+                else
+                {
+                    Tile = Resources.Load<GameObject>("TileSet/EmptyTiles/RockTile");
                     GameObject temp = Instantiate(Tile, node.transform.position, node.transform.rotation, environment);
                 }
             }
