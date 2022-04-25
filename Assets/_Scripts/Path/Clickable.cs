@@ -7,13 +7,13 @@ using UnityEngine.Events;
 
 namespace WooHooFly.NodeSystem {
 
+    [ExecuteInEditMode]
     public class Clickable : MonoBehaviour, IPointerDownHandler
     { 
         public Node clickedNode;
         public Action<Clickable, Vector3> clickAction;
 
         public UnityEvent hintEvent;
-
         private void Awake()
         {
             clickedNode = this.transform.parent.GetComponentInChildren<Node>();
