@@ -36,8 +36,8 @@ namespace TileSystem
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.R))
-                GenerateRealWorld();
+            //if (Input.GetKeyDown(KeyCode.R))
+            //    GenerateRealWorld();
         }
 
         public void GenerateRealWorld()
