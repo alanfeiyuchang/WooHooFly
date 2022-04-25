@@ -264,6 +264,17 @@ public class MouseRotation : MonoBehaviour
         StartCoroutine(RotateMapAnim(-1 * rotateAngle));
     }
 
+    public void RotateTwoTimes()
+    {
+        StartCoroutine(RotateTwoTimesAnim());
+    }
+
+    IEnumerator RotateTwoTimesAnim()
+    {
+        StartCoroutine(RotateMapAnim(rotateAngle));
+        yield return new WaitForSeconds(TurnDuration);
+        StartCoroutine(RotateMapAnim(rotateAngle));
+    }
 
     IEnumerator RotateMapAnim(float angle)
     {

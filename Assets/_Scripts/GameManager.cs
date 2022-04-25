@@ -216,53 +216,61 @@ public class GameManager : MonoBehaviour
         else
         {
             Debug.Log("Win!! " + _pathFinder.FindPath(currentLevelManager.StartNode, currentLevelManager.FinishNode).Count.ToString());
-            WinGame();
-            if (finalMap != null)
-            {
-                finalMap.GetComponent<FinalTransition>().Begin();
-            }
-            else {
-                if (RiverGenerator.instance != null)
-                {
-                    RiverGenerator.instance.GenerateRealWorld();
-                }
-                if (DissolveTransition.instance != null)
-                {
-                    DissolveTransition.instance.spawnGround();
-                    DissolveTransition.instance.startDissolve(2f);
-                }
-            }
-            if (SealedMaterial != null)
-            {
-                Color temp = SealedMaterial.color;
-                temp.a = 0f;
-                SealedMaterial.color = temp;
-            }
+            StartCoroutine(Transit(finalMap, currentLevelManager));
             return true;
         }
-        
-        
-        /*if (levelComplete || CurrentState == GameState.restart)
-            return;
+    }
 
-        bool win = true;
-        foreach (var tile in ChangableTiles)
+    IEnumerator Transit(GameObject finalMap, LevelManager currentLevelManager)
+    {
+        if (currentLevelManager.NeedAutomaticRotation)
         {
-            if (tile.GetComponent<TileManager>().MapColor == TileColor.red)
+            float currentAngle = (int)currentLevelManager.transform.localEulerAngles.y;
+            float targetAngle = (int)currentLevelManager.FinalRotationAngle;
+            if (currentAngle != targetAngle)
             {
-                win = false;
-                break;
+                GameManager.instance.CurrentState = GameState.playing;
+                float angleDiff = Mathf.DeltaAngle(currentAngle, targetAngle);
+                Debug.Log("Angle Diff " + angleDiff);
+                Debug.Log(angleDiff + "  " + currentLevelManager.GetComponent<MouseRotation>() != null);
+                if (angleDiff == -90 && currentLevelManager.GetComponent<MouseRotation>() != null)
+                {
+                    currentLevelManager.GetComponent<MouseRotation>().RotateMapCCW();
+                }
+                else if (angleDiff == 90 && currentLevelManager.GetComponent<MouseRotation>() != null)
+                {
+                    currentLevelManager.GetComponent<MouseRotation>().RotateMapCW();
+                }
+                else if ((angleDiff == 180 || angleDiff == -180) && currentLevelManager.GetComponent<MouseRotation>() != null)
+                {
+                    currentLevelManager.GetComponent<MouseRotation>().RotateTwoTimes();
+                }
             }
         }
-
-        if (win)
+        yield return new WaitForSeconds(1.5f);
+        WinGame();
+        if (finalMap != null)
         {
-            WinGame();
+            finalMap.GetComponent<FinalTransition>().Begin();
         }
         else
         {
-            //Debug.Log("Not yet");
-        }*/
+            if (RiverGenerator.instance != null)
+            {
+                RiverGenerator.instance.GenerateRealWorld();
+            }
+            if (DissolveTransition.instance != null)
+            {
+                DissolveTransition.instance.spawnGround();
+                DissolveTransition.instance.startDissolve(2f);
+            }
+        }
+        if (SealedMaterial != null)
+        {
+            Color temp = SealedMaterial.color;
+            temp.a = 0f;
+            SealedMaterial.color = temp;
+        }
     }
 
     public bool IsLevelCompleted()
