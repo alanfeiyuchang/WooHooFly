@@ -91,10 +91,10 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (!_changingColor)
+        /*if (!_changingColor)
         {
             StartCoroutine(ColorChange());
-        }
+        }*/
     }
 
     IEnumerator ColorChange()
