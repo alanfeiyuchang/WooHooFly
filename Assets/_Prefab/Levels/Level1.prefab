@@ -481,7 +481,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8934933402319993109
 RectTransform:
   m_ObjectHideFlags: 0
@@ -576,7 +576,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _path: {fileID: 0}
-  tutorialHints: []
+  tutorialHints:
+  - HintPlace: {fileID: 741053123033342154}
+    HintEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6636983468340881599}
+          m_TargetAssemblyTypeName: TutorialManager, Assembly-CSharp
+          m_MethodName: ShowArrowHint
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 741053123036616220}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 6636983468340881599}
+          m_TargetAssemblyTypeName: TutorialManager, Assembly-CSharp
+          m_MethodName: ShowTextHint
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: + changes your color
+            m_BoolArgument: 0
+          m_CallState: 2
   Arrow: {fileID: 6602149849770592960, guid: 67754b2c0fdb7463e8330e7478fb949a, type: 3}
 --- !u!1001 &1496192076758298293
 PrefabInstance:
