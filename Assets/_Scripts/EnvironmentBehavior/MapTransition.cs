@@ -230,7 +230,8 @@ public class MapTransition : MonoBehaviour
         
         StartCoroutine(LevelOneCubeCrash(dropTime, dropHeight, _fromLevel.gameObject.transform));
         StartCoroutine(LevelOneCubeCrash(dropTime, dropHeight, graph.transform));
-        yield return new WaitForSeconds(dropTime);
+        yield return new WaitForSeconds(dropTime+1f);
+
         //move water parent back to original
 /*        if (SpawnEnviiorment.instance != null)
         {
@@ -254,6 +255,11 @@ public class MapTransition : MonoBehaviour
             Destroy(go.gameObject);
         }
         Destroy(_fromLevel.gameObject);
+
+        // put graph object back to the original position
+        Vector3 tempPos = graph.transform.position;
+        tempPos.y += dropHeight;
+        graph.transform.position = tempPos;
 
         SetPosition(_toMapCubes, _toMapFlags, _toMapPlayerCube, +dropHeight);
         
