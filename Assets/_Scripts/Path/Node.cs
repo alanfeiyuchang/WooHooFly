@@ -462,24 +462,18 @@ namespace WooHooFly.NodeSystem
                         {
                             movingInfo.startNode = c.neighbor;
                             movingInfo.endNode = e.neighbor; 
-                            if (e.atFront)
-                            {
-                                movingInfo.transitState = TransitState.RotateMove;
-                                movingInfo.transitNodePos = c.neighbor.transform.position + GetTranslate(c.neighbor.transform, e.direction);
-                            }
-                            else
-                            {
-                                movingInfo.transitState = TransitState.MoveRotate;
-                                movingInfo.transitNodePos = e.neighbor.transform.position - GetTranslate(c.neighbor.transform, e.direction);
-                            }
-                            movingInfo.transitVector = e.neighbor.transform.position - c.neighbor.transform.position - GetTranslate(c.neighbor.transform, e.direction);
+                            movingInfo.transitState = TransitState.MoveRotate;
+                            movingInfo.transitNodePos = e.neighbor.transform.position - GetTranslate(c.neighbor.transform, e.direction);
+                            Vector3 startNodePos = this.transform.position + this.transform.up / 2;
+                            Vector3 transitNodePosup = movingInfo.transitNodePos + movingInfo.startNode.transform.up / 2;
+                            movingInfo.transitVector = transitNodePosup - startNodePos;
                             return movingInfo;
                         }
                     }
 
                     foreach(Edge e in c.neighbor.Edges)
                     {
-                        if(e.neighbor.isActiveAndEnabled && e.isActive && e.neighbor == endNode)
+                        if (e.neighbor.isActiveAndEnabled && e.isActive && e.neighbor == endNode)
                         {
                             movingInfo.startNode = c.neighbor;
                             movingInfo.endNode = e.neighbor;

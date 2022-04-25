@@ -195,13 +195,15 @@ namespace WooHooFly.NodeSystem
         private void FindPathAtDirection(Node node, Direction direction)
         {
             Path path = new Path();
+            List<Node> visited = new List<Node>();
+
             bool hasNextAccessible;
             do
             {
                 hasNextAccessible = false;
                 foreach (TransitEdge e in node.Transits)
                 {
-                    if (e.isActive && e.direction == direction)
+                    if (e.isActive && e.direction == direction && !path.Contains(e.neighbor))
                     {
                         node = e.neighbor;
                         path.Add(e.neighbor);
@@ -211,7 +213,7 @@ namespace WooHooFly.NodeSystem
                 }
                 foreach (Edge e in node.Edges)
                 {
-                    if (e.isActive && e.direction == direction)
+                    if (e.isActive && e.direction == direction && !path.Contains(e.neighbor))
                     {
                         node = e.neighbor;
                         path.Add(e.neighbor);
@@ -219,8 +221,6 @@ namespace WooHooFly.NodeSystem
                         break;
                     }
                 }
-
-                
             } while (hasNextAccessible);
             AccessibleNodes.Add(path);
         }

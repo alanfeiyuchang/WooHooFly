@@ -141,6 +141,7 @@ public class CubeController : MonoBehaviour
 
         if (movingInfo.transitState == TransitState.MoveRotate)
         {
+            //this.transform.position = movingInfo.startNode.transform.position + movingInfo.startNode.transform.up;
             // translate then rotate
             this.transform.position = this.transform.position + movingInfo.transitVector;
             rotateStartPos = movingInfo.transitNodePos;

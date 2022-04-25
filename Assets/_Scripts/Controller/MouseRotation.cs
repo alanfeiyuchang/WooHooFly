@@ -16,7 +16,6 @@ public class MouseRotation : MonoBehaviour
     [SerializeField] private Transform Axis;
 
     //public bool enableMouseRotation;
-    //public RotationLink[] rotationLinks;
     public RotationLinker[] rotationLinksTransit;
     public RotationLinker[] rotationLinksCorner;
     public UnityEvent<float> rotationEvent;
