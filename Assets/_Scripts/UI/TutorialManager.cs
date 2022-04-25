@@ -5,6 +5,8 @@ using UnityEngine.Events;
 
 using System.Collections;
 using System.Collections.Generic;
+using WooHooFly.Colors;
+
 // using WooHooFly.Tutorial;
 [System.Serializable]
 public class TutorialHint
@@ -25,12 +27,17 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] 
     private GameObject _path;
 
+    public Camera cam;
+
     public TutorialHint[] tutorialHints;
 
     public GameObject Arrow;
     private GameObject _arrow;
 
     private bool isPlaying;
+
+    private string[] directions = {"R2DL", "R2UL", "L2UR", "L2DR"} ;
+    private int index = 2;
 
     private void Awake()
     {
@@ -48,14 +55,26 @@ public class TutorialManager : MonoBehaviour
             Debug.Log("tutorial hints: " + this.transform.parent.name + " " + tutorialHints.Length);
             foreach (TutorialHint tutorialHint in tutorialHints)
             {
-                BoxCollider bc = tutorialHint.HintPlace.transform.GetChild(0).GetChild(0).gameObject.AddComponent<BoxCollider>();
+                BoxCollider bc;
+                HintTrigger hintTrigger;
+                if (tutorialHint.HintPlace.name == "Side C") {
+                    bc = tutorialHint.HintPlace.transform.GetChild(0).gameObject.AddComponent<BoxCollider>();
+                    hintTrigger = tutorialHint.HintPlace.transform
+                                            .GetChild(0).gameObject
+                                            .AddComponent<HintTrigger>();
+                }
+                else {
+                    bc = tutorialHint.HintPlace.transform.GetChild(0).GetChild(0).gameObject.AddComponent<BoxCollider>();
+                    hintTrigger = tutorialHint.HintPlace.transform
+                                            .GetChild(0).GetChild(0).gameObject
+                                            .AddComponent<HintTrigger>();
+                }
+                  
                 bc.isTrigger = true;
                 bc.size = new Vector3(0.2f, 0.2f, 0.05f);
                 bc.center = new Vector3(0, 0, 0);
                 // Debug.Log(tutorialHint.HintPlace.name);
-                HintTrigger hintTrigger = tutorialHint.HintPlace.transform
-                                            .GetChild(0).GetChild(0).gameObject
-                                            .AddComponent<HintTrigger>();
+                
                 hintTrigger.HintEvent = tutorialHint.HintEvent;
             }
         }
@@ -203,8 +222,14 @@ public class TutorialManager : MonoBehaviour
        
         arrow_container.transform.parent = mapCube.transform;
         // Vector3 original = mapCube.transform.position;
-        arrow_container.transform.localPosition = new Vector3(0, 1.5f, 0);
+        arrow_container.transform.localPosition = new Vector3(0,  1.5f, 0 );
         arrow.transform.parent = arrow_container.transform;
+        ArrowController ac = arrow_container.GetComponentInChildren<ArrowController>();
+        if (mapCube.name == "Side C") {
+            ac.OnRotateMap(directions[index]);
+        }
+        // ac.vector = mapCube.transform.position;
+        // arrow_container.transform.LookAt(cam.transform.position);
 
         _arrow = arrow_container; 
     }
@@ -212,6 +237,12 @@ public class TutorialManager : MonoBehaviour
     public void DeactiveArrow() {
         if (_arrow != null)
             _arrow.SetActive(false);
+            
+    }
+
+    public void DestroyArrow() {
+        if (_arrow != null)
+            Destroy(_arrow);
             
     }
 
@@ -224,9 +255,40 @@ public class TutorialManager : MonoBehaviour
         
     }
 
+    public void RotateSideArrow(float angle) {
+        if (angle > 0) {
+                index = (index + 1) % directions.Length;
+                
+        }
+        else {
+            if (index == 0)
+                index = directions.Length - 1;
+            else
+                index = index - 1;
+        }
+        if (_arrow != null) {
+             ArrowController ac = _arrow.GetComponentInChildren<ArrowController>();
+
+           
+            ac.OnRotateMap(directions[index]);
+            _arrow.SetActive(true);
+         }
+        
+    }
+
     private void StopArrow() {
         if (_arrow != null)
             Destroy(_arrow);
+    }
+
+    public void ShowArrowOnMissedCube(GameObject checkCube) {
+
+        TileManager tileManager = checkCube.GetComponentInChildren<TileManager>();
+        TileColor color = tileManager.MapColor;
+        if (color != TileColor.green) {
+            NextArrowPosition(checkCube);
+        }
+
     }
 
 
