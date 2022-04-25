@@ -5,24 +5,35 @@ using UnityEngine.SceneManagement;
 
 public class MainScene : MonoBehaviour
 {
-   /* // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    /* // Start is called before the first frame update
+     void Start()
+     {
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }*/
-   public void playGame()
+     }
+
+     // Update is called once per frame
+     void Update()
+     {
+        if(CreditUI.activeInHierarchy == false)
+        {
+            panel.SetActive(true);
+        }
+     }*/
+    public GameObject CreditUI;
+    public GameObject panel;
+    public void playGame()
     {
         SceneManager.LoadScene("Prototype");
     }
     public void Credit()
     {
-        SceneManager.LoadScene("Credit");
+        //SceneManager.LoadScene("Credit");
+        CreditUI.SetActive(true);
+        panel.SetActive(false);
+    }
+    public void CreditClose()
+    {
+        panel.SetActive(true);
     }
     public void quit()
     {

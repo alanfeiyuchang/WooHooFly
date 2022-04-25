@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FinalTransition : MonoBehaviour
 {
@@ -65,7 +66,10 @@ public class FinalTransition : MonoBehaviour
         }
         YTransform yTransform = transform.GetComponentInChildren<YTransform>();
         yTransform.Begin();        
-        yield return null;
+        yield return new WaitForSeconds(5f);
+
+        SceneManager.LoadScene("Credit");
+
     }
 
     IEnumerator Transforming(int childIndex) {

@@ -18,6 +18,7 @@ public class UIController : MonoBehaviour
     public bool canShowArrows = true;
     private AudioSource BGM;
     private AudioSource playerSoundEffect;
+    private bool IsBgmMute = false;
     private void Awake()
     {
         instance = this;
@@ -205,8 +206,12 @@ public class UIController : MonoBehaviour
     {
         HomeButtonMusic.Play();
         CloseMenu();
-        BGM.clip = music[0];
-        BGM.Play();
+        print("fsfsfss"+IsBgmMute);
+        if (!IsBgmMute)
+        {
+            BGM.clip = music[0];
+            BGM.Play();
+        }
         InGamePanel.SetActive(true);
         MapTransition.instance.SelectLevel();
     }
@@ -223,8 +228,11 @@ public class UIController : MonoBehaviour
     {
         restartButtonMusic.Play();
         CloseMenu();
-        BGM.clip = music[0];
-        BGM.Play();
+        if (!IsBgmMute)
+        {
+            BGM.clip = music[0];
+            BGM.Play();
+        }
         stepCounterActive = true;
         InGamePanel.SetActive(true);
         // if player did not complete the level, record analytics data
@@ -340,11 +348,13 @@ public class UIController : MonoBehaviour
         {
             BGM.Stop();
             _musicImage.sprite = _musicOff;
+            IsBgmMute = true;
         }
         else
         {
             BGM.Play();
             _musicImage.sprite = _musicOn;
+            IsBgmMute = false;
         }
     }
     public void muteSoundEffect()
