@@ -31,10 +31,10 @@ public class DissolveTransition : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
+        /*if (Input.GetKeyDown(KeyCode.R))
         {
             startDissolve(dissolveTime);
-        }
+        }*/
     }
     private void OnApplicationQuit()
     {
@@ -69,6 +69,8 @@ public class DissolveTransition : MonoBehaviour
         mapCube = MapTransition.instance.GetCurrentLevel().MapCubes;
         TileColor playerColor = MapTransition.instance.GetCurrentLevel().PlayerCube.GetComponent<CubeCollider>().Color;
         List<GameObject> fires = new List<GameObject>();
+        GroundMaterial.SetFloat("_Surface", 1);
+        GroundMaterial.color = new Color(1, 1, 1, 0);
         foreach (GameObject cube in mapCube)
         {
             //Debug.Log("spawn ground at: " + cube.transform.position);
