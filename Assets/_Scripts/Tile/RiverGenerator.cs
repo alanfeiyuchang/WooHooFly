@@ -42,7 +42,7 @@ namespace TileSystem
 
         public void GenerateRealWorld()
         {
-
+            Debug.Log("I am Generating real world");
             //create a gameobject contains real world item
             environment = this.transform.Find("Environment");
             if (environment == null)
