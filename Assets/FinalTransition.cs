@@ -25,13 +25,13 @@ public class FinalTransition : MonoBehaviour
 
     }
 
-    private void Update() {
-        if (Input.GetKeyDown(KeyCode.F)) {
-            if (!transformed) {
-                Begin();
-            }
-        }
-    }
+    // private void Update() {
+    //     if (Input.GetKeyDown(KeyCode.F)) {
+    //         if (!transformed) {
+    //             Begin();
+    //         }
+    //     }
+    // }
 
     public void Begin() {
         if (endPositions == null || endPositions.Length != transform.childCount)

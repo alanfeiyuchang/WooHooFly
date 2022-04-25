@@ -21,20 +21,6 @@ public class ArrowController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        // var rotation = Quaternion.LookRotation(vector); 
-        // transform.rotation = rotation;
-        if (Input.GetKeyDown(KeyCode.V)) {
-            animator.SetTrigger("up");
-                }
-        if (Input.GetKeyDown(KeyCode.B)) {
-             animator.SetTrigger("left2right");
-        }
-        if (Input.GetKeyDown(KeyCode.N)) {
-             animator.SetTrigger("right2left");
-        }
-    }
 
     public void Rotate(bool up)
     {

@@ -6,6 +6,7 @@ using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
 using WooHooFly.Colors;
+using WooHooFly.NodeSystem;
 
 // using WooHooFly.Tutorial;
 [System.Serializable]
@@ -39,6 +40,8 @@ public class TutorialManager : MonoBehaviour
     private string[] directions = {"R2DL", "R2UL", "L2UR", "L2DR"} ;
     private int index = 2;
 
+    private List<Clickable> clickables = new List<Clickable>();
+
     private void Awake()
     {
         //Debug.Log("TutorialManager Awake");
@@ -55,27 +58,43 @@ public class TutorialManager : MonoBehaviour
             Debug.Log("tutorial hints: " + this.transform.parent.name + " " + tutorialHints.Length);
             foreach (TutorialHint tutorialHint in tutorialHints)
             {
-                BoxCollider bc;
-                HintTrigger hintTrigger;
+                BoxCollider bc = new BoxCollider();
+                HintTrigger hintTrigger = new HintTrigger();
                 if (tutorialHint.HintPlace.name == "Side C") {
                     bc = tutorialHint.HintPlace.transform.GetChild(0).gameObject.AddComponent<BoxCollider>();
                     hintTrigger = tutorialHint.HintPlace.transform
                                             .GetChild(0).gameObject
                                             .AddComponent<HintTrigger>();
+                    bc.isTrigger = true;
+                    bc.size = new Vector3(0.2f, 0.2f, 0.05f);
+                    bc.center = new Vector3(0, 0, 0);
+                    hintTrigger.HintEvent = tutorialHint.HintEvent;
                 }
-                else {
+                else if  (tutorialHint.HintPlace.name.StartsWith("MapCube"))  {
                     bc = tutorialHint.HintPlace.transform.GetChild(0).GetChild(0).gameObject.AddComponent<BoxCollider>();
                     hintTrigger = tutorialHint.HintPlace.transform
                                             .GetChild(0).GetChild(0).gameObject
                                             .AddComponent<HintTrigger>();
+                    bc.isTrigger = true;
+                    bc.size = new Vector3(0.2f, 0.2f, 0.05f);
+                    bc.center = new Vector3(0, 0, 0);
+                    hintTrigger.HintEvent = tutorialHint.HintEvent;
+                }
+
+
+                // Debug.Log(tutorialHint.HintPlace.name);
+                if (tutorialHint.HintPlace.name == "Coloring_Tile") {
+                    clickables.Add(tutorialHint.HintPlace.GetComponentInChildren<Clickable>());
                 }
                   
-                bc.isTrigger = true;
-                bc.size = new Vector3(0.2f, 0.2f, 0.05f);
-                bc.center = new Vector3(0, 0, 0);
-                // Debug.Log(tutorialHint.HintPlace.name);
+               
+                foreach (Clickable c in clickables)
+                {
+                    c.clickAction += OnClickTile;
+                    c.hintEvent = tutorialHint.HintEvent;
+                }
                 
-                hintTrigger.HintEvent = tutorialHint.HintEvent;
+               
             }
         }
         else
@@ -87,6 +106,10 @@ public class TutorialManager : MonoBehaviour
     private void Start()
     {
 
+    }
+
+    public void OnClickTile(Clickable clickable, Vector3 position) {
+        clickable.loadTutorial();
     }
 
     public void ShowTextHint(String i) {
@@ -101,6 +124,10 @@ public class TutorialManager : MonoBehaviour
 
     private void OnDestroy() {
         GameManager.instance.onGameStateChanged -= GameStateChanged;
+        foreach (Clickable c in clickables)
+        {
+            c.clickAction -= OnClickTile;
+        }
         // TutorialManager.current.onHighLightPosEnter -=  HighlightPath;
         // TutorialManager.current.onArrowHit -= NextArrowPosition;
         // TutorialManager.current.onTextHit -= NextTextShow;

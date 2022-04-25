@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     public AudioClip[] music;
     private AudioSource BGM;
 
+    private bool isFinal; // is final map
+
     private void Awake()
     {
         instance = this;
@@ -152,7 +154,8 @@ public class GameManager : MonoBehaviour
         BGM.Play();
         CurrentState = GameState.win;
         Debug.Log("***************WON***************");
-        UIController.instance.WinUI();
+        if (!isFinal)
+            UIController.instance.WinUI();
         levelComplete = true;
         
         // WinGame() was called twice after winning
@@ -248,7 +251,8 @@ public class GameManager : MonoBehaviour
                 yield return new WaitForSeconds(1.5f);
             }
         }
-        
+        if (finalMap != null)
+            isFinal = true;
         WinGame();
         if (finalMap != null)
         {

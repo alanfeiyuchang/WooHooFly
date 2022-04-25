@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.EventSystems;
+using UnityEngine.Events;
 
 namespace WooHooFly.NodeSystem {
 
@@ -10,6 +11,9 @@ namespace WooHooFly.NodeSystem {
     { 
         public Node clickedNode;
         public Action<Clickable, Vector3> clickAction;
+
+        public UnityEvent hintEvent;
+
         private void Awake()
         {
             clickedNode = this.transform.parent.GetComponentInChildren<Node>();
@@ -33,6 +37,10 @@ namespace WooHooFly.NodeSystem {
                 //Debug.Log("invoke");
                 clickAction.Invoke(this, eventData.pointerPressRaycast.worldPosition);
             }
+        }
+
+        public void loadTutorial() {
+            hintEvent?.Invoke();
         }
     }
 
