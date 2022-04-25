@@ -246,8 +246,9 @@ public class GameManager : MonoBehaviour
                     currentLevelManager.GetComponent<MouseRotation>().RotateTwoTimes();
                 }
             }
+            yield return new WaitForSeconds(1.5f);
         }
-        yield return new WaitForSeconds(1.5f);
+        
         WinGame();
         if (finalMap != null)
         {
