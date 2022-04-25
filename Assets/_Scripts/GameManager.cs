@@ -245,8 +245,8 @@ public class GameManager : MonoBehaviour
                 {
                     currentLevelManager.GetComponent<MouseRotation>().RotateTwoTimes();
                 }
+                yield return new WaitForSeconds(1.5f);
             }
-            yield return new WaitForSeconds(1.5f);
         }
         
         WinGame();
@@ -256,14 +256,14 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            if (RiverGenerator.instance != null)
-            {
-                RiverGenerator.instance.GenerateRealWorld();
-            }
             if (DissolveTransition.instance != null)
             {
                 DissolveTransition.instance.spawnGround();
                 DissolveTransition.instance.startDissolve(2f);
+            }
+            if (RiverGenerator.instance != null)
+            {
+                RiverGenerator.instance.GenerateRealWorld();
             }
         }
         if (SealedMaterial != null)
