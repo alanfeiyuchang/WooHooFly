@@ -72,11 +72,11 @@ public class MapTransition : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T))
+        /*if (Input.GetKeyDown(KeyCode.T))
         {
             LevelTransition();
             
-        }
+        }*/
     }
 
     private void SetCameraSize(float size)
