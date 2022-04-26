@@ -25,13 +25,13 @@ public class FinalTransition : MonoBehaviour
 
     }
 
-    // private void Update() {
-    //     if (Input.GetKeyDown(KeyCode.F)) {
-    //         if (!transformed) {
-    //             Begin();
-    //         }
-    //     }
-    // }
+     private void Update() {
+         if (Input.GetKeyDown(KeyCode.F)) {
+             if (!transformed) {
+                 Begin();
+             }
+         }
+     }
 
     public void Begin() {
         if (endPositions == null || endPositions.Length != transform.childCount)
@@ -54,6 +54,18 @@ public class FinalTransition : MonoBehaviour
         
         StartCoroutine(TransformSeparately());        
         transformed = true;
+        //
+        //change top color to blue
+        for (int i = 0; i< transform.childCount; i++)
+        {
+            Transform _child = transform.GetChild(i);
+            for(int j = 0; j < _child.childCount; j++)
+            {
+                GameObject _mapCube = _child.GetChild(j).gameObject;
+                MapCubeManager _mapManager = _mapCube.GetComponent<MapCubeManager>();
+
+            }
+        }
     }
 
     IEnumerator TransformSeparately() {
