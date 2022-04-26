@@ -16,8 +16,8 @@ public class CubeController : MonoBehaviour
     private bool firstRotate;
     private Clickable[] clickables;
     private NodeMovingInfo movingInfo;
+    private InputType inputType = InputType.MouseInput;
 
-    public InputType inputType;
     public GameObject SnapPoint;
     public float speed = 500;
     public UnityEvent RotationEvent;
