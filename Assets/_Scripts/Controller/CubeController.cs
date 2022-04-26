@@ -14,6 +14,7 @@ public class CubeController : MonoBehaviour
     public CubeCollider cubeColorControl;
     private bool isMoving;
     private bool firstRotate;
+    private bool firstClick = true;
     private Clickable[] clickables;
     private NodeMovingInfo movingInfo;
     private InputType inputType = InputType.MouseInput;
@@ -68,6 +69,11 @@ public class CubeController : MonoBehaviour
     }
     private void OnClick(Clickable clickable, Vector3 position)
     {
+        if (firstClick)
+        {
+            firstClick = false;
+            FindAccessibleNode();
+        }
         if (inputType != InputType.MouseInput)
             return;
 
