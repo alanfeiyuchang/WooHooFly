@@ -265,7 +265,7 @@ public class MapTransition : MonoBehaviour
         
         _toLevel.gameObject.SetActive(true);
         mouseRotation = _toLevel.GetComponent<MouseRotation>();
-
+        
         // turn on all the sealed material
         if (GameManager.instance.SealedMaterial != null)
         {
@@ -282,7 +282,7 @@ public class MapTransition : MonoBehaviour
         CurrentLevel = levelIndex;
         SetCameraSize(LevelList[CurrentLevel].CameraProjectionSize);
         UIController.instance.StepCount = 0;
-
+        UIController.instance.SetPlayerSFX(LevelList[CurrentLevel].PlayerCube.GetComponent<AudioSource>());
         //to map appears
         betweenTime = TotalCrashTime / _toMapCubes.Count();
         foreach (GameObject go in _toMapCubes)
@@ -297,7 +297,7 @@ public class MapTransition : MonoBehaviour
             StartCoroutine(LevelOneCubeCrash(dropTime, dropHeight, flag.transform));
         }
         yield return new WaitForSeconds(dropTime+0.5f);
-
+        UIController.instance.playerSoundEffect = LevelList[CurrentLevel].PlayerCube.GetComponent<AudioSource>();
         //Set the camera follow target to the current player cube
         // CameraFollow.instance.SetCameraTarget(_toMapPlayerCube.transform);
 

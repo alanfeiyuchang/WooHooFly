@@ -17,9 +17,10 @@ public class UIController : MonoBehaviour
     [HideInInspector]
     public bool canShowArrows = true;
     private AudioSource BGM;
-    private AudioSource playerSoundEffect;
+    public AudioSource playerSoundEffect;
     private bool IsBgmMute = false;
     private float BGMVolume;
+    private float playerVolume;
     private void Awake()
     {
         instance = this;
@@ -167,6 +168,7 @@ public class UIController : MonoBehaviour
 
         _initAudioVolumn = _audioSource.volume;
         BGMVolume = BGM.volume;
+        playerVolume = MapTransition.instance.GetCurrentLevel().PlayerCube.GetComponent<AudioSource>().volume;
     }
     
 
@@ -370,16 +372,30 @@ public class UIController : MonoBehaviour
         if (_audioSource.volume != 0)
         {
             _audioSource.volume = 0f;
-            playerSoundEffect.enabled = false;
+            playerSoundEffect.volume = 0f;
 
             _sfxImage.sprite = _sfxOff;
         }
         else
         {
             _audioSource.volume = _initAudioVolumn;
-            playerSoundEffect.enabled = true;
+            playerSoundEffect.volume = playerVolume;
             _sfxImage.sprite = _sfxOn;
         }
+    }
+
+    public void SetPlayerSFX(AudioSource audioS)
+    {
+        playerSoundEffect = audioS;
+        if (_sfxImage.sprite == _sfxOn)
+        {
+            playerSoundEffect.volume = playerVolume;
+        }
+        else
+        {
+            playerSoundEffect.volume = 0f;
+        }
+
     }
     // add more methods to track other stats
 }

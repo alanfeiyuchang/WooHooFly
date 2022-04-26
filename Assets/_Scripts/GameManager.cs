@@ -342,10 +342,10 @@ public class GameManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        foreach (levelStar ls in levelData.levelStarData)
+        /*foreach (levelStar ls in levelData.levelStarData)
         {
             ls.StarEarned = 0;
-        }
+        }*/
 
         if (SealedMaterial != null)
         {
