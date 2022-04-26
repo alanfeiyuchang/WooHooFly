@@ -20,9 +20,12 @@ public class CoverController : MonoBehaviour
 
     public void UpdateCoverWhenLevelRotate(Vector3 predictNextAngle)
     {
+        float preditctAngle = predictNextAngle.y;
+        if (preditctAngle < 0)
+            preditctAngle += 360;
         foreach (Cover covers in coverCollection)
         {
-            if(covers.angle == predictNextAngle.y)
+            if(covers.angle == preditctAngle)
             {
                 if (covers.PlayerLayerNode.Contains(playerCube.CurrentNode))
                 {
