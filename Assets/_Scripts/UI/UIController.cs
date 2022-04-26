@@ -109,7 +109,7 @@ public class UIController : MonoBehaviour
                 }*/
                 else
                 {
-                    starStepNumber = curLevelData.TwoStarStep;
+                    starStepNumber = curLevelData.OneStarStep;
                 }
             }
 
