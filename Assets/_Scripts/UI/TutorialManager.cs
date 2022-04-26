@@ -25,7 +25,7 @@ public class TutorialManager : MonoBehaviour
     public static TutorialManager current;
 
     private GameObject _text;
-    [SerializeField] 
+    [SerializeField]
     private GameObject _path;
 
     public List<GameObject> checkPath;
@@ -42,7 +42,7 @@ public class TutorialManager : MonoBehaviour
     private bool isPlaying;
     private bool showUI;
 
-    private string[] directions = {"R2DL", "R2UL", "L2UR", "L2DR"} ;
+    private string[] directions = { "R2DL", "R2UL", "L2UR", "L2DR" };
     private int index = 2;
 
     private bool isCheckOn;
@@ -66,8 +66,9 @@ public class TutorialManager : MonoBehaviour
             foreach (TutorialHint tutorialHint in tutorialHints)
             {
                 BoxCollider bc = new BoxCollider();
-                HintTrigger hintTrigger = new HintTrigger();
-                if (tutorialHint.HintPlace.name.StartsWith("Side")) {
+                HintTrigger hintTrigger;
+                if (tutorialHint.HintPlace.name.StartsWith("Side"))
+                {
                     bc = tutorialHint.HintPlace.transform.GetChild(0).gameObject.AddComponent<BoxCollider>();
                     hintTrigger = tutorialHint.HintPlace.transform
                                             .GetChild(0).gameObject
@@ -77,7 +78,8 @@ public class TutorialManager : MonoBehaviour
                     bc.center = new Vector3(0, 0, 0);
                     hintTrigger.HintEvent = tutorialHint.HintEvent;
                 }
-                else if  (tutorialHint.HintPlace.name.StartsWith("MapCube"))  {
+                else if (tutorialHint.HintPlace.name.StartsWith("MapCube"))
+                {
                     bc = tutorialHint.HintPlace.transform.GetChild(0).GetChild(0).gameObject.AddComponent<BoxCollider>();
                     hintTrigger = tutorialHint.HintPlace.transform
                                             .GetChild(0).GetChild(0).gameObject
@@ -90,19 +92,20 @@ public class TutorialManager : MonoBehaviour
 
 
                 // Debug.Log(tutorialHint.HintPlace.name);
-                if (tutorialHint.HintPlace.name == "Coloring_Tile") {
+                if (tutorialHint.HintPlace.name == "Coloring_Tile")
+                {
                     clickables.Add(tutorialHint.HintPlace.GetComponentInChildren<Clickable>());
                 }
 
-                  
-               
+
+
                 foreach (Clickable c in clickables)
                 {
                     c.clickAction += OnClickTile;
                     c.hintEvent = tutorialHint.HintEvent;
                 }
-                
-               
+
+
             }
         }
         else
@@ -116,21 +119,25 @@ public class TutorialManager : MonoBehaviour
 
     }
 
-    public void OnClickTile(Clickable clickable, Vector3 position) {
+    public void OnClickTile(Clickable clickable, Vector3 position)
+    {
         clickable.loadTutorial();
     }
 
-    public void ShowTextHint(String i) {
+    public void ShowTextHint(String i)
+    {
         _text.GetComponent<Text>().text = i;
     }
 
-    public void ShowArrowHint(GameObject i) {
+    public void ShowArrowHint(GameObject i)
+    {
         NextArrowPosition(i);
     }
 
 
 
-    private void OnDestroy() {
+    private void OnDestroy()
+    {
         GameManager.instance.onGameStateChanged -= GameStateChanged;
         foreach (Clickable c in clickables)
         {
@@ -145,25 +152,29 @@ public class TutorialManager : MonoBehaviour
     //      Debug.Log("DISABLED");
     // }
 
-    public void GameStateChanged(GameManager.GameState state) 
+    public void GameStateChanged(GameManager.GameState state)
     {
-        if (state == GameManager.GameState.starting || state == GameManager.GameState.restart) {
+        if (state == GameManager.GameState.starting || state == GameManager.GameState.restart)
+        {
 
-            if (!isPlaying){
+            if (!isPlaying)
+            {
                 ShowTutorialText();
                 ShowUI();
             }
         }
-        else if (state != GameManager.GameState.playing && state != GameManager.GameState.rotating) {
+        else if (state != GameManager.GameState.playing && state != GameManager.GameState.rotating)
+        {
             StopTutorialText();
             HideUI();
         }
 
-        if (state == GameManager.GameState.win) {
+        if (state == GameManager.GameState.win)
+        {
             StopArrow();
             HideUI();
         }
-    
+
     }
 
     private void ShowUI()
@@ -196,28 +207,32 @@ public class TutorialManager : MonoBehaviour
         _text.SetActive(false);
     }
 
-    public void HighlightPath() {
+    public void HighlightPath()
+    {
         Debug.Log("highting-----");
-        if (_path != null) {
+        if (_path != null)
+        {
             _path.SetActive(true);
             StartCoroutine(FadePath());
         }
-        
+
     }
 
 
-    IEnumerator FadePath() {
+    IEnumerator FadePath()
+    {
         int glowCount = 5;
-        while (glowCount-- > 0) {
+        while (glowCount-- > 0)
+        {
             MeshRenderer[] glows = _path.GetComponentsInChildren<MeshRenderer>();
-            
-            yield return StartCoroutine(FadePathToFullAlpha(1f, glows ));
+
+            yield return StartCoroutine(FadePathToFullAlpha(1f, glows));
             yield return new WaitForSeconds(1.0f);
-            yield return StartCoroutine(FadePathToZeroAlpha(1f, glows ));   
-            
-            
+            yield return StartCoroutine(FadePathToZeroAlpha(1f, glows));
+
+
         }
-         
+
     }
 
     public IEnumerator FadePathToZeroAlpha(float t, MeshRenderer[] glows)
@@ -227,8 +242,8 @@ public class TutorialManager : MonoBehaviour
             Material i = glow.material;
             i.color = new Color(i.color.r, i.color.g, i.color.b, 1);
         }
-        
-        float alpha  = glows[0].material.color.a ;
+
+        float alpha = glows[0].material.color.a;
 
         while (alpha > 0.0f)
         {
@@ -237,7 +252,7 @@ public class TutorialManager : MonoBehaviour
             {
                 Material i = glow.material;
                 i.color = new Color(i.color.r, i.color.g, i.color.b, alpha);
-            }         
+            }
             yield return null;
         }
     }
@@ -249,8 +264,8 @@ public class TutorialManager : MonoBehaviour
             Material i = glow.material;
             i.color = new Color(i.color.r, i.color.g, i.color.b, 0);
         }
-        
-        float alpha = glows[0].material.color.a ;
+
+        float alpha = glows[0].material.color.a;
         while (alpha < 1.0f)
         {
             alpha += (Time.deltaTime / t);
@@ -258,13 +273,14 @@ public class TutorialManager : MonoBehaviour
             {
                 Material i = glow.material;
                 i.color = new Color(i.color.r, i.color.g, i.color.b, alpha);
-            }         
+            }
             yield return null;
         }
     }
 
     // Show Arrow on Mapcube
-    private void NextArrowPosition(GameObject mapCube){
+    private void NextArrowPosition(GameObject mapCube)
+    {
         // Debug.Log("change to next postion");
         if (_arrow != null)
             Destroy(_arrow);
@@ -274,104 +290,121 @@ public class TutorialManager : MonoBehaviour
         //             new Vector3(0, 0, 0),
         //             Quaternion.Euler(new Vector3(0, 150, 90)));
         GameObject arrow;
-        if (mapCube.name == "Side C") {
+        if (mapCube.name == "Side C")
+        {
             isSide = true;
             arrow = Instantiate(SideArrow);
             arrow.transform.localRotation = SideArrow.transform.localRotation;
             GameObject arrow_container = new GameObject("arrow");
-        
+
             arrow_container.transform.parent = mapCube.transform;
             // Vector3 original = mapCube.transform.position;
-            arrow_container.transform.localPosition = new Vector3(0,  1.5f, 0 );
+            arrow_container.transform.localPosition = new Vector3(0, 1.5f, 0);
             arrow_container.transform.localEulerAngles = new Vector3(0, -90, -90);
             arrow.transform.parent = arrow_container.transform;
             ArrowController ac = arrow_container.GetComponentInChildren<ArrowController>();
             ac.OnRotateMap(directions[index]);
-             _arrow = arrow_container; 
+            _arrow = arrow_container;
         }
-        else if (mapCube.name == "Side A" || mapCube.name.StartsWith("MapCube")) {
+        else if (mapCube.name == "Side A" || mapCube.name.StartsWith("MapCube"))
+        {
             isSide = false;
             arrow = Instantiate(Arrow);
             arrow.transform.localRotation = Arrow.transform.localRotation;
             GameObject arrow_container = new GameObject("arrow");
-        
+
             arrow_container.transform.parent = mapCube.transform;
             // Vector3 original = mapCube.transform.position;
-            arrow_container.transform.localPosition = new Vector3(0,  1.5f, 0 );
+            arrow_container.transform.localPosition = new Vector3(0, 1.5f, 0);
             arrow.transform.parent = arrow_container.transform;
-             _arrow = arrow_container; 
+            _arrow = arrow_container;
         }
-        
+
         // ac.vector = mapCube.transform.position;
         // arrow_container.transform.LookAt(cam.transform.position);
 
-       
+
     }
 
-    public void DeactiveArrow() {
+    public void DeactiveArrow()
+    {
         if (_arrow != null)
             _arrow.SetActive(false);
-            
+
     }
 
-    public void DestroyArrow() {
+    public void DestroyArrow()
+    {
         if (_arrow != null)
             Destroy(_arrow);
-            
+
     }
 
-    public void ShowTextHintOnce(string text) {
-        if (!activatedText) {
+    public void ShowTextHintOnce(string text)
+    {
+        if (!activatedText)
+        {
             ShowTextHint(text);
             activatedText = true;
         }
     }
 
-    public void ShowArrowHintOnce(GameObject mapCube) {
-        if (!activatedArrow) {
+    public void ShowArrowHintOnce(GameObject mapCube)
+    {
+        if (!activatedArrow)
+        {
             ShowArrowHint(mapCube);
             activatedArrow = true;
         }
     }
 
-    public void RotateArrowOnRotation(float angle) {
-         if (_arrow != null && !isSide ) {
-             Debug.Log("Original arrow rotate");
+    public void RotateArrowOnRotation(float angle)
+    {
+        if (_arrow != null && !isSide)
+        {
+            Debug.Log("Original arrow rotate");
             Vector3 original = _arrow.transform.localEulerAngles;
-            _arrow.transform.localEulerAngles = new Vector3(original.x, original.y-angle, original.z); 
+            _arrow.transform.localEulerAngles = new Vector3(original.x, original.y - angle, original.z);
             _arrow.SetActive(true);
-         }
-        
+        }
+
     }
 
-    public void RotateSideArrow(float angle) {
-        
-        if (angle > 0) {
-                index = (index + 1) % directions.Length;
-                
+    public void RotateSideArrow(float angle)
+    {
+
+        if (angle > 0)
+        {
+            index = (index + 1) % directions.Length;
+
         }
-        else {
+        else
+        {
             if (index == 0)
                 index = directions.Length - 1;
             else
                 index = index - 1;
         }
-        if (_arrow != null && isSide) {
+        if (_arrow != null && isSide)
+        {
             Debug.Log("new arrow rotate");
-             ArrowController ac = _arrow.GetComponentInChildren<ArrowController>();
+            ArrowController ac = _arrow.GetComponentInChildren<ArrowController>();
             ac.OnRotateMap(directions[index]);
             _arrow.SetActive(true);
-         }
-        
+        }
+
     }
 
-    private void StopArrow() {
+    private void StopArrow()
+    {
         if (_arrow != null)
             Destroy(_arrow);
     }
 
-    public void ShowArrowOnMissedCube(bool atWin) {
-        if (atWin) {
+    public void ShowArrowOnMissedCube(bool atWin)
+    {
+        if (atWin)
+        {
             isCheckOn = true;
         }
         if (!isCheckOn)
@@ -382,7 +415,8 @@ public class TutorialManager : MonoBehaviour
         {
             TileManager tileManager = checkCube.GetComponentInChildren<TileManager>();
             TileColor color = tileManager.MapColor;
-            if (color != TileColor.green) {
+            if (color != TileColor.green)
+            {
                 notGreens.Add(checkCube);
             }
         }
@@ -393,9 +427,9 @@ public class TutorialManager : MonoBehaviour
             NextArrowPosition(checkCube);
             ShowTextHint("You missed a tile!");
             return;
-        }      
+        }
 
-   
+
 
     }
 
