@@ -251,14 +251,16 @@ public class MouseRotation : MonoBehaviour
 
     public void RotateMapCW()
     {
-        if (GameManager.instance.CurrentState != GameManager.GameState.playing)
+        if (GameManager.instance.CurrentState != GameManager.GameState.playing && 
+            GameManager.instance.CurrentState != GameManager.GameState.starting)
             return;
         StartCoroutine(RotateMapAnim(rotateAngle));
     }
 
     public void RotateMapCCW()
     {
-        if (GameManager.instance.CurrentState != GameManager.GameState.playing)
+        if (GameManager.instance.CurrentState != GameManager.GameState.playing &&
+            GameManager.instance.CurrentState != GameManager.GameState.starting)
             return;
         StartCoroutine(RotateMapAnim(-1 * rotateAngle));
     }
