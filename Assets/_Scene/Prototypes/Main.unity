@@ -643,6 +643,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 240935398}
   m_CullTransparentMesh: 1
+--- !u!20 &267470198 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 6691212060208032457, guid: 089d01fb7b00b423bafb61f39704354b, type: 3}
+  m_PrefabInstance: {fileID: 664396130}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &275877866
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -734,7 +739,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particles: {fileID: 1549127785}
-  mainCamera: {fileID: 0}
+  mainCamera: {fileID: 267470198}
   cursor: {fileID: 2800000, guid: 38082b10bb77b6140b974d7b36080a22, type: 3}
   cursorClicked: {fileID: 2800000, guid: 3e6822420e0a8ff4096c40af586f9898, type: 3}
 --- !u!4 &306243771
@@ -928,7 +933,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6691212060208032463, guid: 089d01fb7b00b423bafb61f39704354b, type: 3}
       propertyPath: m_Cameras.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6691212060208032463, guid: 089d01fb7b00b423bafb61f39704354b, type: 3}
       propertyPath: m_Cameras.Array.data[0]
