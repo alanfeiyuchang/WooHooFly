@@ -28,12 +28,16 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] 
     private GameObject _path;
 
-    public Camera cam;
+    public List<GameObject> checkPath;
 
     public TutorialHint[] tutorialHints;
 
     public GameObject Arrow;
+    public GameObject DefaultArrow;
     private GameObject _arrow;
+    private bool isSide;
+
+    private bool activatedText, activatedArrow;
 
     private bool isPlaying;
 
@@ -60,7 +64,7 @@ public class TutorialManager : MonoBehaviour
             {
                 BoxCollider bc = new BoxCollider();
                 HintTrigger hintTrigger = new HintTrigger();
-                if (tutorialHint.HintPlace.name == "Side C") {
+                if (tutorialHint.HintPlace.name.StartsWith("Side")) {
                     bc = tutorialHint.HintPlace.transform.GetChild(0).gameObject.AddComponent<BoxCollider>();
                     hintTrigger = tutorialHint.HintPlace.transform
                                             .GetChild(0).gameObject
@@ -99,7 +103,7 @@ public class TutorialManager : MonoBehaviour
         }
         else
         {
-            //Debug.Log("No tutorial hints");
+            Debug.Log("No tutorial hints");
         }
     }
 
@@ -240,25 +244,43 @@ public class TutorialManager : MonoBehaviour
         if (_arrow != null)
             Destroy(_arrow);
 
+        Debug.Log("initiate " + mapCube.name + " of " + mapCube.transform.parent.name);
         // GameObject arrow = Instantiate(Arrow, 
         //             new Vector3(0, 0, 0),
         //             Quaternion.Euler(new Vector3(0, 150, 90)));
-        GameObject arrow = Instantiate(Arrow);
-        arrow.transform.localRotation = Arrow.transform.localRotation;
-        GameObject arrow_container = new GameObject("arrow");
-       
-        arrow_container.transform.parent = mapCube.transform;
-        // Vector3 original = mapCube.transform.position;
-        arrow_container.transform.localPosition = new Vector3(0,  1.5f, 0 );
-        arrow.transform.parent = arrow_container.transform;
-        ArrowController ac = arrow_container.GetComponentInChildren<ArrowController>();
+        GameObject arrow;
         if (mapCube.name == "Side C") {
+            isSide = true;
+            arrow = Instantiate(Arrow);
+            arrow.transform.localRotation = Arrow.transform.localRotation;
+            GameObject arrow_container = new GameObject("arrow");
+        
+            arrow_container.transform.parent = mapCube.transform;
+            // Vector3 original = mapCube.transform.position;
+            arrow_container.transform.localPosition = new Vector3(0,  1.5f, 0 );
+            arrow_container.transform.localEulerAngles = new Vector3(0, -90, -90);
+            arrow.transform.parent = arrow_container.transform;
+            ArrowController ac = arrow_container.GetComponentInChildren<ArrowController>();
             ac.OnRotateMap(directions[index]);
+             _arrow = arrow_container; 
         }
+        else if (mapCube.name == "Side A" || mapCube.name.StartsWith("MapCube")) {
+            isSide = false;
+            arrow = Instantiate(DefaultArrow);
+            arrow.transform.localRotation = DefaultArrow.transform.localRotation;
+            GameObject arrow_container = new GameObject("arrow");
+        
+            arrow_container.transform.parent = mapCube.transform;
+            // Vector3 original = mapCube.transform.position;
+            arrow_container.transform.localPosition = new Vector3(0,  1.5f, 0 );
+            arrow.transform.parent = arrow_container.transform;
+             _arrow = arrow_container; 
+        }
+        
         // ac.vector = mapCube.transform.position;
         // arrow_container.transform.LookAt(cam.transform.position);
 
-        _arrow = arrow_container; 
+       
     }
 
     public void DeactiveArrow() {
@@ -273,8 +295,23 @@ public class TutorialManager : MonoBehaviour
             
     }
 
+    public void ShowTextHintOnce(string text) {
+        if (!activatedText) {
+            ShowTextHint(text);
+            activatedText = true;
+        }
+    }
+
+    public void ShowArrowHintOnce(GameObject mapCube) {
+        if (!activatedArrow) {
+            ShowArrowHint(mapCube);
+            activatedArrow = true;
+        }
+    }
+
     public void RotateArrowOnRotation(float angle) {
-         if (_arrow != null) {
+         if (_arrow != null && !isSide ) {
+             Debug.Log("Original arrow rotate");
             Vector3 original = _arrow.transform.localEulerAngles;
             _arrow.transform.localEulerAngles = new Vector3(original.x, original.y-angle, original.z); 
             _arrow.SetActive(true);
@@ -283,6 +320,7 @@ public class TutorialManager : MonoBehaviour
     }
 
     public void RotateSideArrow(float angle) {
+        
         if (angle > 0) {
                 index = (index + 1) % directions.Length;
                 
@@ -293,10 +331,9 @@ public class TutorialManager : MonoBehaviour
             else
                 index = index - 1;
         }
-        if (_arrow != null) {
+        if (_arrow != null && isSide) {
+            Debug.Log("new arrow rotate");
              ArrowController ac = _arrow.GetComponentInChildren<ArrowController>();
-
-           
             ac.OnRotateMap(directions[index]);
             _arrow.SetActive(true);
          }
@@ -308,16 +345,28 @@ public class TutorialManager : MonoBehaviour
             Destroy(_arrow);
     }
 
-    public void ShowArrowOnMissedCube(GameObject checkCube) {
-        
-        TileManager tileManager = checkCube.GetComponentInChildren<TileManager>();
-        TileColor color = tileManager.MapColor;
-        if (color != TileColor.green) {
+    public void ShowArrowOnMissedCube() {
+        List<GameObject> notGreens = new List<GameObject>();
+
+        foreach (GameObject checkCube in checkPath)
+        {
+            TileManager tileManager = checkCube.GetComponentInChildren<TileManager>();
+            TileColor color = tileManager.MapColor;
+            if (color != TileColor.green) {
+                notGreens.Add(checkCube);
+            }
+        }
+        checkPath = notGreens;
+
+        foreach (GameObject checkCube in notGreens)
+        {
             NextArrowPosition(checkCube);
             ShowTextHint("You missed a tile!");
-        }
+            return;
+        }      
+
+   
 
     }
-
 
 }

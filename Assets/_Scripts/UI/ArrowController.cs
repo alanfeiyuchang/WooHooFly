@@ -22,12 +22,15 @@ public class ArrowController : MonoBehaviour
 
     // Update is called once per frame
 
-    public void Rotate(bool up)
+    public void Rotate(bool left)
     {
-        Debug.Log("arrow rotate " + up);
-        if (up) {
-            transform.localEulerAngles = upRotation;
-            animator.SetTrigger("up");
+        if (left && !isLeftToRight) {
+            animator.SetTrigger("left2right");
+            isLeftToRight = true;
+        }
+        if (!left && isLeftToRight) {
+            animator.SetTrigger("right2left");
+            isLeftToRight = false;
         }
     }
 
@@ -38,19 +41,19 @@ public class ArrowController : MonoBehaviour
         {
             case "L2DR":
                 transform.localEulerAngles = leftToDownRightRotation;
-                animator.SetTrigger("left2right");
+                Rotate(true);
                 break;
             case "R2UL":
                 transform.localEulerAngles = rightToUpLeftRotation;
-                animator.SetTrigger("left2right");
+                Rotate(true);
                 break;
             case "L2UR":
                 transform.localEulerAngles = leftToUpRightRotation;
-                animator.SetTrigger("right2left");
+                Rotate(false);
                 break;
             case "R2DL":
                 transform.localEulerAngles = rightToDownLeftRotation;
-                animator.SetTrigger("right2left");
+                Rotate(false);
                 break;
             // case "up":
             //     transform.localEulerAngles = upRotation;
