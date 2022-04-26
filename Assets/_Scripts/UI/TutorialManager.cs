@@ -40,9 +40,12 @@ public class TutorialManager : MonoBehaviour
     private bool activatedText, activatedArrow;
 
     private bool isPlaying;
+    private bool showUI;
 
     private string[] directions = {"R2DL", "R2UL", "L2UR", "L2DR"} ;
     private int index = 2;
+
+    private bool isCheckOn;
 
     private List<Clickable> clickables = new List<Clickable>();
 
@@ -90,6 +93,7 @@ public class TutorialManager : MonoBehaviour
                 if (tutorialHint.HintPlace.name == "Coloring_Tile") {
                     clickables.Add(tutorialHint.HintPlace.GetComponentInChildren<Clickable>());
                 }
+
                   
                
                 foreach (Clickable c in clickables)
@@ -147,16 +151,37 @@ public class TutorialManager : MonoBehaviour
 
             if (!isPlaying){
                 ShowTutorialText();
+                ShowUI();
             }
         }
         else if (state != GameManager.GameState.playing && state != GameManager.GameState.rotating) {
             StopTutorialText();
+            HideUI();
         }
 
         if (state == GameManager.GameState.win) {
             StopArrow();
+            HideUI();
         }
     
+    }
+
+    private void ShowUI()
+    {
+        if (showUI)
+            UIController.instance.StartArrowAnim();
+    }
+
+    public void ShowUIHint()
+    {
+        showUI = true;
+        UIController.instance.StartArrowAnim();
+    }
+
+    private void HideUI()
+    {
+        if (showUI)
+            UIController.instance.StopArrowAnim();
     }
 
     private void ShowTutorialText()
@@ -345,7 +370,12 @@ public class TutorialManager : MonoBehaviour
             Destroy(_arrow);
     }
 
-    public void ShowArrowOnMissedCube() {
+    public void ShowArrowOnMissedCube(bool atWin) {
+        if (atWin) {
+            isCheckOn = true;
+        }
+        if (!isCheckOn)
+            return;
         List<GameObject> notGreens = new List<GameObject>();
 
         foreach (GameObject checkCube in checkPath)

@@ -317,12 +317,9 @@ public class UIController : MonoBehaviour
 
     public void StartArrowAnim()
     {
-        if (!arrowTutorial)
-        {
-            leftAnim.Play();
-            rightAnim.Play();
-            arrowTutorial = true;
-        }  
+
+        leftAnim.Play();
+        rightAnim.Play();
     }
    
     public void StopArrowAnim()
