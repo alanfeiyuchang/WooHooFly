@@ -52,6 +52,24 @@ public class MapCubeManager : MonoBehaviour
         changeTileColor(sideE, sideEColor);
         changeTileColor(sideF, sideFColor);
     }
+    public void changeAllTileColor(TileColor _color)
+    {
+        changeTileColor(sideA, _color);
+        changeTileColor(sideB, _color);
+        changeTileColor(sideC, _color);
+        changeTileColor(sideD, _color);
+        changeTileColor(sideE, _color);
+        changeTileColor(sideF, _color);
+    }
+    public void changeAllTileType(TileType tileType)
+    {
+        ChangeTileType(sideA, tileType);
+        ChangeTileType(sideB, tileType);
+        ChangeTileType(sideC, tileType);
+        ChangeTileType(sideD, tileType);
+        ChangeTileType(sideE, tileType);
+        ChangeTileType(sideF, tileType);
+    }
     void Start()
     {
         sideA = transform.GetChild(0).gameObject;

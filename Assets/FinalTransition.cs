@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using WooHooFly.Colors;
 public class FinalTransition : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -52,20 +52,54 @@ public class FinalTransition : MonoBehaviour
             
         }               
         
-        StartCoroutine(TransformSeparately());        
-        transformed = true;
+
         //
-        //change top color to blue
-        for (int i = 0; i< transform.childCount; i++)
+        //change top color to blue, bottom to red
+        for (int i = 0; i< transform.childCount-1; i++)
         {
             Transform _child = transform.GetChild(i);
             for(int j = 0; j < _child.childCount; j++)
             {
                 GameObject _mapCube = _child.GetChild(j).gameObject;
                 MapCubeManager _mapManager = _mapCube.GetComponent<MapCubeManager>();
+                TileColor _color;
+                if (i < 4)
+                {
+                    _color = TileColor.green;
+                }
+                else
+                {
+                    _color = TileColor.red;
+                }
+                _mapManager.changeAllTileColor(_color);
+                _mapManager.changeAllTileType(MapCubeManager.TileType.Changeable);
 
             }
         }
+        Transform _childY = transform.GetChild(transform.childCount-1);
+        for (int i = 0; i < _childY.childCount; i++)
+        {
+            Transform _child = _childY.GetChild(i);
+            for (int j = 0; j < _child.childCount; j++)
+            {
+                GameObject _mapCube = _child.GetChild(j).gameObject;
+                MapCubeManager _mapManager = _mapCube.GetComponent<MapCubeManager>();
+                TileColor _color;
+                if (i < 4)
+                {
+                    _color = TileColor.green;
+                }
+                else
+                {
+                    _color = TileColor.red;
+                }
+                _mapManager.changeAllTileColor(_color);
+                _mapManager.changeAllTileType(MapCubeManager.TileType.Changeable);
+
+            }
+        }
+        StartCoroutine(TransformSeparately());
+        transformed = true;
     }
 
     IEnumerator TransformSeparately() {
