@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44109356, g: 0.48984808, b: 0.5699254, a: 1}
+  m_IndirectSpecularColor: {r: 0.44109416, g: 0.4898492, b: 0.569927, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -369,52 +369,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 8329758595366037168, guid: a512bde1411b3094e9b5f3d9902747ab, type: 3}
-      propertyPath: Arrow
-      value: 
-      objectReference: {fileID: 6602149849770592960, guid: 67754b2c0fdb7463e8330e7478fb949a, type: 3}
-    - target: {fileID: 8329758595366037168, guid: a512bde1411b3094e9b5f3d9902747ab, type: 3}
       propertyPath: tutorialHints.Array.data[0].HintEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 729350613}
-    - target: {fileID: 8329758595366037168, guid: a512bde1411b3094e9b5f3d9902747ab, type: 3}
-      propertyPath: tutorialHints.Array.data[0].HintEvent.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
-      value: HideRotateArrow
-      objectReference: {fileID: 0}
-    - target: {fileID: 8402967712001876684, guid: a512bde1411b3094e9b5f3d9902747ab, type: 3}
-      propertyPath: rotationEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8402967712001876684, guid: a512bde1411b3094e9b5f3d9902747ab, type: 3}
-      propertyPath: rotationEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8402967712001876684, guid: a512bde1411b3094e9b5f3d9902747ab, type: 3}
-      propertyPath: rotationEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 2113478652}
-    - target: {fileID: 8402967712001876684, guid: a512bde1411b3094e9b5f3d9902747ab, type: 3}
-      propertyPath: rotationEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8402967712001876684, guid: a512bde1411b3094e9b5f3d9902747ab, type: 3}
-      propertyPath: rotationEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: RotateArrowOnRotation
-      objectReference: {fileID: 0}
-    - target: {fileID: 8402967712001876684, guid: a512bde1411b3094e9b5f3d9902747ab, type: 3}
-      propertyPath: rotationEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: TutorialManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 8402967712001876684, guid: a512bde1411b3094e9b5f3d9902747ab, type: 3}
-      propertyPath: rotationEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     - target: {fileID: 8402967712001876685, guid: a512bde1411b3094e9b5f3d9902747ab, type: 3}
       propertyPath: m_Name
       value: Tutorial1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8402967712001876685, guid: a512bde1411b3094e9b5f3d9902747ab, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8402967712001876687, guid: a512bde1411b3094e9b5f3d9902747ab, type: 3}
       propertyPath: m_RootOrder
@@ -460,10 +420,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 7234967802992203989, guid: a512bde1411b3094e9b5f3d9902747ab, type: 3}
-    - {fileID: 840284121, guid: a512bde1411b3094e9b5f3d9902747ab, type: 3}
-    - {fileID: 840284122, guid: a512bde1411b3094e9b5f3d9902747ab, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a512bde1411b3094e9b5f3d9902747ab, type: 3}
 --- !u!20 &228401432 stripped
 Camera:
@@ -1450,10 +1407,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tutorial2
       objectReference: {fileID: 0}
-    - target: {fileID: 5617353225874384397, guid: d23704dd385b6854db61283c5f3af831, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5617353225874384399, guid: d23704dd385b6854db61283c5f3af831, type: 3}
       propertyPath: m_RootOrder
       value: 22
@@ -1499,37 +1452,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7816253882702133391, guid: d23704dd385b6854db61283c5f3af831, type: 3}
-      propertyPath: tutorialHints.Array.data[0].HintEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7816253882702133391, guid: d23704dd385b6854db61283c5f3af831, type: 3}
-      propertyPath: tutorialHints.Array.data[0].HintEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7816253882702133391, guid: d23704dd385b6854db61283c5f3af831, type: 3}
       propertyPath: tutorialHints.Array.data[0].HintEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 729350613}
-    - target: {fileID: 7816253882702133391, guid: d23704dd385b6854db61283c5f3af831, type: 3}
-      propertyPath: tutorialHints.Array.data[0].HintEvent.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7816253882702133391, guid: d23704dd385b6854db61283c5f3af831, type: 3}
-      propertyPath: tutorialHints.Array.data[0].HintEvent.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
-      value: HideRotateArrow
-      objectReference: {fileID: 0}
-    - target: {fileID: 7816253882702133391, guid: d23704dd385b6854db61283c5f3af831, type: 3}
-      propertyPath: tutorialHints.Array.data[0].HintEvent.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
-      value: UIController, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 7816253882702133391, guid: d23704dd385b6854db61283c5f3af831, type: 3}
-      propertyPath: tutorialHints.Array.data[0].HintEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgument
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7816253882702133391, guid: d23704dd385b6854db61283c5f3af831, type: 3}
-      propertyPath: tutorialHints.Array.data[0].HintEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d23704dd385b6854db61283c5f3af831, type: 3}
 --- !u!1001 &1030442263
@@ -2384,6 +2309,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Level WoohooFly
       objectReference: {fileID: 0}
+    - target: {fileID: 4218300732120782670, guid: 5febd4efaeed34e89a88f6bd4b80a1a2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5febd4efaeed34e89a88f6bd4b80a1a2, type: 3}
 --- !u!114 &1942319527 stripped
@@ -2395,17 +2324,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7201661bff449e74db9fdff6c1c56d67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2113478652 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8329758595366037168, guid: a512bde1411b3094e9b5f3d9902747ab, type: 3}
-  m_PrefabInstance: {fileID: 203823235}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 298957d4f3d8c4fd9a032a3d627f79c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &2129214804
@@ -2502,7 +2420,7 @@ PrefabInstance:
       objectReference: {fileID: 1557166530}
     - target: {fileID: 186178671, guid: 6a4d9fab7a7ba43479e94e429f5f4944, type: 3}
       propertyPath: CurrentLevel
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 186178671, guid: 6a4d9fab7a7ba43479e94e429f5f4944, type: 3}
       propertyPath: LevelList.Array.size
