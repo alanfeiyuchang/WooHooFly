@@ -33,7 +33,7 @@ public class TutorialManager : MonoBehaviour
     public TutorialHint[] tutorialHints;
 
     public GameObject Arrow;
-    public GameObject DefaultArrow;
+    public GameObject SideArrow;
     private GameObject _arrow;
     private bool isSide;
 
@@ -244,15 +244,15 @@ public class TutorialManager : MonoBehaviour
         if (_arrow != null)
             Destroy(_arrow);
 
-        Debug.Log("initiate " + mapCube.name + " of " + mapCube.transform.parent.name);
+        // Debug.Log("initiate " + mapCube.name + " of " + mapCube.transform.parent.name);
         // GameObject arrow = Instantiate(Arrow, 
         //             new Vector3(0, 0, 0),
         //             Quaternion.Euler(new Vector3(0, 150, 90)));
         GameObject arrow;
         if (mapCube.name == "Side C") {
             isSide = true;
-            arrow = Instantiate(Arrow);
-            arrow.transform.localRotation = Arrow.transform.localRotation;
+            arrow = Instantiate(SideArrow);
+            arrow.transform.localRotation = SideArrow.transform.localRotation;
             GameObject arrow_container = new GameObject("arrow");
         
             arrow_container.transform.parent = mapCube.transform;
@@ -266,8 +266,8 @@ public class TutorialManager : MonoBehaviour
         }
         else if (mapCube.name == "Side A" || mapCube.name.StartsWith("MapCube")) {
             isSide = false;
-            arrow = Instantiate(DefaultArrow);
-            arrow.transform.localRotation = DefaultArrow.transform.localRotation;
+            arrow = Instantiate(Arrow);
+            arrow.transform.localRotation = Arrow.transform.localRotation;
             GameObject arrow_container = new GameObject("arrow");
         
             arrow_container.transform.parent = mapCube.transform;
