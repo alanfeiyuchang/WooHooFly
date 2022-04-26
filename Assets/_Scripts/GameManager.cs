@@ -263,7 +263,7 @@ public class GameManager : MonoBehaviour
             if (DissolveTransition.instance != null)
             {
                 DissolveTransition.instance.spawnGround();
-                DissolveTransition.instance.startDissolve(2f);
+                DissolveTransition.instance.startDissolve(1f);
             }
             if (RiverGenerator.instance != null)
             {

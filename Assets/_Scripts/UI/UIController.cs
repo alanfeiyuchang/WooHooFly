@@ -19,6 +19,7 @@ public class UIController : MonoBehaviour
     private AudioSource BGM;
     private AudioSource playerSoundEffect;
     private bool IsBgmMute = false;
+    private float BGMVolume;
     private void Awake()
     {
         instance = this;
@@ -51,12 +52,15 @@ public class UIController : MonoBehaviour
     private bool arrowTutorial = false;
 
     //music
-    public AudioSource ArrowMusic;
-    public AudioSource WinMusic;
-    public AudioSource PauseMusic;
-    public AudioSource HomeButtonMusic;
-    public AudioSource NextButtonMusic;
-    public AudioSource restartButtonMusic;
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioClip _arrowClip;
+    [SerializeField] private AudioClip _winClip;
+    [SerializeField] private AudioClip _pauseClip;
+    [SerializeField] private AudioClip _homeButtonClip;
+    [SerializeField] private AudioClip _nextButtonClip;
+    [SerializeField] private AudioClip _restartButtonClip;
+    private float _initAudioVolumn;
+
     public AudioClip[] music;
     [SerializeField] private Sprite _musicOn;
     [SerializeField] private Sprite _musicOff;
@@ -160,6 +164,9 @@ public class UIController : MonoBehaviour
 
         leftAnim = cwArrow.GetComponent<Animation>();
         rightAnim = ccwArrow.GetComponent<Animation>();
+
+        _initAudioVolumn = _audioSource.volume;
+        BGMVolume = BGM.volume;
     }
     
 
@@ -175,7 +182,7 @@ public class UIController : MonoBehaviour
     public void WinUI()
     {
         WinPanel.SetActive(true);
-        WinMusic.Play();
+        _audioSource.PlayOneShot(_winClip);
         // disable step counter
         stepCounterActive = false;
         // Send analytic event for steps
@@ -204,7 +211,7 @@ public class UIController : MonoBehaviour
 
     public void HomeButtonPressed()
     {
-        HomeButtonMusic.Play();
+        _audioSource.PlayOneShot(_homeButtonClip);
         CloseMenu();
         print("fsfsfss"+IsBgmMute);
         if (!IsBgmMute)
@@ -218,7 +225,7 @@ public class UIController : MonoBehaviour
 
     public void NextButtonPressed()
     {
-        NextButtonMusic.Play();
+        _audioSource.PlayOneShot(_nextButtonClip);
         CloseMenu();
         BGM.clip = music[0];
         BGM.Play();
@@ -226,7 +233,7 @@ public class UIController : MonoBehaviour
     }
     public void RestartButtonPressed()
     {
-        restartButtonMusic.Play();
+        _audioSource.PlayOneShot(_restartButtonClip);
         CloseMenu();
         if (!IsBgmMute)
         {
@@ -252,7 +259,7 @@ public class UIController : MonoBehaviour
 
         if (PauseMene.activeInHierarchy)
         {
-            PauseMusic.Play();
+            _audioSource.PlayOneShot(_pauseClip);
             PauseMene.SetActive(false);
             InGamePanel.SetActive(true);
             GameManager.instance.CurrentState = GameManager.GameState.starting;
@@ -261,7 +268,7 @@ public class UIController : MonoBehaviour
         }
         else
         {
-            PauseMusic.Play();
+            _audioSource.PlayOneShot(_pauseClip);
             homeButton.SetActive(true);
             restartButton.SetActive(true);
             if (MapTransition.instance.CurrentLevel == 0)
@@ -295,7 +302,7 @@ public class UIController : MonoBehaviour
         if (MapTransition.instance.mouseRotation != null)
         {
             MapTransition.instance.mouseRotation.RotateMapCW();
-            ArrowMusic.Play();
+            _audioSource.PlayOneShot(_arrowClip);
         }
     }
 
@@ -304,7 +311,7 @@ public class UIController : MonoBehaviour
         if (MapTransition.instance.mouseRotation != null)
         {
             MapTransition.instance.mouseRotation.RotateMapCCW();
-            ArrowMusic.Play();
+            _audioSource.PlayOneShot(_arrowClip);
         }
     }
 
@@ -344,15 +351,17 @@ public class UIController : MonoBehaviour
     public void muteBGM()
     {
         
-        if (BGM.isPlaying)
+        if (BGM.volume != 0)
         {
             BGM.Stop();
+            BGM.volume = 0f;
             _musicImage.sprite = _musicOff;
             IsBgmMute = true;
         }
         else
         {
             BGM.Play();
+            BGM.volume = BGMVolume;
             _musicImage.sprite = _musicOn;
             IsBgmMute = false;
         }
@@ -361,26 +370,16 @@ public class UIController : MonoBehaviour
     {
         GameObject Player = GameObject.Find("PlayerCube_OneColor");
         playerSoundEffect = Player.GetComponent<AudioSource>();
-        if (ArrowMusic.enabled)
+        if (_audioSource.volume != 0)
         {
-            ArrowMusic.enabled = false;
-            WinMusic.enabled = false;
-            PauseMusic.enabled = false;
-            HomeButtonMusic.enabled = false;
-            NextButtonMusic.enabled = false;
-            restartButtonMusic.enabled = false;
+            _audioSource.volume = 0f;
             playerSoundEffect.enabled = false;
 
             _sfxImage.sprite = _sfxOff;
         }
         else
         {
-            ArrowMusic.enabled = true;
-            WinMusic.enabled = true;
-            PauseMusic.enabled = true;
-            HomeButtonMusic.enabled = true;
-            NextButtonMusic.enabled = true;
-            restartButtonMusic.enabled = true;
+            _audioSource.volume = _initAudioVolumn;
             playerSoundEffect.enabled = true;
             _sfxImage.sprite = _sfxOn;
         }
