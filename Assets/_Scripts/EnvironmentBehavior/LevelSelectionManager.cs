@@ -25,14 +25,12 @@ public class LevelSelectionManager : MonoBehaviour
         if (PlayerPrefs.HasKey("LevelUnlocked"))
             MapTransition.instance.LevelUnlocked = PlayerPrefs.GetInt("LevelUnlocked");
         GameManager.instance.LoadPlayerPrefsStars();
-        
-        
     }
 
     public void UpdateLevelSelection()
     {
         GameManager.instance.UploadPlayerPrefsStars();
-        PlayerPrefs.SetInt("LevelUnlocked", MapTransition.instance.LevelUnlocked);
+        //PlayerPrefs.SetInt("LevelUnlocked", MapTransition.instance.LevelUnlocked);
         int index = 1;
         foreach (GameObject star in LevelStars)
         {

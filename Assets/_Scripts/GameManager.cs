@@ -164,6 +164,7 @@ public class GameManager : MonoBehaviour
         if (MapTransition.instance.CurrentLevel == MapTransition.instance.LevelUnlocked)
         {
             MapTransition.instance.LevelUnlocked++;
+            PlayerPrefs.SetInt("LevelUnlocked", MapTransition.instance.LevelUnlocked);
             //LevelSelectionManager.instance.UpdateLevelSelection();
         }
         UpdateStars();
@@ -189,6 +190,14 @@ public class GameManager : MonoBehaviour
             {
                 data.StarEarned = PlayerPrefs.GetInt(s);
             }
+        }
+    }
+
+    public void ZeroOutLevelDataStars()
+    {
+        foreach (levelStar data in levelData.levelStarData)
+        {
+            data.StarEarned = 0;
         }
     }
 
@@ -346,7 +355,7 @@ public class GameManager : MonoBehaviour
         {
             ls.StarEarned = 0;
         }*/
-
+        //ZeroOutLevelDataStars();
         if (SealedMaterial != null)
         {
             Color temp = SealedMaterial.color;
